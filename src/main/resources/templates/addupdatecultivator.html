@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
+	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+	<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+
+	<title>Add/Update</title>
+	<style>
+		.grey-text {
+			color: grey;
+			font-family: Arial, sans-serif;
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+		#cultivatorsList {
+			width: 100%;
+		}
+
+
+
+		.black-text {
+			color: black;
+			font-family: Arial, sans-serif;
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+
+		.grey-background {
+			background-color: rgb(255, 255, 255);
+		}
+
+
+
+		.cropbook {
+			background-color: white;
+			width: 100%;
+			text-align: center;
+		}
+
+
+		.blue-background {
+			background-color: #3498db;
+		}
+
+
+
+		.white-background {
+			background-color: white;
+		}
+
+
+
+		.village {
+			padding: 10px;
+			margin: 10px;
+			text-align: center;
+		}
+
+		.close {
+			color: #aaaaaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: #000;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		.container,
+		.container-lg,
+		.container-md,
+		.container-sm,
+		.container-xl {
+			max-width: 1520px !important;
+		}
+
+		.table>.form-control {
+			height: 30px;
+		}
+	</style>
+	<script>
+		var sel = document.getElementById("searchParam"), text = document.getElementById("text");
+
+		function onUserTypeChange(index, selectedValue, cultivator) {
+			console.log('onUserTypeChange', selectedValue, cultivator);
+			if (selectedValue === '1') {
+				document.getElementById("occupantExtent" + index).disabled = false;
+				document.getElementById("save" + index).disabled = false;
+				$("#occupantExtent" + index).removeAttr('disabled').focus();
+				$("#save" + index).removeAttr('disabled').focus();
+			} else if (selectedValue === '2') {
+				document.getElementById("occupantExtent" + index).disabled = true;
+				setModalValues(index);
+				$('.modal').modal('show');
+			}
+			else if (selectedValue === '3') {
+				document.getElementById("aadharNo" + index).disabled = false;
+				document.getElementById("occupantExtent" + index).disabled = false;
+				document.getElementById("save" + index).disabled = false;
+				$("#aadharNo" + index).removeAttr('disabled').focus();
+				$("#occupantExtent" + index).removeAttr('disabled').focus();
+				$("#save" + index).removeAttr('disabled').focus();
+			}
+		}
+		function setModalValues(index) {
+			$("#crSno").val($("#crSno" + index).val());
+			$("#khNo").val($("#khNo" + index).val());
+			$("#part_key").val($("#part_key" + index).val());
+			$("#cr_vcode").val($("#cr_vcode" + index).val());
+			$("#cr_year").val($("#cr_year" + index).val());
+			$("#cr_season").val($("#cr_season" + index).val());
+			$("#owner_tenant").val('T');
+		}
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<div th:replace="home :: content"></div>
+		<div class="content-wrapper">
+			<section class="content" style="padding-top: 1px;">
+				<form th:action="@{/kathaNo}" th:object="${cultivatorsList}" method="get">
+					<div class="row topformcontent">
+						<div class="col-md-12">
+							<div class="box box-solid box-patent showhidecriteriainfo"
+								style="margin-top: 5px;margin-bottom: 10px;">
+								<div class="box-header">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="col-md-6">
+												<label class="box-title">
+													<span style="font-size: 16px; font-weight: bold;">Selection Of Khata
+														No For Add/Update Cultivator</span>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="box-body" style="padding: 10px 10px 3px 10px; height: auto;">
+									<div class="row">
+										<div class="col-md-3">
+											<div class="col-md-5">
+												<label>Crop Year</label>
+											</div>
+											<div class="col-md-7">
+												<div class="form-group" style="margin-bottom: 5px;">
+													<div class="input-group">
+														<select class="form-control" id="dropOperator"
+															required="required">
+															<option value="" selected disabled>Select crop year</option>
+															<option th:each="cropyear : ${crYearList}"
+																th:value="${cropyear}" th:text="${cropyear}">
+															</option>
+														</select>
+														<span id="dropdownError" style="color: red;"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="col-md-5">
+												<label>Search By</label>
+											</div>
+											<div class="col-md-7">
+												<div class="form-group" style="margin-bottom: 5px;">
+													<div class="input-group">
+														<select class="form-control" id="searchParam" name="searchParam"
+															style="width: 190px">
+															<option value="khNo">Katha No</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="col-md-5">
+												<label>From Katha</label>
+											</div>
+											<div class="col-md-7">
+												<div class="form-group" style="margin-bottom: 5px;">
+													<div class="input-group">
+														<input type="number" name="fromKhno" id="fromKhnoId"
+															class="form-control">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3" style="padding-top: 2%;">
+											<div class="col-md-5">
+											</div>
+											<div class="col-md-7">
+												<div class="form-group" style="margin-bottom: 5px;">
+													<div class="input-group">
+														<div style="margin: 0 auto; width: 155px; color: #000;">
+															<button type="button" class="btn btn-primary" id="searchId"
+																title="Search Opposition Details">Search</button>
+															<button type="button" class="btn btn-warning" id="resetId"
+																title="To reset all the details">Rest</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</section>
+		</div>
+
+		<BR>
+		<table id="ecropGrid" class="table table-bordered table-striped dataTable">
+			<thead class="color-palette" style="background-color: #9494b8;">
+				<tr>
+					<td style="width:10%;background-color: #9494b8;">Booking Id</th>
+					<td style="width:10%;background-color: #9494b8;">Survey No</th>
+					<td style="width:10%;background-color: #9494b8;">Khata No</th>
+					<td style="width:12%;background-color: #9494b8;">Pattadhar Name</th>
+					<td style="width:12%;background-color: #9494b8;">Pattadhar Father Name</th>
+					<td style="width:10%;background-color: #9494b8;">Aadhar No</th>
+					<td style="width:10%;background-color: #9494b8;">Occupant Extent</th>
+					<td style="width:12%;background-color: #9494b8;">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:id="${cultivator.bookingId}" th:each="cultivator:${cultivatorsList}">
+
+					<td style="width:10%;">
+						<span th:text="${cultivator.bookingId}"></span>
+						<input type="hidden" th:value="${cultivator.bookingId}"
+							th:id="'bookingId'+${cultivatorStat.index}">
+						<input type="hidden" th:value="${cultivator.part_key}"
+							th:id="'part_key'+${cultivatorStat.index}">
+
+						<input type="hidden" th:value="${cultivator.cr_vcode}"
+							th:id="'cr_vcode'+${cultivatorStat.index}">
+						<input type="hidden" th:value="${cultivator.cr_year}" th:id="'cr_year'+${cultivatorStat.index}">
+						<input type="hidden" th:value="${cultivator.cr_season}"
+							th:id="'cr_season'+${cultivatorStat.index}">
+
+					</td>
+					<td style="width:10%;">
+						<span th:text="${cultivator.crSno}"></span>
+						<input type="hidden" th:value="${cultivator.crSno}" th:id="'crSno'+${cultivatorStat.index}">
+					</td>
+					<td style="width:10%;">
+						<span th:text="${cultivator.khNo}"></span>
+						<input type="hidden" th:value="${cultivator.khNo}" th:id="'khNo'+${cultivatorStat.index}">
+					</td>
+					<td style="width:12%;">
+						<span th:text="${cultivator.ocName}"></span>
+						<input type="hidden" th:value="${cultivator.ocName}" th:id="'ocName'+${cultivatorStat.index}">
+					</td>
+					<td style="width:12%;">
+						<span th:text="${cultivator.fatherName}"></span>
+						<input type="hidden" th:value="${cultivator.fatherName}"
+							th:id="'fatherName'+${cultivatorStat.index}">
+					</td>
+					<td style="width:10%;">
+						<input style="width: 150pX;" type="text" th:value="${cultivator.aadharNo}"
+							th:id="'aadharNo'+${cultivatorStat.index}" class="form-control" disabled>
+					</td>
+					<td style="width:10%;">
+						<input style="width: 150pX;" type="text" th:value="${cultivator.occupantExtent}"
+							th:id="'occupantExtent'+${cultivatorStat.index}" class="form-control" disabled>
+					</td>
+					<td style="width:12%;">
+						<div class="row">
+							<div class="col-md-8">
+								<div class="form-group" style="margin-bottom: 5px;">
+									<div class="input-group">
+										<div style="margin: 0 auto; width: 155px; color: #000;">
+											<select th:id="'searchParam'+${cultivatorStat.index}" style="width: 100px"
+												class="form-control"
+												th:onchange="onUserTypeChange([[${cultivatorStat.index}]], this.value, [[${cultivator}]])">
+												<option value="0" selected>--Select--</option>
+												<option value="1">Owner</option>
+												<option value="2">Cultivator
+												</option>
+												<option value="3">Enjoyer</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group" style="margin-bottom: 5px;">
+									<div class="input-group">
+										<div style="margin: 0 auto; width: 155px; color: #000;">
+											<i class="fa fa-save fa-2x fa-pull-left fa-border"
+												onclick="updateCultivatorData();" style="padding: 0px;"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<div class="container">
+			<div class="modal face" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog" style="max-width: 700px!important;" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title w-100 text-center">Add Cultivator Details</h4>
+							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"> <span
+									aria-hidden="true">&times;</span></button>
+						</div>
+
+						<div class="modal-body">
+
+							<form th:action="@{/cultivator/save}" method="post" enctype="multipart/form-data"
+								th:object="${cultivator}">
+								<div class="container">
+									<div class="form-group row">
+										<label for="id" class="col-sm-2 col-form-label">Survey No</label>
+										<div class="col-sm-4">
+											<input th:field="*{crSno}" class="form-control" id="crSno" />
+											<input type="hidden" th:field="*{part_key}" class="form-control"
+												id="part_key" />
+											<input type="hidden" th:field="*{cr_vcode}" class="form-control"
+												id="cr_vcode" />
+											<input type="hidden" th:field="*{cr_year}" id="cr_year" />
+											<input type="hidden" th:field="*{cr_season}" id="cr_season" />
+											<input type="hidden" th:field="*{owner_tenant}" id="owner_tenant" />
+										</div>
+										<label for="id" class="col-sm-2 col-form-label">Katha No</label>
+										<div class="col-sm-4">
+											<input th:field="*{khNo}" class="form-control" id="khNo" />
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="id" class="col-sm-2 col-form-label">Cultivator Name</label>
+										<div class="col-sm-10">
+											<input th:field="*{ocName}" class="form-control" id="ocName"
+												placeholder="Please Enter Cultivator Name." required />
+											<div class="invalid-feedback">
+												Please Enter Cultivator Name.
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="validationCustomUsername" class="col-sm-2 col-form-label">Father
+											Name</label>
+										<div class="input-group col-sm-10">
+											<input th:field="*{fatherName}" class="form-control" id="fatherName"
+												placeholder="Please Enter Cultivator Father Name." required>
+											<div class="invalid-feedback">
+												Please Enter Cultivator Father Name.
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="id" class="col-sm-2 col-form-label">Aadhar No</label>
+										<div class="col-sm-10">
+											<input th:field="*{aadharNo}" class="form-control" id="aadharNo"
+												placeholder="Please Enter Cultivator Aadhar No" required />
+											<div class="invalid-feedback">
+												Please Enter Cultivator Aadhar No.
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="id" class="col-sm-2 col-form-label">Extent</label>
+										<div class="col-sm-10">
+											<input th:field="*{occupantExtent}" class="form-control" id="occupantExtent"
+												placeholder="Please Enter Cultivator Extent" required />
+											<div class="invalid-feedback">
+												Please Enter Cultivator Extent.
+											</div>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-success">Save</button>
+										<button type="button" class="btn btn-danger"
+											data-bs-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<script type="text/javascript">
+				$(document).ready(function () {
+
+					new DataTable('#ecropGrid');
+
+					$("#btnCancel").on("click", function () {
+						window.location = "[[@{/cultivatorsList}]]";
+					});
+				});
+
+				function updateCultivatorData(index) {
+					$("#crSno" + index).val();
+					$("#khNo" + index).val();
+					$("#part_key" + index).val();
+				}
+			</script>
+
+		</div>
+	</div>
+</body>
+
+</html>
