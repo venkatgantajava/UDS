@@ -16,6 +16,8 @@ public interface CultivatorService {
 	public List<Cultivator> getCultivatorsByKathaNo(Integer kathaNo);
 
 	public Cultivator save(Cultivator cultivator);
+	
+	public int updateCultivatorOwnerDetails(Cultivator cultivator);
 
 	public void delete(int bookingId);
 

@@ -12,21 +12,24 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//	@Autowired
-//	private UserService userDetailsService;
-//
-//	@Autowired
-//	private AppUserRepo userRepo;
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-				.antMatchers("/registration/**", "/js/**", "/css/**", "/img/**", "/images/**","/home/**","/katha/**","/kathaNo/**", "/bootstrap/**",
-						"/customCSS/**", "/customJS/**", "/fonts/**", "/sass/**", "/login-auth/**", "/cultivator/save")
-				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll()
-				.defaultSuccessUrl("/", true).and().logout().invalidateHttpSession(true).clearAuthentication(true)
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
-				.permitAll();
+		http.authorizeRequests(requests -> requests
+				.antMatchers("/registration/**", "/js/**", "/css/**", "/img/**", "/images/**", "/home/**",
+						"/cultivator/**", "/cultivator/kathaNo/**", "/bootstrap/**", "/customCSS/**", "/customJS/**",
+						"/fonts/**", "/sass/**", "/login-auth/**", "/cultivator/save", "/cultivator/owner/update")
+				.permitAll().anyRequest().permitAll())
+				.formLogin(login -> login.loginPage("/login").permitAll().defaultSuccessUrl("/", true))
+				.logout(logout -> {
+					try {
+						logout.invalidateHttpSession(true).clearAuthentication(true)
+								.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+								.logoutSuccessUrl("/login?logout").and().csrf().disable().cors();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});
+
 	}
 
 	@Override

@@ -1,11 +1,15 @@
 package com.ecrops.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ecrops.dto.CultivatorDto;
+import com.ecrops.dto.CultivatorEmbedableDto;
 import com.ecrops.entity.Cultivator;
+import com.ecrops.repo.CultivatorCompositeRepository;
 import com.ecrops.repo.CultivatorRepository;
 import com.ecrops.service.CultivatorService;
 
@@ -14,6 +18,9 @@ public class CultivatorServiceImpl implements CultivatorService {
 
 	@Autowired
 	private CultivatorRepository repo;
+
+	@Autowired
+	CultivatorCompositeRepository cultivatorCompositeRepository;
 
 	public List<Cultivator> listAll() {
 
@@ -35,8 +42,20 @@ public class CultivatorServiceImpl implements CultivatorService {
 
 	@Override
 	public void delete(int bookingId) {
-		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public int updateCultivatorOwnerDetails(Cultivator cultivator) {
+
+		Optional<CultivatorDto> optionalDto = cultivatorCompositeRepository
+				.findById(new CultivatorEmbedableDto(cultivator.getBookingId(), cultivator.getPart_key()));
+		CultivatorDto cultivatorDto = optionalDto.get();
+		cultivatorDto.setAadharNo(cultivator.getAadharNo());
+		cultivatorDto.setOccupantExtent(cultivator.getOccupantExtent());
+		CultivatorDto cDtoResult = cultivatorCompositeRepository.save(cultivatorDto);
+
+		return cDtoResult != null ? 1 : 0;
 	}
 
 }
