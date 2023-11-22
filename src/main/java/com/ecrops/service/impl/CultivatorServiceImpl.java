@@ -35,16 +35,6 @@ public class CultivatorServiceImpl implements CultivatorService {
 		return repo.getCultivatorDetailsByKathaNo(kathaNo);
 	}
 
-	public Cultivator save(Cultivator cultivator) {
-
-		return repo.save(cultivator);
-	}
-
-	@Override
-	public void delete(int bookingId) {
-
-	}
-
 	@Override
 	public int updateCultivatorOwnerDetails(Cultivator cultivator) {
 
@@ -56,6 +46,33 @@ public class CultivatorServiceImpl implements CultivatorService {
 		CultivatorDto cDtoResult = cultivatorCompositeRepository.save(cultivatorDto);
 
 		return cDtoResult != null ? 1 : 0;
+	}
+	
+	public Cultivator saveTenant(Cultivator cultivator) {
+
+		return repo.save(cultivator);
+	}
+
+	@Override
+	public int updateCultivatorTenantDetails(Cultivator cultivator) {
+
+		Optional<CultivatorDto> optionalDto = cultivatorCompositeRepository
+				.findById(new CultivatorEmbedableDto(cultivator.getBookingId(), cultivator.getPart_key()));
+		CultivatorDto cultivatorDto = optionalDto.get();
+		cultivatorDto.setAadharNo(cultivator.getAadharNo());
+		cultivatorDto.setOccupantExtent(cultivator.getOccupantExtent());
+		CultivatorDto cDtoResult = cultivatorCompositeRepository.save(cultivatorDto);
+
+		return cDtoResult != null ? 1 : 0;
+	}
+
+	@Override
+	public void deleteCultivatorTenantDetails(Cultivator cultivator) {
+
+		Optional<CultivatorDto> optionalDto = cultivatorCompositeRepository
+				.findById(new CultivatorEmbedableDto(cultivator.getBookingId(), cultivator.getPart_key()));
+		cultivatorCompositeRepository.delete(optionalDto.get());
+
 	}
 
 }
