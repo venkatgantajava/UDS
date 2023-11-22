@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -54,10 +55,19 @@ public class CultivatorController {
 		return "addupdatecultivator";
 	}
 
-	@PostMapping("/cultivator/save")
-	public String save(Cultivator cultivator, Model model) {
+	@PutMapping("/cultivator/owner/update")
+	public String updateCultivatorOwnerDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
 
-		cultivatorService.save(cultivator);
+		cultivatorService.updateCultivatorOwnerDetails(cultivator);
+
+		return "addupdatecultivator";
+
+	}
+
+	@PostMapping("/cultivator/tenant/save")
+	public String saveCultivatorTenantData(Cultivator cultivator, Model model) {
+
+		cultivatorService.saveTenant(cultivator);
 
 		List<Cultivator> cultiVatorsList = cultivatorService.getCultivatorsByKathaNo(cultivator.getKhNo());
 		model.addAttribute("ownersList", cultiVatorsList.stream().filter(c -> "O".equalsIgnoreCase(c.getOwner_tenant()))
@@ -72,10 +82,19 @@ public class CultivatorController {
 
 	}
 
-	@PutMapping("/cultivator/owner/update")
-	public String updateCultivatorOwnerDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
+	@PutMapping("/cultivator/tenant/update")
+	public String updateCultivatorTenantDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
 
-		cultivatorService.updateCultivatorOwnerDetails(cultivator);
+		cultivatorService.updateCultivatorTenantDetails(cultivator);
+
+		return "addupdatecultivator";
+
+	}
+
+	@DeleteMapping("/cultivator/tenant/delete")
+	public String deleteCultivatorTenantDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
+
+		cultivatorService.deleteCultivatorTenantDetails(cultivator);
 
 		return "addupdatecultivator";
 

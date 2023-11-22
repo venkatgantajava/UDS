@@ -15,10 +15,12 @@ public interface CultivatorService {
 
 	public List<Cultivator> getCultivatorsByKathaNo(Integer kathaNo);
 
-	public Cultivator save(Cultivator cultivator);
-	
 	public int updateCultivatorOwnerDetails(Cultivator cultivator);
 
-	public void delete(int bookingId);
+	public Cultivator saveTenant(Cultivator cultivator);
+
+	public int updateCultivatorTenantDetails(Cultivator cultivator);
+
+	public void deleteCultivatorTenantDetails(Cultivator cultivator);
 
 }
