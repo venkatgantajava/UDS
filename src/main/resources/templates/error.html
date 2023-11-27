@@ -1,7 +1,16 @@
-<div style="background-color:lightblue;" th:fragment="headerMessage">
-	<center>
-		<p style="font-size: larger;"> Welcome to <b><span th:text="${session.typename}"></span></b> from <b><span
-					th:text="${session.wbedname}"></span> , <span th:text="${session.wbemname}"></span>, <span
-					th:text="${session.wbevname}"></span></b></p>
-	</center>
-</div>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="header"></head>
+
+<body>
+	<div th:insert="headerImage"></div>
+
+	<div th:insert="navBarTop"></div>
+	<div th:insert="headerMessage"></div>
+
+	<h3 style="text-align: center;color: red;">Something went Wrong, Please try again after some time / Contact Support Team</h3>
+
+</body>
+
+</html>
