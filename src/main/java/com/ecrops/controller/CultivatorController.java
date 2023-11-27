@@ -1,9 +1,15 @@
 package com.ecrops.controller;
 
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +24,12 @@ import com.ecrops.entity.ActiveSeason;
 import com.ecrops.entity.Cultivator;
 import com.ecrops.service.CultivatorService;
 import com.ecrops.service.impl.ActiveSeasonServiceImpl;
+import com.google.gson.Gson;
 
 @Controller
 public class CultivatorController {
+	
+	 Logger logger = LoggerFactory.getLogger(CultivatorController.class);
 
 	@Autowired
 	private CultivatorService cultivatorService;
@@ -30,14 +39,13 @@ public class CultivatorController {
 
 	@GetMapping("/cultivator")
 	public String loadAddOrUpdateCultivator(Model model) {
-
 		List<ActiveSeason> cropYearActiveSeasonList = activeSeasonService.listAll();
 		model.addAttribute("crYearList", Arrays
 				.stream(cropYearActiveSeasonList.stream().mapToInt(ActiveSeason::getCropyear).distinct().toArray())
 				.boxed().collect(Collectors.toList()));
 		model.addAttribute("cultivator", new Cultivator());
 
-		return "cultivatorsearch";
+		return "cultivatorHomePage";
 	}
 
 	@GetMapping("/cultivator/kathaNo/")
@@ -56,11 +64,12 @@ public class CultivatorController {
 	}
 
 	@PutMapping("/cultivator/owner/update")
-	public String updateCultivatorOwnerDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
+	public String updateCultivatorOwnerDetails(Cultivator cultivator, HttpServletRequest request,
+			HttpServletResponse response) {
 
-		cultivatorService.updateCultivatorOwnerDetails(cultivator);
-
-		return "addupdatecultivator";
+		int result = cultivatorService.updateCultivatorOwnerDetails(cultivator);
+		setResponse(request, response, result >= 0 );
+		return null;
 
 	}
 
@@ -98,6 +107,21 @@ public class CultivatorController {
 
 		return "addupdatecultivator";
 
+	}
+
+	public void setResponse(HttpServletRequest request, HttpServletResponse response, boolean status) {
+		try {
+
+			String jsonMap = new Gson().toJson(status);
+
+			response.setContentType("text/html");
+			PrintWriter out;
+			out = response.getWriter();
+			out.println(jsonMap);
+			out.flush();
+		} catch (Exception e) {
+
+		}
 	}
 
 }

@@ -83,10 +83,10 @@
 									<div class="form-group" style="margin-bottom: 5px;">
 										<div class="input-group">
 											<div style="margin: 0 auto; width: 155px; color: #000;">
-												<i class="fa fa-save fa-2x fa-pull-left fa-border"
+												<i class="fa fa-save fa-2x fa-pull-left"
 													th:id="'update'+${cultivatorStat.index}"
-													th:onclick="updateCultivatorOwnerData([[${cultivatorStat.index}]])"
-													style="padding: 0px;display:none;"></i>
+													th:onclick="updateCultivatorOwnerDetails([[${cultivatorStat.index}]])"
+													style="padding: 0px;padding-top: 4px;display:none;"></i>
 											</div>
 										</div>
 									</div>
@@ -167,19 +167,10 @@
 									<div class="form-group" style="margin-bottom: 5px;">
 										<div class="input-group">
 											<div style="margin: 0 auto; width: 155px; color: #000;">
-												<!--<select th:id="'searchParam_c'+${cultivatorStat.index}"
-													style="width: 100px" class="form-control"
-													th:onchange="onUserTypeChange('_c[[${cultivatorStat.index}]]', this.value)">
-													<option value="0" selected>--Select--</option>
-													<option value="1">Owner</option>
-													<option value="2">Cultivator
-													</option>
-													<option value="3">Enjoyer</option>
-												</select>-->
-												<i class="fa fa-edit fa-2x fa-pull-left fa-border"
+												<i class="fa fa-edit fa-2x fa-pull-left"
 													th:id="'edit_c'+${cultivatorStat.index}"
 													th:onclick="editCultivatorTenantDetails('_c[[${cultivatorStat.index}]]')"
-													style="padding: 0px;"></i>
+													style="padding: 0px;padding-top: 4px;"></i>
 											</div>
 										</div>
 									</div>
@@ -188,10 +179,10 @@
 									<div class="form-group" style="margin-bottom: 5px;">
 										<div class="input-group">
 											<div style="margin: 0 auto; width: 155px; color: #000;">
-												<i class="fa fa-save fa-2x fa-pull-left fa-border"
+												<i class="fa fa-save fa-2x fa-pull-left"
 													th:id="'update_c'+${cultivatorStat.index}"
 													th:onclick="updateCultivatorTenantDetails('_c[[${cultivatorStat.index}]]')"
-													style="padding: 0px;display:none;"></i>
+													style="padding: 0px;padding-top: 4px;display:none;"></i>
 											</div>
 										</div>
 									</div>
@@ -200,10 +191,10 @@
 									<div class="form-group" style="margin-bottom: 5px;">
 										<div class="input-group">
 											<div style="margin: 0 auto; width: 155px; color: #000;">
-												<i class="fa fa-trash-o fa-2x fa-pull-left fa-border"
+												<i class="fa fa-trash-o fa-2x fa-pull-left"
 													th:id="'delete_c'+${cultivatorStat.index}"
 													th:onclick="deleteCultivatorTenantDetails('_c[[${cultivatorStat.index}]]')"
-													style="padding: 0px;"></i>
+													style="padding: 0px;padding-top: 4px;"></i>
 											</div>
 										</div>
 									</div>
@@ -213,14 +204,11 @@
 					</tr>
 				</tbody>
 			</table>
-
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 	$(document).ready(function () {
-
-		//new DataTable('#ownerGrid');
 
 		new DataTable('#cultivatorGrid');
 
