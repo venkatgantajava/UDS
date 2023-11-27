@@ -138,3 +138,80 @@ img {
 	border-color: #008080;
 }
 
+.grey-text {
+	color: grey;
+	font-family: Arial, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#cultivatorsList {
+	width: 100%;
+}
+
+
+
+.black-text {
+	color: black;
+	font-family: Arial, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+
+.grey-background {
+	background-color: rgb(255, 255, 255);
+}
+
+
+
+.cropbook {
+	background-color: white;
+	width: 100%;
+	text-align: center;
+}
+
+
+.blue-background {
+	background-color: #3498db;
+}
+
+
+
+.white-background {
+	background-color: white;
+}
+
+
+
+.village {
+	padding: 10px;
+	margin: 10px;
+	text-align: center;
+}
+
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.container,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl {
+	max-width: 1520px !important;
+}
+
+.table>.form-control {
+	height: 30px;
+}

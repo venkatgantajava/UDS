@@ -27,7 +27,6 @@ public class UserRegServiceImpl implements UserService{
 	
 	private AppUserRepo appUserRepo;
 	
-	//@Autowired private BCryptPasswordEncoder passwordEncoder;
 	@Autowired 
 	private CustomPasswordEncoder passwordEncoder;
 	
@@ -39,16 +38,6 @@ public class UserRegServiceImpl implements UserService{
 	@Override
 	public AppUser save(UserRegistrationDto userRegistrationDto) {
 		
-//		AppUser user = new AppUser(
-//				userRegistrationDto.getFirstName(),
-//				userRegistrationDto.getLastName(),
-//				userRegistrationDto.getEmail(),
-//				passwordEncoder.encode(userRegistrationDto.getPassword()),
-//				Arrays.asList(new Roles("ROLE_DD"))
-//				);
-//		
-//		return appUserRepo.save(user);
-//	}
 		AppUser user = new AppUser(
 				userRegistrationDto.getUserid(),
 				passwordEncoder.encode(userRegistrationDto.getEncpassword()),
@@ -57,8 +46,6 @@ public class UserRegServiceImpl implements UserService{
 				userRegistrationDto.getMcode(),
 				
 				userRegistrationDto.getStatus(),
-				
-				//userRegistrationDto.getOpunitcode(),
 				
 				userRegistrationDto.getType_user(),
 				

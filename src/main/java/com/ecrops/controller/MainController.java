@@ -16,14 +16,14 @@ import com.ecrops.config.Encrypt;
 import com.ecrops.dto.AuthenticationRequest;
 import com.ecrops.entity.AppUser;
 import com.ecrops.entity.UserRegEntity;
-import com.ecrops.service.AutenticationService;
+import com.ecrops.service.AuthenticationService;
 import com.ecrops.service.UserRegService;
 
 @Controller
 public class MainController {
 
 	@Autowired
-	private AutenticationService autenticationService;
+	private AuthenticationService authenticationService;
 
 	@Autowired
 	private Encrypt encrypt;
@@ -33,6 +33,13 @@ public class MainController {
 
 	AppUser user;
 
+	@GetMapping("/home")
+	public String homePage(@ModelAttribute AuthenticationRequest authenticationRequest, Model model,
+			HttpServletRequest request) {
+
+		return "home";
+	}
+	
 	@GetMapping("/login")
 	public String loginPage(@ModelAttribute AuthenticationRequest authenticationRequest, Model model,
 			HttpServletRequest request) {
@@ -44,7 +51,7 @@ public class MainController {
 	public String loginUser(@ModelAttribute AuthenticationRequest authenticationRequest, Model model,
 			HttpServletRequest request, HttpSession httpSession) {
 		try {
-			final UserDetails userDetails = autenticationService
+			final UserDetails userDetails = authenticationService
 					.loadUserByUsername(authenticationRequest.getUsername());
 			String password = userDetails.getPassword();
 			String encpassword = authenticationRequest.getPassword();
@@ -58,11 +65,9 @@ public class MainController {
 				httpSession.setAttribute("role", entity.getType_user());
 				httpSession.setAttribute("userid", entity.getUserid());
 				httpSession.setAttribute("typename", entity.getUserTypesEntity().getTypeName());
-				model.addAttribute("typename", entity.getUserTypesEntity().getTypeName());
-				model.addAttribute("village", entity.getVillCode());
-				model.addAttribute("wbedname", entity.getWebMaster().getWbedname());
-				model.addAttribute("wbemname", entity.getWebMaster().getWbemname());
-				model.addAttribute("wbevname", entity.getWebMaster().getWbevname());
+				httpSession.setAttribute("wbedname", entity.getWebMaster().getWbedname());
+				httpSession.setAttribute("wbemname", entity.getWebMaster().getWbemname());
+				httpSession.setAttribute("wbevname", entity.getWebMaster().getWbevname());
 
 				httpSession.setAttribute("wbdcode", entity.getWbDcode());
 				httpSession.setAttribute("wbmcode", entity.getWbMcode());
