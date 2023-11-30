@@ -45,6 +45,15 @@ public class CultivatorDto {
 	@Column(name = "owner_tenant")
 	private String owner_tenant;
 
+	@Column(name = "refbookingid")
+	private Integer refBookingId;
+
+	@Column(name = "cultivator_type")
+	private String cultivatorType;
+
+	@Column(name = "anubhavadar_extent")
+	private Double anubhavadarExtent;
+
 	public CultivatorEmbedableDto getCultivatorEmbedableDto() {
 		return cultivatorEmbedableDto;
 	}
@@ -168,6 +177,30 @@ public class CultivatorDto {
 
 	public CultivatorDto() {
 		super();
+	}
+
+	public Integer getRefBookingId() {
+		return refBookingId;
+	}
+
+	public void setRefBookingId(Integer refBookingId) {
+		this.refBookingId = refBookingId;
+	}
+
+	public String getCultivatorType() {
+		return cultivatorType;
+	}
+
+	public void setCultivatorType(String cultivatorType) {
+		this.cultivatorType = cultivatorType;
+	}
+
+	public Double getAnubhavadarExtent() {
+		return anubhavadarExtent;
+	}
+
+	public void setAnubhavadarExtent(Double anubhavadarExtent) {
+		this.anubhavadarExtent = anubhavadarExtent;
 	}
 
 }

@@ -17,4 +17,8 @@ public interface CultivatorRepository extends JpaRepository<Cultivator, Integer>
 	@Query(value = "SELECT * , (tot_extent-occupant_extent) available_extent  FROM cr_booking WHERE kh_no =:kh_No", nativeQuery = true)
 	List<Cultivator> getCultivatorDetailsByKathaNo(@Param("kh_No") Integer khNo);
 
+	@Query(value = "SELECT SUM(tot_extent) tot_extent FROM CR_BOOKING WHERE kh_no = :khNo and cr_farmeruid = :cr_farmeruid AND owner_tenant = :owner_tenant GROUP BY kh_no, cr_farmeruid", nativeQuery = true)
+	List<Cultivator> getCultivatorDetailsByKathaNo(@Param("khNo") Integer khNo,
+			@Param("owner_tenant") String owner_tenant, @Param("cr_farmeruid") String cr_farmeruid);
+
 }
