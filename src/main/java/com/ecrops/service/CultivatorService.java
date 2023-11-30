@@ -17,10 +17,12 @@ public interface CultivatorService {
 
 	public int updateCultivatorOwnerDetails(Cultivator cultivator);
 
-	public Cultivator saveTenant(Cultivator cultivator);
+	public Cultivator saveCultivatorsData(Cultivator cultivator);
 
-	public int updateCultivatorTenantDetails(Cultivator cultivator);
+	public int updateCultivatorDetails(Cultivator cultivator);
 
-	public void deleteCultivatorTenantDetails(Cultivator cultivator);
+	public void deleteCultivatorDetails(Cultivator cultivator);
+	
+	public List<Cultivator> getOwnerOrTenantExtent(Integer khNo, String ownerTenant, String aadharNo);
 
 }

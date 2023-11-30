@@ -47,32 +47,37 @@ public class CultivatorServiceImpl implements CultivatorService {
 
 		return cDtoResult != null ? 1 : 0;
 	}
-	
-	public Cultivator saveTenant(Cultivator cultivator) {
+
+	public Cultivator saveCultivatorsData(Cultivator cultivator) {
 
 		return repo.save(cultivator);
 	}
 
 	@Override
-	public int updateCultivatorTenantDetails(Cultivator cultivator) {
+	public int updateCultivatorDetails(Cultivator cultivator) {
 
 		Optional<CultivatorDto> optionalDto = cultivatorCompositeRepository
 				.findById(new CultivatorEmbedableDto(cultivator.getBookingId(), cultivator.getPart_key()));
 		CultivatorDto cultivatorDto = optionalDto.get();
-		cultivatorDto.setAadharNo(cultivator.getAadharNo());
 		cultivatorDto.setOccupantExtent(cultivator.getOccupantExtent());
+		cultivatorDto.setCultivatorType(cultivator.getCultivatorType());
 		CultivatorDto cDtoResult = cultivatorCompositeRepository.save(cultivatorDto);
 
 		return cDtoResult != null ? 1 : 0;
 	}
 
 	@Override
-	public void deleteCultivatorTenantDetails(Cultivator cultivator) {
+	public void deleteCultivatorDetails(Cultivator cultivator) {
 
 		Optional<CultivatorDto> optionalDto = cultivatorCompositeRepository
 				.findById(new CultivatorEmbedableDto(cultivator.getBookingId(), cultivator.getPart_key()));
 		cultivatorCompositeRepository.delete(optionalDto.get());
 
+	}
+
+	@Override
+	public List<Cultivator> getOwnerOrTenantExtent(Integer khNo, String ownerTenant, String aadharNo) {
+		return repo.getCultivatorDetailsByKathaNo(khNo, ownerTenant, aadharNo);
 	}
 
 }

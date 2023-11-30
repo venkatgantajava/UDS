@@ -12,7 +12,7 @@
 						<td style="width:12%;background-color: #9494b8;">Pattadhar Name</th>
 						<td style="width:12%;background-color: #9494b8;">Pattadhar Father Name</th>
 						<td style="width:10%;background-color: #9494b8;">Aadhar No</th>
-						<td style="width:10%;background-color: #9494b8;">Occupant Extent</th>
+						<td style="width:10%;background-color: #9494b8;">Total Extent</th>
 						<td style="width:12%;background-color: #9494b8;">Actions</th>
 					</tr>
 				</thead>
@@ -32,6 +32,8 @@
 								th:id="'cr_year'+${cultivatorStat.index}">
 							<input type="hidden" th:value="${cultivator.cr_season}"
 								th:id="'cr_season'+${cultivatorStat.index}">
+							<input type="hidden" th:value="${cultivator.owner_tenant}"
+								th:id="'owner_tenant'+${cultivatorStat.index}">
 
 						</td>
 						<td style="width:10%;">
@@ -53,33 +55,34 @@
 								th:id="'fatherName'+${cultivatorStat.index}">
 						</td>
 						<td style="width:10%;">
-							<input style="width: 150pX;" type="text" th:value="${cultivator.aadharNo}"
-								th:id="'aadharNo'+${cultivatorStat.index}" class="form-control" disabled>
+							<span th:text="${cultivator.aadharNo}"></span>
+							<input type="hidden" th:value="${cultivator.aadharNo}"
+								th:id="'aadharNo'+${cultivatorStat.index}">
 						</td>
 						<td style="width:10%;">
-							<input style="width: 150pX;" type="text" th:value="${cultivator.occupantExtent}"
-								th:id="'occupantExtent'+${cultivatorStat.index}" class="form-control" disabled>
+							<span th:text="${cultivator.anubhavadarExtent}"></span>
+							<input type="hidden" th:value="${cultivator.anubhavadarExtent}"
+								th:id="'anubhavadarExtent'+${cultivatorStat.index}">
 						</td>
 						<td style="width:12%;">
 							<div class="row">
-								<div class="col-md-8">
+								<div class="col-md-12">
 									<div class="form-group" style="margin-bottom: 5px;">
 										<div class="input-group">
-											<div style="margin: 0 auto; width: 155px; color: #000;">
+											<div style="margin: 0 auto; color: #000;">
 												<select th:id="'searchParam'+${cultivatorStat.index}"
-													style="width: 100px" class="form-control"
+													style="width: 120px" class="form-control"
 													th:onchange="onUserTypeChange([[${cultivatorStat.index}]], this.value)">
 													<option value="0" selected>--Select--</option>
 													<option value="1">Owner</option>
-													<option value="2">Cultivator
-													</option>
+													<option value="2">Cultivator</option>
 													<option value="3">Enjoyer</option>
 												</select>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-4">
+								<!--<div class="col-md-4">
 									<div class="form-group" style="margin-bottom: 5px;">
 										<div class="input-group">
 											<div style="margin: 0 auto; width: 155px; color: #000;">
@@ -90,7 +93,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div>-->
 							</div>
 						</td>
 					</tr>
@@ -103,7 +106,7 @@
 		<div class="panel-heading">Cultivator Data</div>
 		<div class="panel-body">
 
-			<table id="cultivatorGrid" class="table table-bordered table-striped dataTable">
+			<table id="cultivatorGrid" class="table table-bordered table-striped">
 				<thead class="color-palette" style="background-color: #9494b8;">
 					<tr>
 						<td style="width:10%;background-color: #9494b8;">Booking Id</th>
@@ -111,9 +114,10 @@
 						<td style="width:10%;background-color: #9494b8;">Khata No</th>
 						<td style="width:12%;background-color: #9494b8;">Pattadhar Name</th>
 						<td style="width:12%;background-color: #9494b8;">Pattadhar Father Name</th>
+						<td style="width:8%;background-color: #9494b8;">Owner/Tenant</th>
 						<td style="width:10%;background-color: #9494b8;">Aadhar No</th>
 						<td style="width:10%;background-color: #9494b8;">Occupant Extent</th>
-						<td style="width:12%;background-color: #9494b8;">Actions</th>
+							<!--<td style="width:12%;background-color: #9494b8;">Actions</th>-->
 					</tr>
 				</thead>
 				<tbody>
@@ -132,6 +136,8 @@
 								th:id="'cr_year_c'+${cultivatorStat.index}">
 							<input type="hidden" th:value="${cultivator.cr_season}"
 								th:id="'cr_season_c'+${cultivatorStat.index}">
+							<input type="hidden" th:value="${cultivator.owner_tenant}"
+								th:id="'owner_tenant_c'+${cultivatorStat.index}">
 
 						</td>
 						<td style="width:10%;">
@@ -153,23 +159,29 @@
 							<input type="hidden" th:value="${cultivator.fatherName}"
 								th:id="'fatherName_c'+${cultivatorStat.index}">
 						</td>
-						<td style="width:10%;">
-							<input style="width: 150pX;" type="text" th:value="${cultivator.aadharNo}"
-								th:id="'aadharNo_c'+${cultivatorStat.index}" class="form-control" disabled>
+						<td style="width:8%;">
+							<span th:text="${cultivator.cultivatorType}"></span>
+							<input type="hidden" th:value="${cultivator.cultivatorType}"
+								th:id="'cultivatorType_c'+${cultivatorStat.index}">
 						</td>
 						<td style="width:10%;">
-							<input style="width: 150pX;" type="text" th:value="${cultivator.occupantExtent}"
-								th:id="'occupantExtent_c'+${cultivatorStat.index}" class="form-control" disabled>
+							<span th:text="${cultivator.aadharNo}"></span>
+							<input type="hidden" th:value="${cultivator.aadharNo}"
+								th:id="'aadharNo_c'+${cultivatorStat.index}">
 						</td>
-						<td style="width:12%;">
+						<td style="width:10%;">
+							<span th:text="${cultivator.occupantExtent}"></span>
+							<input type="hidden" th:value="${cultivator.occupantExtent}"
+								th:id="'occupantExtent_c'+${cultivatorStat.index}">
+						</td>
+						<!--<td style="width:12%;">
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group" style="margin-bottom: 5px;">
 										<div class="input-group">
 											<div style="margin: 0 auto; width: 155px; color: #000;">
-												<i class="fa fa-edit fa-2x fa-pull-left"
-													th:id="'edit_c'+${cultivatorStat.index}"
-													th:onclick="editCultivatorTenantDetails('_c[[${cultivatorStat.index}]]')"
+												<i class="fa fa-edit fa-2x fa-pull-left" th:id="'edit_c'+${cultivatorStat.index}"
+													th:onclick="editCultivatorDetails('_c[[${cultivatorStat.index}]]')"
 													style="padding: 0px;padding-top: 4px;"></i>
 											</div>
 										</div>
@@ -179,9 +191,8 @@
 									<div class="form-group" style="margin-bottom: 5px;">
 										<div class="input-group">
 											<div style="margin: 0 auto; width: 155px; color: #000;">
-												<i class="fa fa-save fa-2x fa-pull-left"
-													th:id="'update_c'+${cultivatorStat.index}"
-													th:onclick="updateCultivatorTenantDetails('_c[[${cultivatorStat.index}]]')"
+												<i class="fa fa-save fa-2x fa-pull-left" th:id="'update_c'+${cultivatorStat.index}"
+													th:onclick="updateCultivatorDetails('_c[[${cultivatorStat.index}]]')"
 													style="padding: 0px;padding-top: 4px;display:none;"></i>
 											</div>
 										</div>
@@ -191,26 +202,25 @@
 									<div class="form-group" style="margin-bottom: 5px;">
 										<div class="input-group">
 											<div style="margin: 0 auto; width: 155px; color: #000;">
-												<i class="fa fa-trash-o fa-2x fa-pull-left"
-													th:id="'delete_c'+${cultivatorStat.index}"
-													th:onclick="deleteCultivatorTenantDetails('_c[[${cultivatorStat.index}]]')"
+												<i class="fa fa-trash-o fa-2x fa-pull-left" th:id="'delete_c'+${cultivatorStat.index}"
+													th:onclick="deleteCultivatorDetails('_c[[${cultivatorStat.index}]]')"
 													style="padding: 0px;padding-top: 4px;"></i>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</td>
+						</td>-->
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
+<!--<script type="text/javascript">
 	$(document).ready(function () {
 
 		new DataTable('#cultivatorGrid');
 
 	});
-</script>
+</script>-->

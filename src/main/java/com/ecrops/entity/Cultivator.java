@@ -52,6 +52,15 @@ public class Cultivator {
 	@Column(name = "owner_tenant")
 	private String owner_tenant;
 
+	@Column(name = "refbookingid")
+	private Integer refBookingId;
+
+	@Column(name = "cultivator_type")
+	private String cultivatorType;
+
+	@Column(name = "anubhavadar_extent")
+	private Double anubhavadarExtent;
+
 	public Integer getBookingId() {
 		return bookingId;
 	}
@@ -154,6 +163,30 @@ public class Cultivator {
 
 	public void setOwner_tenant(String owner_tenant) {
 		this.owner_tenant = owner_tenant;
+	}
+
+	public Integer getRefBookingId() {
+		return refBookingId;
+	}
+
+	public void setRefBookingId(Integer refBookingId) {
+		this.refBookingId = refBookingId;
+	}
+
+	public String getCultivatorType() {
+		return cultivatorType;
+	}
+
+	public void setCultivatorType(String cultivatorType) {
+		this.cultivatorType = cultivatorType;
+	}
+
+	public Double getAnubhavadarExtent() {
+		return anubhavadarExtent;
+	}
+
+	public void setAnubhavadarExtent(Double anubhavadarExtent) {
+		this.anubhavadarExtent = anubhavadarExtent;
 	}
 
 }

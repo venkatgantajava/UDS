@@ -28,8 +28,8 @@ import com.google.gson.Gson;
 
 @Controller
 public class CultivatorController {
-	
-	 Logger logger = LoggerFactory.getLogger(CultivatorController.class);
+
+	Logger logger = LoggerFactory.getLogger(CultivatorController.class);
 
 	@Autowired
 	private CultivatorService cultivatorService;
@@ -56,34 +56,23 @@ public class CultivatorController {
 				.collect(Collectors.toList()));
 
 		model.addAttribute("cultivatorsList", cultiVatorsList.stream()
-				.filter(c -> "T".equalsIgnoreCase(c.getOwner_tenant())).collect(Collectors.toList()));
+				.filter(c -> c.getCultivatorType() != null).collect(Collectors.toList()));
 
 		model.addAttribute("cultivator", new Cultivator());
 
 		return "addupdatecultivator";
 	}
 
-	@PutMapping("/cultivator/owner/update")
-	public String updateCultivatorOwnerDetails(Cultivator cultivator, HttpServletRequest request,
-			HttpServletResponse response) {
+	@PostMapping("/cultivator/save")
+	public String saveCultivatorsData(Cultivator cultivator, Model model) {
 
-		int result = cultivatorService.updateCultivatorOwnerDetails(cultivator);
-		setResponse(request, response, result >= 0 );
-		return null;
-
-	}
-
-	@PostMapping("/cultivator/tenant/save")
-	public String saveCultivatorTenantData(Cultivator cultivator, Model model) {
-
-		cultivatorService.saveTenant(cultivator);
-
+		cultivatorService.saveCultivatorsData(cultivator);
 		List<Cultivator> cultiVatorsList = cultivatorService.getCultivatorsByKathaNo(cultivator.getKhNo());
 		model.addAttribute("ownersList", cultiVatorsList.stream().filter(c -> "O".equalsIgnoreCase(c.getOwner_tenant()))
 				.collect(Collectors.toList()));
 
 		model.addAttribute("cultivatorsList", cultiVatorsList.stream()
-				.filter(c -> "T".equalsIgnoreCase(c.getOwner_tenant())).collect(Collectors.toList()));
+				.filter(c -> c.getCultivatorType() != null).collect(Collectors.toList()));
 
 		model.addAttribute("cultivator", new Cultivator());
 
@@ -91,30 +80,30 @@ public class CultivatorController {
 
 	}
 
-	@PutMapping("/cultivator/tenant/update")
-	public String updateCultivatorTenantDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
+	@PutMapping("/cultivator/update")
+	public String updateCultivatorDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
 
-		cultivatorService.updateCultivatorTenantDetails(cultivator);
-
-		return "addupdatecultivator";
-
-	}
-
-	@DeleteMapping("/cultivator/tenant/delete")
-	public String deleteCultivatorTenantDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
-
-		cultivatorService.deleteCultivatorTenantDetails(cultivator);
+		cultivatorService.updateCultivatorDetails(cultivator);
 
 		return "addupdatecultivator";
 
 	}
 
-	public void setResponse(HttpServletRequest request, HttpServletResponse response, boolean status) {
+	@DeleteMapping("/cultivator/delete")
+	public String deleteCultivatorDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
+
+		cultivatorService.deleteCultivatorDetails(cultivator);
+
+		return "addupdatecultivator";
+
+	}
+
+	public void setResponse(HttpServletRequest request, HttpServletResponse response, Object status) {
 		try {
 
 			String jsonMap = new Gson().toJson(status);
 
-			response.setContentType("text/html");
+			response.setContentType("text/json");
 			PrintWriter out;
 			out = response.getWriter();
 			out.println(jsonMap);
@@ -122,6 +111,18 @@ public class CultivatorController {
 		} catch (Exception e) {
 
 		}
+	}
+
+	@GetMapping("/cultivator/extent")
+	public String getOwnerOrTenantExtent(@RequestParam("owner_tenant") Integer khNo,
+			@RequestParam("owner_tenant") String ownerTenant, @RequestParam("aadharNo") String aadharNo,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		List<Cultivator> cultiVatorsList = cultivatorService.getOwnerOrTenantExtent(khNo, ownerTenant, aadharNo);
+
+		setResponse(request, response, cultiVatorsList);
+
+		return null;
 	}
 
 }
