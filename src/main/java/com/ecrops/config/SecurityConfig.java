@@ -14,14 +14,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests(
-				requests -> requests
-						.antMatchers("/registration/**", "/custom/**", "/js/**", "/css/**", "/img/**", "/images/**",
-								"/home/**", "/cultivator/**", "/cultivator/kathaNo/**", "/bootstrap/**",
-								"/customCSS/**", "/customJS/**", "/fonts/**", "/sass/**", "/login-auth/**",
-								"/cultivator/save", "/cultivator/update", "/cultivator/delete")
-						.permitAll().anyRequest().permitAll())
-				.formLogin(login -> login.loginPage("/login").permitAll().defaultSuccessUrl("/", true))
+		http.authorizeRequests(requests -> requests.antMatchers("/registration/**", "/custom/**", "/js/**", "/css/**",
+				"/img/**", "/images/**", "/home/**", "/cultivator/**", "/cultivator/kathaNo/**", "/bootstrap/**",
+				"/customCSS/**", "/customJS/**", "/fonts/**", "/sass/**", "/login-auth/**", "/cultivator/save",
+				"/cultivator/update", "/cultivator/delete").permitAll().anyRequest()
+				.permitAll()).formLogin(login -> login.loginPage("/login").permitAll().defaultSuccessUrl("/", true))
 				.logout(logout -> {
 					try {
 						logout.invalidateHttpSession(true).clearAuthentication(true)

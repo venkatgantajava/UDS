@@ -75,9 +75,4 @@ public class CultivatorServiceImpl implements CultivatorService {
 
 	}
 
-	@Override
-	public List<Cultivator> getOwnerOrTenantExtent(Integer khNo, String ownerTenant, String aadharNo) {
-		return repo.getCultivatorDetailsByKathaNo(khNo, ownerTenant, aadharNo);
-	}
-
 }

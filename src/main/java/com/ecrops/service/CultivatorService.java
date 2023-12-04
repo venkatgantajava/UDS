@@ -22,7 +22,5 @@ public interface CultivatorService {
 	public int updateCultivatorDetails(Cultivator cultivator);
 
 	public void deleteCultivatorDetails(Cultivator cultivator);
-	
-	public List<Cultivator> getOwnerOrTenantExtent(Integer khNo, String ownerTenant, String aadharNo);
 
 }
