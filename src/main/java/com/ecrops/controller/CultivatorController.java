@@ -1,12 +1,13 @@
 package com.ecrops.controller;
 
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,8 +56,8 @@ public class CultivatorController {
 		model.addAttribute("ownersList", cultiVatorsList.stream().filter(c -> "O".equalsIgnoreCase(c.getOwner_tenant()))
 				.collect(Collectors.toList()));
 
-		model.addAttribute("cultivatorsList", cultiVatorsList.stream()
-				.filter(c -> c.getCultivatorType() != null).collect(Collectors.toList()));
+		model.addAttribute("cultivatorsList",
+				cultiVatorsList.stream().filter(c -> c.getCultivatorType() != null).collect(Collectors.toList()));
 
 		model.addAttribute("cultivator", new Cultivator());
 
@@ -71,8 +72,8 @@ public class CultivatorController {
 		model.addAttribute("ownersList", cultiVatorsList.stream().filter(c -> "O".equalsIgnoreCase(c.getOwner_tenant()))
 				.collect(Collectors.toList()));
 
-		model.addAttribute("cultivatorsList", cultiVatorsList.stream()
-				.filter(c -> c.getCultivatorType() != null).collect(Collectors.toList()));
+		model.addAttribute("cultivatorsList",
+				cultiVatorsList.stream().filter(c -> c.getCultivatorType() != null).collect(Collectors.toList()));
 
 		model.addAttribute("cultivator", new Cultivator());
 
@@ -96,33 +97,6 @@ public class CultivatorController {
 
 		return "addupdatecultivator";
 
-	}
-
-	public void setResponse(HttpServletRequest request, HttpServletResponse response, Object status) {
-		try {
-
-			String jsonMap = new Gson().toJson(status);
-
-			response.setContentType("text/json");
-			PrintWriter out;
-			out = response.getWriter();
-			out.println(jsonMap);
-			out.flush();
-		} catch (Exception e) {
-
-		}
-	}
-
-	@GetMapping("/cultivator/extent")
-	public String getOwnerOrTenantExtent(@RequestParam("owner_tenant") Integer khNo,
-			@RequestParam("owner_tenant") String ownerTenant, @RequestParam("aadharNo") String aadharNo,
-			HttpServletRequest request, HttpServletResponse response) {
-
-		List<Cultivator> cultiVatorsList = cultivatorService.getOwnerOrTenantExtent(khNo, ownerTenant, aadharNo);
-
-		setResponse(request, response, cultiVatorsList);
-
-		return null;
 	}
 
 }

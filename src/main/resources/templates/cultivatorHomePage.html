@@ -84,7 +84,7 @@
 														onclick="searchData()"
 														title="Search Opposition Details">Search</button>
 													<button type="button" class="btn btn-warning" id="resetId"
-														title="To reset all the details">Rest</button>
+														title="To reset all the details">Reset</button>
 												</div>
 											</div>
 										</div>
@@ -98,10 +98,16 @@
 		</section>
 	</div>
 
+	<form action="/cultivator" method="GET">
+		<input type="hidden" th:value="${session.dcode}" th:id="dcode" />
+		<input type="hidden" th:value="${session.mcode}" th:id="mcode" />
+		<input type="hidden" th:value="${session.village}" th:id="village" />
+	</form>
+
 	<div class="container" id="contentDivId"></div>
 
 	<div th:insert="cultivatorModal"></div>
-	
+
 	<div th:insert="ownerOrEnjoyerModal"></div>
 </body>
 
