@@ -9,10 +9,11 @@
 						<td style="width:10%;background-color: #9494b8;">Booking Id</th>
 						<td style="width:10%;background-color: #9494b8;">Survey No</th>
 						<td style="width:10%;background-color: #9494b8;">Khata No</th>
-						<td style="width:12%;background-color: #9494b8;">Pattadhar Name</th>
-						<td style="width:12%;background-color: #9494b8;">Pattadhar Father Name</th>
+						<td style="width:13%;background-color: #9494b8;">Pattadhar Name</th>
+						<td style="width:15%;background-color: #9494b8;">Pattadhar Father Name</th>
 						<td style="width:10%;background-color: #9494b8;">Aadhar No</th>
 						<td style="width:10%;background-color: #9494b8;">Total Extent</th>
+						<td style="width:10%;background-color: #9494b8;">Available Extent</th>
 						<td style="width:12%;background-color: #9494b8;">Actions</th>
 					</tr>
 				</thead>
@@ -36,6 +37,8 @@
 								th:id="'owner_tenant'+${cultivatorStat.index}">
 							<input type="hidden" th:value="${cultivator.cultivatorType}"
 								th:id="'cultivatorType'+${cultivatorStat.index}">
+							<input type="hidden" th:value="${cultivator.occupantExtent}"
+								th:id="'occupantExtent'+${cultivatorStat.index}">
 
 						</td>
 						<td style="width:10%;">
@@ -46,12 +49,12 @@
 							<span th:text="${cultivator.khNo}"></span>
 							<input type="hidden" th:value="${cultivator.khNo}" th:id="'khNo'+${cultivatorStat.index}">
 						</td>
-						<td style="width:12%;">
+						<td style="width:13%;">
 							<span th:text="${cultivator.ocName}"></span>
 							<input type="hidden" th:value="${cultivator.ocName}"
 								th:id="'ocName'+${cultivatorStat.index}">
 						</td>
-						<td style="width:12%;">
+						<td style="width:15%;">
 							<span th:text="${cultivator.fatherName}"></span>
 							<input type="hidden" th:value="${cultivator.fatherName}"
 								th:id="'fatherName'+${cultivatorStat.index}">
@@ -65,6 +68,11 @@
 							<span th:text="${cultivator.anubhavadarExtent}"></span>
 							<input type="hidden" th:value="${cultivator.anubhavadarExtent}"
 								th:id="'anubhavadarExtent'+${cultivatorStat.index}">
+						</td>
+						<td style="width:10%;">
+							<span th:text="${cultivator.availableExtent}"></span>
+							<input type="hidden" th:value="${cultivator.availableExtent}"
+								th:id="'availableExtent'+${cultivatorStat.index}">
 						</td>
 						<td style="width:12%;">
 							<div class="row">
@@ -114,9 +122,9 @@
 						<td style="width:10%;background-color: #9494b8;">Booking Id</th>
 						<td style="width:10%;background-color: #9494b8;">Survey No</th>
 						<td style="width:10%;background-color: #9494b8;">Khata No</th>
-						<td style="width:12%;background-color: #9494b8;">Pattadhar Name</th>
-						<td style="width:12%;background-color: #9494b8;">Pattadhar Father Name</th>
-						<td style="width:8%;background-color: #9494b8;">Owner/Tenant</th>
+						<td style="width:8%;background-color: #9494b8;">Cultivator Type</th>
+						<td style="width:13%;background-color: #9494b8;">Pattadhar Name</th>
+						<td style="width:15%;background-color: #9494b8;">Pattadhar Father Name</th>
 						<td style="width:10%;background-color: #9494b8;">Aadhar No</th>
 						<td style="width:10%;background-color: #9494b8;">Occupant Extent</th>
 							<!--<td style="width:12%;background-color: #9494b8;">Actions</th>-->
@@ -151,20 +159,20 @@
 							<span th:text="${cultivator.khNo}"></span>
 							<input type="hidden" th:value="${cultivator.khNo}" th:id="'khNo_c'+${cultivatorStat.index}">
 						</td>
-						<td style="width:12%;">
-							<span th:text="${cultivator.ocName}"></span>
-							<input type="hidden" th:value="${cultivator.ocName}"
-								th:id="'ocName_c'+${cultivatorStat.index}">
-						</td>
-						<td style="width:12%;">
-							<span th:text="${cultivator.fatherName}"></span>
-							<input type="hidden" th:value="${cultivator.fatherName}"
-								th:id="'fatherName_c'+${cultivatorStat.index}">
-						</td>
 						<td style="width:8%;">
 							<span th:text="${cultivator.cultivatorType}"></span>
 							<input type="hidden" th:value="${cultivator.cultivatorType}"
 								th:id="'cultivatorType_c'+${cultivatorStat.index}">
+						</td>
+						<td style="width:15%;">
+							<span th:text="${cultivator.ocName}"></span>
+							<input type="hidden" th:value="${cultivator.ocName}"
+								th:id="'ocName_c'+${cultivatorStat.index}">
+						</td>
+						<td style="width:15%;">
+							<span th:text="${cultivator.fatherName}"></span>
+							<input type="hidden" th:value="${cultivator.fatherName}"
+								th:id="'fatherName_c'+${cultivatorStat.index}">
 						</td>
 						<td style="width:10%;">
 							<span th:text="${cultivator.aadharNo}"></span>

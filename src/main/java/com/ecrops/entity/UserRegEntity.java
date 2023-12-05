@@ -47,6 +47,9 @@ public class UserRegEntity {
 	@Column(name = "wbdcode")
 	private String wbDcode;
 
+	@Column(name = "wbvcode")
+	private String wbvcode;
+
 	@OneToOne
 	@JoinColumn(name = "usertype", insertable = false, updatable = false)
 	private UserTypesEntity userTypesEntity;
@@ -159,16 +162,45 @@ public class UserRegEntity {
 		this.webMaster = webMaster;
 	}
 
+	public String getWbvcode() {
+		return wbvcode;
+	}
+
+	public void setWbvcode(String wbvcode) {
+		this.wbvcode = wbvcode;
+	}
+
+	public UserRegEntity(String name, String aadhaar_id, String type_user, String mobile_phone, String userid,
+			String encpassword, Integer distCode, Integer mandCode, Integer villCode, Integer wbMcode, String wbDcode,
+			String wbvcode, UserTypesEntity userTypesEntity, WbMaster webMaster) {
+		super();
+		this.name = name;
+		this.aadhaar_id = aadhaar_id;
+		this.type_user = type_user;
+		this.mobile_phone = mobile_phone;
+		this.userid = userid;
+		this.encpassword = encpassword;
+		this.distCode = distCode;
+		this.mandCode = mandCode;
+		this.villCode = villCode;
+		this.wbMcode = wbMcode;
+		this.wbDcode = wbDcode;
+		this.wbvcode = wbvcode;
+		this.userTypesEntity = userTypesEntity;
+		this.webMaster = webMaster;
+	}
+
+	public UserRegEntity() {
+		super();
+	}
+
 	@Override
 	public String toString() {
 		return "UserRegEntity [name=" + name + ", aadhaar_id=" + aadhaar_id + ", type_user=" + type_user
 				+ ", mobile_phone=" + mobile_phone + ", userid=" + userid + ", encpassword=" + encpassword
-				+ ", distCode=" + distCode + ", mandCode=" + mandCode + ", villCode=" + villCode + ", getName()="
-				+ getName() + ", getAadhaar_id()=" + getAadhaar_id() + ", getType_user()=" + getType_user()
-				+ ", getMobile_phone()=" + getMobile_phone() + ", getUserid()=" + getUserid() + ", getEncpassword()="
-				+ getEncpassword() + ", getDistCode()=" + getDistCode() + ", getMandCode()=" + getMandCode()
-				+ ", getVillCode()=" + getVillCode() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", distCode=" + distCode + ", mandCode=" + mandCode + ", villCode=" + villCode + ", wbMcode="
+				+ wbMcode + ", wbDcode=" + wbDcode + ", wbvcode=" + wbvcode + ", userTypesEntity=" + userTypesEntity
+				+ ", webMaster=" + webMaster + "]";
 	}
 
 }

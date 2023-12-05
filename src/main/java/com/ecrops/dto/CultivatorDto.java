@@ -196,32 +196,4 @@ public class CultivatorDto {
 		this.crMandCode = crMandCode;
 	}
 
-	public CultivatorDto(CultivatorEmbedableDto cultivatorEmbedableDto, String crSno, Double totalExtent, Long aadharNo,
-			String fatherName, Double occupantExtent, Integer khNo, String ocName, Integer cr_vcode, Integer cr_year,
-			String cr_season, String owner_tenant, Integer refBookingId, String cultivatorType,
-			Double anubhavadarExtent, Integer crDistCode, Integer crMandCode) {
-		super();
-		this.cultivatorEmbedableDto = cultivatorEmbedableDto;
-		this.crSno = crSno;
-		this.totalExtent = totalExtent;
-		this.aadharNo = aadharNo;
-		this.fatherName = fatherName;
-		this.occupantExtent = occupantExtent;
-		this.khNo = khNo;
-		this.ocName = ocName;
-		this.cr_vcode = cr_vcode;
-		this.cr_year = cr_year;
-		this.cr_season = cr_season;
-		this.owner_tenant = owner_tenant;
-		this.refBookingId = refBookingId;
-		this.cultivatorType = cultivatorType;
-		this.anubhavadarExtent = anubhavadarExtent;
-		this.crDistCode = crDistCode;
-		this.crMandCode = crMandCode;
-	}
-
-	public CultivatorDto() {
-		super();
-	}
-
 }
