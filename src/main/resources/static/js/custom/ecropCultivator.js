@@ -3,8 +3,13 @@ $(document).ready(function() {
 	$('.modal').on('hidden.bs.modal', function() {
 		var index = $("#cultivatorIndex").val();
 		$("#searchParam" + index).val('0');
+		$("#aadharNo").val('');
+		$("#ocName").val('');
+		$("#fatherName").val('');
+		$("#occupantExtent").val('');
+		$("#occupantExtentOE").val('');
 	})
-	alertify.set('notifier','position', 'top-right');
+	alertify.set('notifier', 'position', 'top-right');
 
 });
 
@@ -14,21 +19,35 @@ var sel = document.getElementById("searchParam"), text = document.getElementById
 function onUserTypeChange(index, selectedValue) {
 	var cultivatorType = $("#cultivatorType" + index).val();
 	if (selectedValue === '1') {
-		if (cultivatorType == 'L' || cultivatorType == 'O') {
+		if (cultivatorType == 'L') {
 			$("#searchParam" + index).val('0');
-			swal.fire("Oops!", "Owner / Enjoyer is not allowed!", "warning");
+			swal.fire("Oops!", "Already Registered as Enjoyer!", "warning");
+			return false;
+		} else if (cultivatorType == 'O') {
+			$("#searchParam" + index).val('0');
+			swal.fire("Oops!", "Already Registered as Owner!", "warning");
 			return false;
 		}
 		setModalValues(index, "O", "Owner");
 		$('#ownerOrEnjoyerModal').modal('show');
 	} else if (selectedValue === '2') {
-		setModalValues(index, "K", "Cultivator");
-		$('#cultivatorModal').modal('show');
+		var availableExtent = parseFloat($("#availableExtent" + index).val());
+		if (availableExtent > 0) {
+			setModalValues(index, "K", "Cultivator");
+			$('#cultivatorModal').modal('show');
+		} else {
+			$("#searchParam" + index).val('0');
+			swal.fire("Oops!", "No Available Extent", "warning");
+		}
 	}
 	else if (selectedValue === '3') {
-		if (cultivatorType == 'L' || cultivatorType == 'O') {
+		if (cultivatorType == 'L') {
 			$("#searchParam" + index).val('0');
-			swal.fire("Oops!", "Owner / Enjoyer is not allowed!", "warning");
+			swal.fire("Oops!", "Already Registered as Enjoyer!", "warning");
+			return false;
+		} else if (cultivatorType == 'O') {
+			$("#searchParam" + index).val('0');
+			swal.fire("Oops!", "Already Registered as Owner!", "warning");
 			return false;
 		}
 		setModalValues(index, "L", 'Enjoyer');
@@ -131,12 +150,21 @@ function editCultivatorDetails(index) {
 
 function updateCultivatorDetails(sufix) {
 
+	if ($("#occupantExtent").val() === '') {
+		Swal.fire({
+			text: "Please fill Occupant Extent.",
+			icon: "error"
+		});
+		return;
+	}
+
 	var part_key = $("#part_key" + sufix).val();
 	var bookingId = $("#bookingId" + sufix).val();
 
 	var index = $("#cultivatorIndexOE").val();
+	var availableExtent = parseFloat($("#availableExtent" + index).val());
 	var occupantExtent = parseFloat($("#occupantExtent" + sufix).val());
-	var availableExtent = parseFloat($("#anubhavadarExtent" + index).val());
+
 
 	if (occupantExtent > availableExtent) {
 		swal.fire("Sorry!", "Entered Occupant Extent is morethan available extent. Allowed Extent is - " + availableExtent, "warning");
@@ -185,6 +213,7 @@ function deleteCultivatorDetails(index) {
 					"bookingId": $("#bookingId" + index).val(),
 				},
 				success: function(data) {
+					$("#occupantExtentOE").val('');
 					searchData();
 					data ?
 						alertify.notify("Data Deleted Successfully!", "success", 10)
@@ -203,10 +232,45 @@ function deleteCultivatorDetails(index) {
 }
 
 function saveCultivatorData() {
-	var index = $("#cultivatorIndex").val();
-	var occupantExtent = parseFloat($("#anubhavadarExtent" + index).val());
-	var availableExtent = parseFloat($("#occupantExtent").val());
 
+	if ($("#ocName").val() === '') {
+		Swal.fire({
+			text: "Please fill Cultivator Name.",
+			icon: "error"
+		});
+		return;
+	}
+
+	if ($("#fatherName").val() === '') {
+		Swal.fire({
+			text: "Please fill Cultivator Father Name.",
+			icon: "error"
+		});
+		return;
+	}
+
+
+	var aadharNo = $("#aadharNo").val();
+	if (aadharNo === '' || !/^\d{12}$/.test(aadharNo)) {
+		Swal.fire({
+			text: "Please enter a valid 12-digit Aadhar number.",
+			icon: "error"
+		});
+		return;
+	}
+	
+	if ($("#occupantExtent").val() === '') {
+		Swal.fire({
+			text: "Please fill Occupant Extent.",
+			icon: "error"
+		});
+		return;
+	}
+
+
+	var index = $("#cultivatorIndex").val();
+	var availableExtent = parseFloat($("#availableExtent" + index).val());
+	var occupantExtent = parseFloat($("#occupantExtent").val());
 	if (occupantExtent > availableExtent) {
 		swal.fire("Sorry!", "Entered Occupant Extent is morethan available extent. Allowed Extent is - " + availableExtent, "warning");
 		return false;
@@ -214,7 +278,7 @@ function saveCultivatorData() {
 
 	$.ajax({
 		type: "POST",
-		url: "cultivator/save",
+		url: "cultivator/ddddd",
 		data: {
 			"khNo": $("#khNo").val(),
 			"crSno": $("#crSno").val(),
@@ -222,9 +286,9 @@ function saveCultivatorData() {
 			"cr_year": $("#cr_year").val(),
 			"aadharNo": $("#aadharNo").val(),
 			"part_key": $("#part_key").val(),
-			"cr_vcode": $("#village").val(),
-			"crDistCode": $("#dcode").val(),
-			"crMandCode": $("#mcode").val(),
+			"cr_vcode": $("#wbvcode").val(),
+			"crDistCode": $("#wbdcode").val(),
+			"crMandCode": $("#wbmcode").val(),
 			"cr_season": $("#cr_season").val(),
 			"fatherName": $("#fatherName").val(),
 			"occupantExtent": occupantExtent,

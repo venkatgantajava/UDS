@@ -68,7 +68,8 @@ public class MainController {
 				httpSession.setAttribute("wbedname", entity.getWebMaster().getWbedname());
 				httpSession.setAttribute("wbemname", entity.getWebMaster().getWbemname());
 				httpSession.setAttribute("wbevname", entity.getWebMaster().getWbevname());
-
+				
+				httpSession.setAttribute("wbvcode", entity.getWbvcode());
 				httpSession.setAttribute("wbdcode", entity.getWbDcode());
 				httpSession.setAttribute("wbmcode", entity.getWbMcode());
 				return "home";

@@ -1,13 +1,8 @@
 package com.ecrops.controller;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +20,6 @@ import com.ecrops.entity.ActiveSeason;
 import com.ecrops.entity.Cultivator;
 import com.ecrops.service.CultivatorService;
 import com.ecrops.service.impl.ActiveSeasonServiceImpl;
-import com.google.gson.Gson;
 
 @Controller
 public class CultivatorController {
@@ -52,12 +46,35 @@ public class CultivatorController {
 	@GetMapping("/cultivator/kathaNo/")
 	public String getCultivatorDetailsByKathaNo(@RequestParam("fromKhno") Integer fromKhno, Model model) {
 
-		List<Cultivator> cultiVatorsList = cultivatorService.getCultivatorsByKathaNo(fromKhno);
-		model.addAttribute("ownersList", cultiVatorsList.stream().filter(c -> "O".equalsIgnoreCase(c.getOwner_tenant()))
-				.collect(Collectors.toList()));
+		List<Cultivator> allCultiVatorsList = cultivatorService.getCultivatorsByKathaNo(fromKhno);
+
+		List<Cultivator> cultivatorsList = allCultiVatorsList.stream().filter(c -> c.getCultivatorType() != null)
+				.collect(Collectors.toList());
+
+		List<Cultivator> ownersList = allCultiVatorsList.stream().map(pc -> {
+			Double availableExtent = 0.0;
+			if ("O".equals(pc.getOwner_tenant())) {
+				availableExtent = pc.getAnubhavadarExtent();
+				if ("O".equals(pc.getCultivatorType())) {
+					availableExtent = availableExtent - pc.getOccupantExtent();
+				} else if ("L".equals(pc.getCultivatorType())) {
+					availableExtent = availableExtent - pc.getOccupantExtent();
+				}
+
+				for (Cultivator cc : cultivatorsList) {
+					if ("K".equals(cc.getCultivatorType()) && pc.getBookingId().equals(cc.getRefBookingId())) {
+						availableExtent = availableExtent - cc.getOccupantExtent();
+					}
+				}
+			}
+			pc.setAvailableExtent(Double.valueOf(String.format("%1.2f", availableExtent)));
+			return pc;
+		}).filter(c -> "O".equalsIgnoreCase(c.getOwner_tenant())).collect(Collectors.toList());
+
+		model.addAttribute("ownersList", ownersList);
 
 		model.addAttribute("cultivatorsList",
-				cultiVatorsList.stream().filter(c -> c.getCultivatorType() != null).collect(Collectors.toList()));
+				allCultiVatorsList.stream().filter(c -> c.getCultivatorType() != null).collect(Collectors.toList()));
 
 		model.addAttribute("cultivator", new Cultivator());
 

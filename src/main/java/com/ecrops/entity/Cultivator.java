@@ -67,6 +67,9 @@ public class Cultivator {
 	@Column(name = "cr_mand_code")
 	private Integer crMandCode;
 
+	@Column(name = "available_extent", insertable = false, updatable = false)
+	private Double availableExtent;
+
 	public Integer getBookingId() {
 		return bookingId;
 	}
@@ -211,44 +214,12 @@ public class Cultivator {
 		this.crMandCode = crMandCode;
 	}
 
-	public Cultivator(Integer bookingId, String part_key, String crSno, Double totalExtent, Long aadharNo,
-			String fatherName, Double occupantExtent, Integer khNo, String ocName, Integer cr_vcode, Integer cr_year,
-			String cr_season, String owner_tenant, Integer refBookingId, String cultivatorType,
-			Double anubhavadarExtent, Integer crDistCode, Integer crMandCode) {
-		super();
-		this.bookingId = bookingId;
-		this.part_key = part_key;
-		this.crSno = crSno;
-		this.totalExtent = totalExtent;
-		this.aadharNo = aadharNo;
-		this.fatherName = fatherName;
-		this.occupantExtent = occupantExtent;
-		this.khNo = khNo;
-		this.ocName = ocName;
-		this.cr_vcode = cr_vcode;
-		this.cr_year = cr_year;
-		this.cr_season = cr_season;
-		this.owner_tenant = owner_tenant;
-		this.refBookingId = refBookingId;
-		this.cultivatorType = cultivatorType;
-		this.anubhavadarExtent = anubhavadarExtent;
-		this.crDistCode = crDistCode;
-		this.crMandCode = crMandCode;
+	public Double getAvailableExtent() {
+		return availableExtent;
 	}
 
-	public Cultivator() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public String toString() {
-		return "Cultivator [bookingId=" + bookingId + ", part_key=" + part_key + ", crSno=" + crSno + ", totalExtent="
-				+ totalExtent + ", aadharNo=" + aadharNo + ", fatherName=" + fatherName + ", occupantExtent="
-				+ occupantExtent + ", khNo=" + khNo + ", ocName=" + ocName + ", cr_vcode=" + cr_vcode + ", cr_year="
-				+ cr_year + ", cr_season=" + cr_season + ", owner_tenant=" + owner_tenant + ", refBookingId="
-				+ refBookingId + ", cultivatorType=" + cultivatorType + ", anubhavadarExtent=" + anubhavadarExtent
-				+ ", crDistCode=" + crDistCode + ", crMandCode=" + crMandCode + "]";
+	public void setAvailableExtent(Double availableExtent) {
+		this.availableExtent = availableExtent;
 	}
 
 }
