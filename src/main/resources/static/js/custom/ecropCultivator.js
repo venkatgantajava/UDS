@@ -95,12 +95,30 @@ function setModalValues(index, cultivatorType, roleType) {
 	} else {
 		$("#cultivatorIndex").val(index);
 	}
-
-
 }
 
+function updateOwnerOrEnjoerDetails(sufix) {
 
-function updateCultivatorOwnerDetails(index) {
+	var cultivatorType = $("#cultivatorTypeOE").val();
+
+	if (cultivatorType == 'L') {
+		var aadharNo = $("#aadharNo" + sufix).val();
+		if (aadharNo === '' || !/^\d{12}$/.test(aadharNo)) {
+			Swal.fire({
+				text: "Please enter a valid 12-digit Aadhar number.",
+				icon: "error"
+			});
+			return;
+		}
+	}
+
+	if ($("#occupantExtent" + sufix).val() === '') {
+		Swal.fire({
+			text: "Please fill Occupant Extent.",
+			icon: "error"
+		});
+		return;
+	}
 
 	Swal.fire({
 		title: "Do you want to update the changes?",
@@ -112,20 +130,22 @@ function updateCultivatorOwnerDetails(index) {
 		if (result.isConfirmed) {
 			$.ajax({
 				type: "PUT",
-				url: "cultivator/update",
+				url: "cultivator/owner/update",
 				data: {
-					"part_key": $("#part_key" + index).val(),
-					"bookingId": $("#bookingId" + index).val(),
-					"aadharNo": $("#aadharNo" + index).val(),
-					"occupantExtent": $("#occupantExtent" + index).val(),
+					"part_key": $("#part_key" + sufix).val(),
+					"bookingId": $("#bookingId" + sufix).val(),
+					"aadharNo": $("#aadharNo" + sufix).val(),
+					"occupantExtent": $("#occupantExtent" + sufix).val(),
 				},
 				success: function(resData) {
-					document.getElementById("aadharNo" + index).disabled = true;
-					document.getElementById("occupantExtent" + index).disabled = true;
-					$("#update" + index).css({ 'display': 'none' });
+					var index = $("#cultivatorIndexOE").val();
 					$("#searchParam" + index).val('0');
+					$("#aadharNo" + sufix).val('');
+					$("#ocName" + sufix).val('');
+					$("#fatherName" + sufix).val('');
+					$("#occupantExtent" + sufix).val('');
 					resData ?
-						alertify.notify("Cultivator Owner Data Updated Successfully!", "success", 10)
+						alertify.notify("Owner/Enjoyer Data Updated Successfully!", "success", 10)
 						: alertify.notify("Something went Wrong. Please Try again after some time or Please Contact Support Team", "warning", 10);
 
 				},
@@ -135,7 +155,7 @@ function updateCultivatorOwnerDetails(index) {
 				}
 			});
 		} else if (result.isDenied) {
-			Swal.fire("Failed to Update Cultivator Owner Data", "", "info");
+			Swal.fire("Failed to Update Owner/Enjoyer Data", "", "info");
 		}
 	});
 
@@ -143,42 +163,89 @@ function updateCultivatorOwnerDetails(index) {
 
 function editCultivatorDetails(index) {
 
+	document.getElementById("ocName" + index).disabled = false;
+	document.getElementById("fatherName" + index).disabled = false;
 	document.getElementById("aadharNo" + index).disabled = false;
-	document.getElementById("occupantExtent" + index).disabled = false;
+	var availableExtent = parseFloat($("#availableExtent" + index).val());
+
+	if (availableExtent > 0) {
+		document.getElementById("occupantExtent" + index).disabled = false;
+	}
+
+	$('#occupantExtent' + index).attr('title', 'Available Extent is : ' + availableExtent);
+	$('#occupantExtent' + index).tooltip();
 	$("#update" + index).css({ 'display': '' });
 }
 
-function updateCultivatorDetails(sufix) {
+function updateCultivatorDetails(index) {
 
-	if ($("#occupantExtent").val() === '') {
+
+	var ocName = $("#ocName" + index).val();
+	var fatherName = $("#fatherName" + index).val();
+	
+	if ($("#ocName" + index).val() === '') {
 		Swal.fire({
-			text: "Please fill Occupant Extent.",
+			text: "Please fill Pattadhar Name.",
 			icon: "error"
 		});
 		return;
 	}
 
-	var part_key = $("#part_key" + sufix).val();
-	var bookingId = $("#bookingId" + sufix).val();
-
-	var index = $("#cultivatorIndexOE").val();
-	var availableExtent = parseFloat($("#availableExtent" + index).val());
-	var occupantExtent = parseFloat($("#occupantExtent" + sufix).val());
-
-
-	if (occupantExtent > availableExtent) {
-		swal.fire("Sorry!", "Entered Occupant Extent is morethan available extent. Allowed Extent is - " + availableExtent, "warning");
-		return false;
+	if ($("#fatherName" + index).val() === '') {
+		Swal.fire({
+			text: "Please fill Pattadhar Father Name.",
+			icon: "error"
+		});
+		return;
 	}
 
+	var aadharNo = $("#aadharNo" + index).val();
+	if (aadharNo === '' || !/^\d{12}$/.test(aadharNo)) {
+		Swal.fire({
+			text: "Please enter a valid 12-digit Aadhar number.",
+			icon: "error"
+		});
+		return;
+	}
+
+	var newAvailableExtent = parseFloat($("#availableExtent" + index).val()) + parseFloat($("#existingOccupantExtent" + index).val());
+	var occupantExtent = parseFloat($("#occupantExtent" + index).val());
+
+	if (occupantExtent === '') {
+		Swal.fire({
+			text: "Please fill Occupant Extent.",
+			icon: "error"
+		});
+		return;
+	} else {
+		if (occupantExtent > newAvailableExtent) {
+			swal.fire("Sorry!", "Entered Occupant Extent is morethan available extent. Allowed Extent is - " + newAvailableExtent, "warning");
+			return false;
+		}
+	}
+
+
+	var part_key = $("#part_key" + index).val();
+	var bookingId = $("#bookingId" + index).val();
+
+
+	/*
+		if (occupantExtent > availableExtent) {
+			swal.fire("Sorry!", "Entered Occupant Extent is morethan available extent. Allowed Extent is - " + availableExtent, "warning");
+			return false;
+		}
+	*/
 	$.ajax({
 		type: "PUT",
 		url: "cultivator/update",
 		data: {
 			"part_key": part_key,
 			"bookingId": bookingId,
+			"ocName": ocName,
+			"fatherName": fatherName,
+			"aadharNo": aadharNo,
 			"occupantExtent": occupantExtent,
-			"cultivatorType": $("#cultivatorType" + sufix).val(),
+			"cultivatorType": $("#cultivatorType" + index).val(),
 		},
 		success: function(resData) {
 			searchData();
@@ -258,7 +325,7 @@ function saveCultivatorData() {
 		});
 		return;
 	}
-	
+
 	if ($("#occupantExtent").val() === '') {
 		Swal.fire({
 			text: "Please fill Occupant Extent.",
@@ -278,7 +345,7 @@ function saveCultivatorData() {
 
 	$.ajax({
 		type: "POST",
-		url: "cultivator/ddddd",
+		url: "cultivator/save",
 		data: {
 			"khNo": $("#khNo").val(),
 			"crSno": $("#crSno").val(),
