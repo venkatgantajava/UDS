@@ -44,9 +44,9 @@ public class CultivatorController {
 	}
 
 	@GetMapping("/cultivator/kathaNo/")
-	public String getCultivatorDetailsByKathaNo(@RequestParam("fromKhno") Integer fromKhno, Model model) {
+	public String getCultivatorDetailsByKathaNo(Cultivator cultivator, Model model) {
 
-		List<Cultivator> allCultiVatorsList = cultivatorService.getCultivatorsByKathaNo(fromKhno);
+		List<Cultivator> allCultiVatorsList = cultivatorService.getCultivatorsByKathaNo(cultivator);
 
 		List<Cultivator> cultivatorsList = allCultiVatorsList.stream().filter(c -> c.getCultivatorType() != null)
 				.collect(Collectors.toList());
@@ -85,7 +85,7 @@ public class CultivatorController {
 	public String saveCultivatorsData(Cultivator cultivator, Model model) {
 
 		cultivatorService.saveCultivatorsData(cultivator);
-		List<Cultivator> cultiVatorsList = cultivatorService.getCultivatorsByKathaNo(cultivator.getKhNo());
+		List<Cultivator> cultiVatorsList = cultivatorService.getCultivatorsByKathaNo(cultivator);
 		model.addAttribute("ownersList", cultiVatorsList.stream().filter(c -> "O".equalsIgnoreCase(c.getOwner_tenant()))
 				.collect(Collectors.toList()));
 

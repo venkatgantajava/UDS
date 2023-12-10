@@ -13,7 +13,7 @@ public interface CultivatorService {
 
 	public Cultivator get(Integer id);
 
-	public List<Cultivator> getCultivatorsByKathaNo(Integer kathaNo);
+	public List<Cultivator> getCultivatorsByKathaNo(Cultivator cultivator);
 
 	public int updateOwnerOrEnjoerDetails(Cultivator cultivator);
 
