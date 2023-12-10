@@ -1,5 +1,7 @@
 package com.ecrops.dto;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -59,6 +61,18 @@ public class CultivatorDto {
 
 	@Column(name = "cr_mand_code")
 	private Integer crMandCode;
+
+	@Column(name = "entry_by", updatable = false)
+	private String entry_by;
+
+	@Column(name = "entry_date", updatable = false)
+	private Timestamp entry_date;
+
+	@Column(name = "updatedby")
+	private String updatedby;
+
+	@Column(name = "updateon")
+	private Timestamp updateon;
 
 	public CultivatorEmbedableDto getCultivatorEmbedableDto() {
 		return cultivatorEmbedableDto;
@@ -194,6 +208,38 @@ public class CultivatorDto {
 
 	public void setCrMandCode(Integer crMandCode) {
 		this.crMandCode = crMandCode;
+	}
+
+	public String getEntry_by() {
+		return entry_by;
+	}
+
+	public void setEntry_by(String entry_by) {
+		this.entry_by = entry_by;
+	}
+
+	public Timestamp getEntry_date() {
+		return entry_date;
+	}
+
+	public void setEntry_date(Timestamp entry_date) {
+		this.entry_date = entry_date;
+	}
+
+	public String getUpdatedby() {
+		return updatedby;
+	}
+
+	public void setUpdatedby(String updatedby) {
+		this.updatedby = updatedby;
+	}
+
+	public Timestamp getUpdateon() {
+		return updateon;
+	}
+
+	public void setUpdateon(Timestamp updateon) {
+		this.updateon = updateon;
 	}
 
 }

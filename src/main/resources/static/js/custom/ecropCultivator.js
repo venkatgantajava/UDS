@@ -136,6 +136,7 @@ function updateOwnerOrEnjoerDetails(sufix) {
 					"bookingId": $("#bookingId" + sufix).val(),
 					"aadharNo": $("#aadharNo" + sufix).val(),
 					"occupantExtent": $("#occupantExtent" + sufix).val(),
+					"updatedby": $("#userid").val(),
 				},
 				success: function(resData) {
 					var index = $("#cultivatorIndexOE").val();
@@ -166,11 +167,12 @@ function editCultivatorDetails(index) {
 	document.getElementById("ocName" + index).disabled = false;
 	document.getElementById("fatherName" + index).disabled = false;
 	document.getElementById("aadharNo" + index).disabled = false;
-	var availableExtent = parseFloat($("#availableExtent" + index).val());
-
+	document.getElementById("occupantExtent" + index).disabled = false;
+	
+	/*var availableExtent = parseFloat($("#availableExtent" + index).val());
 	if (availableExtent > 0) {
 		document.getElementById("occupantExtent" + index).disabled = false;
-	}
+	}*/
 
 	$('#occupantExtent' + index).attr('title', 'Available Extent is : ' + availableExtent);
 	$('#occupantExtent' + index).tooltip();
@@ -246,6 +248,7 @@ function updateCultivatorDetails(index) {
 			"aadharNo": aadharNo,
 			"occupantExtent": occupantExtent,
 			"cultivatorType": $("#cultivatorType" + index).val(),
+			"updatedby": $("#userid").val(),
 		},
 		success: function(resData) {
 			searchData();
@@ -362,6 +365,7 @@ function saveCultivatorData() {
 			"refBookingId": $("#refBookingId").val(),
 			"cultivatorType": $("#cultivatorType").val(),
 			"owner_tenant": $("#owner_tenant").val(),
+			"entry_by": $("#userid").val(),
 		},
 		success: function(data) {
 			searchData();

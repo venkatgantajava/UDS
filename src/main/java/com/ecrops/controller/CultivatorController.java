@@ -101,7 +101,7 @@ public class CultivatorController {
 	@PutMapping("/cultivator/owner/update")
 	public String updateOwnerOrEnjoerDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
 
-		cultivatorService.updateCultivatorDetails(cultivator);
+		cultivatorService.updateOwnerOrEnjoerDetails(cultivator);
 
 		return "addupdatecultivator";
 

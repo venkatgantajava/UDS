@@ -1,5 +1,7 @@
 package com.ecrops.entity;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -69,6 +71,18 @@ public class Cultivator {
 
 	@Column(name = "available_extent", insertable = false, updatable = false)
 	private Double availableExtent;
+
+	@Column(name = "entry_by")
+	private String entry_by;
+
+	@Column(name = "entry_date")
+	private Timestamp entry_date;
+
+	@Column(name = "updatedby", insertable = false, updatable = false)
+	private String updatedby;
+
+	@Column(name = "updateon", insertable = false, updatable = false)
+	private Timestamp updateon;
 
 	public Integer getBookingId() {
 		return bookingId;
@@ -220,6 +234,38 @@ public class Cultivator {
 
 	public void setAvailableExtent(Double availableExtent) {
 		this.availableExtent = availableExtent;
+	}
+
+	public String getEntry_by() {
+		return entry_by;
+	}
+
+	public void setEntry_by(String entry_by) {
+		this.entry_by = entry_by;
+	}
+
+	public Timestamp getEntry_date() {
+		return entry_date;
+	}
+
+	public void setEntry_date(Timestamp entry_date) {
+		this.entry_date = entry_date;
+	}
+
+	public String getUpdatedby() {
+		return updatedby;
+	}
+
+	public void setUpdatedby(String updatedby) {
+		this.updatedby = updatedby;
+	}
+
+	public Timestamp getUpdateon() {
+		return updateon;
+	}
+
+	public void setUpdateon(Timestamp updateon) {
+		this.updateon = updateon;
 	}
 
 }
