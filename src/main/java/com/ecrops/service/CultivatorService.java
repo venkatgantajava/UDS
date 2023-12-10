@@ -15,7 +15,7 @@ public interface CultivatorService {
 
 	public List<Cultivator> getCultivatorsByKathaNo(Integer kathaNo);
 
-	public int updateCultivatorOwnerDetails(Cultivator cultivator);
+	public int updateOwnerOrEnjoerDetails(Cultivator cultivator);
 
 	public Cultivator saveCultivatorsData(Cultivator cultivator);
 

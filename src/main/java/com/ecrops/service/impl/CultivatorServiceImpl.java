@@ -36,12 +36,15 @@ public class CultivatorServiceImpl implements CultivatorService {
 	}
 
 	@Override
-	public int updateCultivatorOwnerDetails(Cultivator cultivator) {
+	public int updateOwnerOrEnjoerDetails(Cultivator cultivator) {
 
 		Optional<CultivatorDto> optionalDto = cultivatorCompositeRepository
 				.findById(new CultivatorEmbedableDto(cultivator.getBookingId(), cultivator.getPart_key()));
 		CultivatorDto cultivatorDto = optionalDto.get();
-		cultivatorDto.setAadharNo(cultivator.getAadharNo());
+		if (cultivator.getCultivatorType() != null && cultivator.getCultivatorType().equalsIgnoreCase("L")) {
+			cultivatorDto.setAadharNo(cultivator.getAadharNo());
+		}
+
 		cultivatorDto.setOccupantExtent(cultivator.getOccupantExtent());
 		CultivatorDto cDtoResult = cultivatorCompositeRepository.save(cultivatorDto);
 
@@ -59,7 +62,10 @@ public class CultivatorServiceImpl implements CultivatorService {
 		Optional<CultivatorDto> optionalDto = cultivatorCompositeRepository
 				.findById(new CultivatorEmbedableDto(cultivator.getBookingId(), cultivator.getPart_key()));
 		CultivatorDto cultivatorDto = optionalDto.get();
+		cultivatorDto.setOcName(cultivator.getOcName());
+		cultivatorDto.setFatherName(cultivator.getFatherName());
 		cultivatorDto.setOccupantExtent(cultivator.getOccupantExtent());
+		cultivatorDto.setAadharNo(cultivator.getAadharNo());
 		cultivatorDto.setCultivatorType(cultivator.getCultivatorType());
 		CultivatorDto cDtoResult = cultivatorCompositeRepository.save(cultivatorDto);
 
