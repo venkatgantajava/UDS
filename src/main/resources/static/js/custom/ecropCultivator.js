@@ -168,7 +168,7 @@ function editCultivatorDetails(index) {
 	document.getElementById("fatherName" + index).disabled = false;
 	document.getElementById("aadharNo" + index).disabled = false;
 	document.getElementById("occupantExtent" + index).disabled = false;
-	
+
 	/*var availableExtent = parseFloat($("#availableExtent" + index).val());
 	if (availableExtent > 0) {
 		document.getElementById("occupantExtent" + index).disabled = false;
@@ -184,7 +184,7 @@ function updateCultivatorDetails(index) {
 
 	var ocName = $("#ocName" + index).val();
 	var fatherName = $("#fatherName" + index).val();
-	
+
 	if ($("#ocName" + index).val() === '') {
 		Swal.fire({
 			text: "Please fill Pattadhar Name.",
@@ -389,7 +389,11 @@ function searchData() {
 	$("#contentDivId").html('');
 	$.ajax({
 		type: "GET",
-		url: 'cultivator/kathaNo/?fromKhno=' + $("#fromKhnoId").val(),
+		url: 'cultivator/kathaNo/',
+		data: {
+			"khNo": $("#khNo").val(),
+			"cr_vcode": $("#wbvcode").val(),
+		},
 		success: function(data) {
 			$("#contentDivId").html(data)
 		}

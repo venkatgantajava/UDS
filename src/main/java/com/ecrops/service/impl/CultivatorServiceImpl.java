@@ -34,8 +34,8 @@ public class CultivatorServiceImpl implements CultivatorService {
 		return repo.getById(id);
 	}
 
-	public List<Cultivator> getCultivatorsByKathaNo(Integer kathaNo) {
-		return repo.getCultivatorDetailsByKathaNo(kathaNo);
+	public List<Cultivator> getCultivatorsByKathaNo(Cultivator cultivator) {
+		return repo.getCultivatorDetailsByKathaNo(cultivator.getKhNo(), cultivator.getCr_vcode());
 	}
 
 	@Override
