@@ -1,5 +1,8 @@
 package com.ecrops.service.impl;
 
+import java.sql.Timestamp;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,13 +49,15 @@ public class CultivatorServiceImpl implements CultivatorService {
 		}
 
 		cultivatorDto.setOccupantExtent(cultivator.getOccupantExtent());
-		CultivatorDto cDtoResult = cultivatorCompositeRepository.save(cultivatorDto);
+		cultivatorDto.setUpdatedby(cultivator.getUpdatedby());
+		cultivatorDto.setUpdateon(Timestamp.from(ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).toInstant()));
+		CultivatorDto cDtoResult = cultivatorCompositeRepository.saveAndFlush(cultivatorDto);
 
 		return cDtoResult != null ? 1 : 0;
 	}
 
 	public Cultivator saveCultivatorsData(Cultivator cultivator) {
-
+		cultivator.setEntry_date(Timestamp.from(ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).toInstant()));
 		return repo.save(cultivator);
 	}
 
@@ -67,6 +72,8 @@ public class CultivatorServiceImpl implements CultivatorService {
 		cultivatorDto.setOccupantExtent(cultivator.getOccupantExtent());
 		cultivatorDto.setAadharNo(cultivator.getAadharNo());
 		cultivatorDto.setCultivatorType(cultivator.getCultivatorType());
+		cultivatorDto.setUpdatedby(cultivator.getUpdatedby());
+		cultivatorDto.setUpdateon(Timestamp.from(ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).toInstant()));
 		CultivatorDto cDtoResult = cultivatorCompositeRepository.save(cultivatorDto);
 
 		return cDtoResult != null ? 1 : 0;
