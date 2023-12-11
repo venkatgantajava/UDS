@@ -63,6 +63,7 @@ public class MainController {
 				httpSession.setAttribute("mcode", entity.getMandCode());
 				httpSession.setAttribute("village", entity.getVillCode());
 				httpSession.setAttribute("role", entity.getType_user());
+				httpSession.setAttribute("name", entity.getName());
 				httpSession.setAttribute("userid", entity.getUserid());
 				httpSession.setAttribute("typename", entity.getUserTypesEntity().getTypeName());
 				httpSession.setAttribute("wbedname", entity.getWebMaster().getWbedname());

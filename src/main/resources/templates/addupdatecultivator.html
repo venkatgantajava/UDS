@@ -1,20 +1,24 @@
-<div class="panel-group">
+<div th:if="${ownersList!=null and !ownersList.isEmpty()}" class="panel-group">
 	<div class="panel panel-primary">
-		<div class="panel-heading">Owner Data</div>
+		<div class="panel-heading"
+			style="text-align: center;background-color: honeydew;padding: 8spx; margin: 0 auto;display: table;">
+			<b>Owner's Data</b>
+		</div>
 		<div class="panel-body">
 
 			<table id="ownerGrid" class="table table-bordered table-striped dataTable">
 				<thead class="color-palette" style="background-color: #9494b8;">
 					<tr>
-						<td style="width:10%;background-color: #9494b8;">Booking Id</th>
-						<td style="width:10%;background-color: #9494b8;">Survey No</th>
-						<td style="width:10%;background-color: #9494b8;">Khata No</th>
-						<td style="width:13%;background-color: #9494b8;">Pattadhar Name</th>
-						<td style="width:15%;background-color: #9494b8;">Pattadhar Father Name</th>
-						<td style="width:10%;background-color: #9494b8;">Aadhar No</th>
-						<td style="width:10%;background-color: #9494b8;">Total Extent</th>
-						<td style="width:10%;background-color: #9494b8;">Available Extent</th>
-						<td style="width:12%;background-color: #9494b8;">Actions</th>
+						<td style="color: white; width:10%;background-color: #9494b8;"><b>Booking Id</b></th>
+						<td style="color: white; width:7%;background-color: #9494b8;"><b>Survey No</b></th>
+						<td style="color: white; width:7%;background-color: #9494b8;"><b>Khata No</b></th>
+						<td style="color: white; width:19%;background-color: #9494b8;"><b>Pattadhar Name</b></th>
+						<td style="color: white; width:19%;background-color: #9494b8;"><b>Pattadhar Father Name</b></th>
+						<td style="color: white; width:8%;background-color: #9494b8;"><b>Aadhaar No</b></th>
+						<td style="color: white; width:8%;background-color: #9494b8;"><b>Total Extent</b></th>
+						<td style="color: white; width:10%;background-color: #9494b8;"><b>Available Extent</b></th>
+						<td style="color: white; width:10%;background-color: #9494b8;padding-left: 35px;"><b>Actions</b>
+							</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -113,21 +117,24 @@
 	</div>
 
 	<div class="panel panel-primary">
-		<div class="panel-heading">Cultivator Data</div>
+		<div class="panel-heading"
+			style="text-align: center;background-color: honeydew;padding: 8spx; margin: 0 auto;display: table;">
+			<b>Cultivator's Data</b>
+		</div>
 		<div class="panel-body">
-
-			<table id="cultivatorGrid" class="table table-bordered table-striped">
+			<table id="cultivatorGrid" class="table table-bordered table-striped dataTable">
 				<thead class="color-palette" style="background-color: #9494b8;">
 					<tr>
-						<td style="width:8%;background-color: #9494b8;">Booking Id</th>
-						<td style="width:8%;background-color: #9494b8;">Survey No</th>
-						<td style="width:7%;background-color: #9494b8;">Khata No</th>
-						<td style="width:10%;background-color: #9494b8;">Cultivator Type</th>
-						<td style="width:19%;background-color: #9494b8;">Pattadhar Name</th>
-						<td style="width:19%;background-color: #9494b8;">Pattadhar Father Name</th>
-						<td style="width:11%;background-color: #9494b8;">Aadhar No</th>
-						<td style="width:10%;background-color: #9494b8;">Occupant Extent</th>
-						<td style="width:9%;background-color: #9494b8;">Actions</th>
+						<td style="color: white; width:8%;background-color: #9494b8;"><b>Booking Id</b></td>
+						<td style="color: white; width:8%;background-color: #9494b8;"><b>Survey No</b></td>
+						<td style="color: white; width:7%;background-color: #9494b8;"><b>Khata No</b></td>
+						<td style="color: white; width:10%;background-color: #9494b8;"><b>Cultivator Type</b></td>
+						<td style="color: white; width:19%;background-color: #9494b8;"><b>Pattadhar Name</b></td>
+						<td style="color: white; width:19%;background-color: #9494b8;"><b>Pattadhar Father Name</b></td>
+						<td style="color: white; width:10%;background-color: #9494b8;"><b>Aadhar No</b></td>
+						<td style="color: white; width:11%;background-color: #9494b8;"><b>Occupant Extent</b></td>
+						<td style="color: white; width:12%;background-color: #9494b8;padding-left: 50px;"><b>Actions</b>
+						</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -164,7 +171,10 @@
 							<input type="hidden" th:value="${cultivator.khNo}" th:id="'khNo_c'+${cultivatorStat.index}">
 						</td>
 						<td style="width:10%;">
-							<span th:text="${cultivator.cultivatorType}"></span>
+							<span th:if="${cultivator.cultivatorType=='K' }">Cultivator</span>
+							<span th:if="${cultivator.cultivatorType=='O' }">Owner</span>
+							<span th:if="${cultivator.cultivatorType=='L' }">Enjoyer</span>
+
 							<input type="hidden" th:value="${cultivator.cultivatorType}"
 								th:id="'cultivatorType_c'+${cultivatorStat.index}">
 						</td>
@@ -197,7 +207,7 @@
 												<i class="fa fa-edit fa-2x fa-pull-left"
 													th:id="'edit_c'+${cultivatorStat.index}"
 													th:onclick="editCultivatorDetails('_c[[${cultivatorStat.index}]]')"
-													th:style="'padding: 0px; display: ' + (${cultivator.owner_tenant eq 'K'} ? 'inline-block' : 'none') + ';'"
+													style="padding: 0px;"
 													th:enabled="${cultivator.owner_tenant eq 'K'}"></i>
 											</div>
 										</div>
@@ -235,6 +245,9 @@
 			</table>
 		</div>
 	</div>
+</div>
+<div style="text-align: center;font-weight: bold;color:red;" th:unless="${ownersList!=null and !ownersList.isEmpty()}">
+	<span>No Data Available</span>
 </div>
 <!--<script type="text/javascript">
 	$(document).ready(function () {

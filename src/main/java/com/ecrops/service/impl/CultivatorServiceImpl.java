@@ -49,6 +49,7 @@ public class CultivatorServiceImpl implements CultivatorService {
 		}
 
 		cultivatorDto.setOccupantExtent(cultivator.getOccupantExtent());
+		cultivatorDto.setCultivatorType(cultivator.getCultivatorType());
 		cultivatorDto.setUpdatedby(cultivator.getUpdatedby());
 		cultivatorDto.setUpdateon(Timestamp.from(ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).toInstant()));
 		CultivatorDto cDtoResult = cultivatorCompositeRepository.saveAndFlush(cultivatorDto);
