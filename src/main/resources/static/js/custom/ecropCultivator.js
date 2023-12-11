@@ -137,6 +137,7 @@ function updateOwnerOrEnjoerDetails(sufix) {
 					"aadharNo": $("#aadharNo" + sufix).val(),
 					"occupantExtent": $("#occupantExtent" + sufix).val(),
 					"updatedby": $("#userid").val(),
+					"cultivatorType": $("#cultivatorType" + sufix).val(),
 				},
 				success: function(resData) {
 					var index = $("#cultivatorIndexOE").val();
@@ -145,6 +146,7 @@ function updateOwnerOrEnjoerDetails(sufix) {
 					$("#ocName" + sufix).val('');
 					$("#fatherName" + sufix).val('');
 					$("#occupantExtent" + sufix).val('');
+					searchData();
 					resData ?
 						alertify.notify("Owner/Enjoyer Data Updated Successfully!", "success", 10)
 						: alertify.notify("Something went Wrong. Please Try again after some time or Please Contact Support Team", "warning", 10);
@@ -162,23 +164,43 @@ function updateOwnerOrEnjoerDetails(sufix) {
 
 }
 
+
+var clickCounts = [];
 function editCultivatorDetails(index) {
-
-	document.getElementById("ocName" + index).disabled = false;
-	document.getElementById("fatherName" + index).disabled = false;
-	document.getElementById("aadharNo" + index).disabled = false;
-	document.getElementById("occupantExtent" + index).disabled = false;
-
-	/*var availableExtent = parseFloat($("#availableExtent" + index).val());
-	if (availableExtent > 0) {
+	var cultivatorType = document.getElementById('cultivatorType' + index).value;
+	if (!clickCounts[index]) {
+		clickCounts[index] = 0;
+	}
+	clickCounts[index]++;
+	if (clickCounts[index] % 2 === 1 && cultivatorType === 'O') {
+		document.getElementById("aadharNo" + index).disabled = true;
 		document.getElementById("occupantExtent" + index).disabled = false;
-	}*/
-
-	$('#occupantExtent' + index).attr('title', 'Available Extent is : ' + availableExtent);
-	$('#occupantExtent' + index).tooltip();
-	$("#update" + index).css({ 'display': '' });
+		document.getElementById("ocName" + index).disabled = true;
+		document.getElementById("fatherName" + index).disabled = true;
+		$("#update" + index).css({ 'display': '' });
+	}
+	else if (clickCounts[index] % 2 === 1 && cultivatorType === 'K') {
+		document.getElementById("aadharNo" + index).disabled = false;
+		document.getElementById("occupantExtent" + index).disabled = false;
+		document.getElementById("ocName" + index).disabled = false;
+		document.getElementById("fatherName" + index).disabled = false;
+		$("#update" + index).css({ 'display': '' });
+	}
+	else if (clickCounts[index] % 2 === 1 && cultivatorType === 'L') {
+		document.getElementById("aadharNo" + index).disabled = false;
+		document.getElementById("occupantExtent" + index).disabled = false;
+		document.getElementById("ocName" + index).disabled = true;
+		document.getElementById("fatherName" + index).disabled = true;
+		$("#update" + index).css({ 'display': '' });
+	}
+	else {
+		document.getElementById("aadharNo" + index).disabled = true;
+		document.getElementById("occupantExtent" + index).disabled = true;
+		document.getElementById("ocName" + index).disabled = true;
+		document.getElementById("fatherName" + index).disabled = true;
+		$("#update_c" + index).css({ 'display': 'none' });
+	}
 }
-
 function updateCultivatorDetails(index) {
 
 
@@ -391,7 +413,7 @@ function searchData() {
 		type: "GET",
 		url: 'cultivator/kathaNo/',
 		data: {
-			"khNo": $("#khNo").val(),
+			"khNo": $("#fromKhnoId").val(),
 			"cr_vcode": $("#wbvcode").val(),
 		},
 		success: function(data) {
