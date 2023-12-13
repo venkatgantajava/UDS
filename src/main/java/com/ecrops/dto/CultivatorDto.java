@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cr_booking")
+@Table(name = "cr_booking", schema = "ecrop2023")
 public class CultivatorDto {
 
 	@EmbeddedId
@@ -73,6 +73,9 @@ public class CultivatorDto {
 
 	@Column(name = "updateon")
 	private Timestamp updateon;
+
+	@Column(name = "downloaded", insertable = false, updatable = false)
+	private String downloaded;
 
 	public CultivatorEmbedableDto getCultivatorEmbedableDto() {
 		return cultivatorEmbedableDto;
@@ -240,6 +243,14 @@ public class CultivatorDto {
 
 	public void setUpdateon(Timestamp updateon) {
 		this.updateon = updateon;
+	}
+
+	public String getDownloaded() {
+		return downloaded;
+	}
+
+	public void setDownloaded(String downloaded) {
+		this.downloaded = downloaded;
 	}
 
 }

@@ -2,11 +2,14 @@ $(document).ready(function() {
 
 	$('.modal').on('hidden.bs.modal', function() {
 		var index = $("#cultivatorIndex").val();
+		var indexOE = $("#cultivatorIndexOE").val();
 		$("#searchParam" + index).val('0');
 		$("#aadharNo").val('');
 		$("#ocName").val('');
 		$("#fatherName").val('');
 		$("#occupantExtent").val('');
+
+		$("#searchParam" + indexOE).val('0');
 		$("#occupantExtentOE").val('');
 	})
 	alertify.set('notifier', 'position', 'top-right');
@@ -21,14 +24,15 @@ function onUserTypeChange(index, selectedValue) {
 	if (selectedValue === '1') {
 		if (cultivatorType == 'L') {
 			$("#searchParam" + index).val('0');
-			swal.fire("Oops!", "Already Registered as Enjoyer!", "warning");
+			swal.fire("Already Registered as Enjoyer!", "", "warning");
 			return false;
 		} else if (cultivatorType == 'O') {
 			$("#searchParam" + index).val('0');
-			swal.fire("Oops!", "Already Registered as Owner!", "warning");
+			swal.fire("Already Registered as Owner!", "", "warning");
 			return false;
 		}
 		setModalValues(index, "O", "Owner");
+		document.getElementById("aadharNo" + index).disabled = true;
 		$('#ownerOrEnjoyerModal').modal('show');
 	} else if (selectedValue === '2') {
 		var availableExtent = parseFloat($("#availableExtent" + index).val());
@@ -37,33 +41,35 @@ function onUserTypeChange(index, selectedValue) {
 			$('#cultivatorModal').modal('show');
 		} else {
 			$("#searchParam" + index).val('0');
-			swal.fire("Oops!", "No Available Extent", "warning");
+			swal.fire("No Available Extent", "", "warning");
 		}
 	}
 	else if (selectedValue === '3') {
 		if (cultivatorType == 'L') {
 			$("#searchParam" + index).val('0');
-			swal.fire("Oops!", "Already Registered as Enjoyer!", "warning");
+			swal.fire("Already Registered as Enjoyer!", "", "warning");
 			return false;
 		} else if (cultivatorType == 'O') {
 			$("#searchParam" + index).val('0');
-			swal.fire("Oops!", "Already Registered as Owner!", "warning");
+			swal.fire("Already Registered as Owner!", "", "warning");
 			return false;
 		}
+		document.getElementById("aadharNo" + index).disabled = false;
 		setModalValues(index, "L", 'Enjoyer');
 		$('#ownerOrEnjoyerModal').modal('show');
 	}
 }
 function setModalValues(index, cultivatorType, roleType) {
 	var suffix = '';
-	if (cultivatorType == 'O' || cultivatorType == 'L') {
+	if (cultivatorType == 'O') {
 		suffix = 'OE'
-	} else {
+		document.getElementById("aadharNo" + suffix).disabled = true;
+	} else if (cultivatorType == 'L') {
+		suffix = 'OE'
+		document.getElementById("aadharNo" + suffix).disabled = false;
+	} else if (cultivatorType == 'K') {
 		suffix = ''
 		$("#owner_tenant").val(cultivatorType);
-	}
-
-	if (cultivatorType == 'K') {
 		$("#refBookingId").val($("#bookingId" + index).val());
 	}
 
@@ -142,9 +148,6 @@ function updateOwnerOrEnjoerDetails(sufix) {
 				success: function(resData) {
 					var index = $("#cultivatorIndexOE").val();
 					$("#searchParam" + index).val('0');
-					$("#aadharNo" + sufix).val('');
-					$("#ocName" + sufix).val('');
-					$("#fatherName" + sufix).val('');
 					$("#occupantExtent" + sufix).val('');
 					searchData();
 					resData ?
@@ -198,8 +201,11 @@ function editCultivatorDetails(index) {
 		document.getElementById("occupantExtent" + index).disabled = true;
 		document.getElementById("ocName" + index).disabled = true;
 		document.getElementById("fatherName" + index).disabled = true;
-		$("#update_c" + index).css({ 'display': 'none' });
+		$("#update" + index).css({ 'display': 'none' });
 	}
+	var availableExtent = parseFloat($("#availableExtent" + index).val());
+	$('#occupantExtent' + index).attr('title', 'Available Extent is : ' + availableExtent);
+	$('#occupantExtent' + index).tooltip();
 }
 function updateCultivatorDetails(index) {
 
@@ -289,11 +295,11 @@ function updateCultivatorDetails(index) {
 
 function deleteCultivatorDetails(index) {
 	Swal.fire({
-		title: "Do you want to update the changes?",
+		title: "Do you want to delete cultivator data?",
 		showDenyButton: true,
 		showCancelButton: false,
-		confirmButtonText: "Delete",
-		denyButtonText: `Don't Delete`
+		confirmButtonText: "Yes",
+		denyButtonText: "No"
 	}).then((result) => {
 		if (result.isConfirmed) {
 
@@ -317,7 +323,6 @@ function deleteCultivatorDetails(index) {
 				}
 			});
 		} else if (result.isDenied) {
-			Swal.fire("Failed to Delete", "", "info");
 		}
 	});
 

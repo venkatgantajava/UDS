@@ -207,8 +207,7 @@
 												<i class="fa fa-edit fa-2x fa-pull-left"
 													th:id="'edit_c'+${cultivatorStat.index}"
 													th:onclick="editCultivatorDetails('_c[[${cultivatorStat.index}]]')"
-													style="padding: 0px;"
-													th:enabled="${cultivator.owner_tenant eq 'K'}"></i>
+													th:style="'padding: 0px; display: ' + (${'N' eq cultivator.downloaded} ? 'inline-block' : 'none') + ';'"></i>
 											</div>
 										</div>
 									</div>
@@ -232,8 +231,7 @@
 												<i class="fa fa-trash-o fa-2x fa-pull-left"
 													th:id="'delete_c'+${cultivatorStat.index}"
 													th:onclick="deleteCultivatorDetails('_c[[${cultivatorStat.index}]]')"
-													th:style="'padding: 0px; display: ' + (${cultivator.owner_tenant eq 'K'} ? 'inline-block' : 'none') + ';'"
-													th:enabled="${cultivator.owner_tenant eq 'K'}"></i>
+													th:style="'padding: 0px; display: ' + (${cultivator.owner_tenant eq 'K' && 'N' eq cultivator.downloaded} ? 'inline-block' : 'none') + ';'"></i>
 											</div>
 										</div>
 									</div>

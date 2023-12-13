@@ -18,6 +18,8 @@ public class CultivatorEmbedableDto implements Serializable {
 
 	@NotNull
 	private String part_key;
+	
+	
 
 	public Integer getBookingid() {
 		return bookingid;
