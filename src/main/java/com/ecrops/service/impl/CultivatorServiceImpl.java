@@ -30,10 +30,6 @@ public class CultivatorServiceImpl implements CultivatorService {
 		return repo.findAll();
 	}
 
-	public Cultivator get(Integer id) {
-		return repo.getById(id);
-	}
-
 	public List<Cultivator> getCultivatorsByKathaNo(Cultivator cultivator) {
 		return repo.getCultivatorDetailsByKathaNo(cultivator.getKhNo(), cultivator.getCr_vcode());
 	}
@@ -87,6 +83,20 @@ public class CultivatorServiceImpl implements CultivatorService {
 				.findById(new CultivatorEmbedableDto(cultivator.getBookingId(), cultivator.getPart_key()));
 		cultivatorCompositeRepository.delete(optionalDto.get());
 
+	}
+
+	public Double getAnubhavadarExtent(Cultivator cultivator) {
+		Double anubhavadarExtent = repo.getAnubhavadarExtent(cultivator.getPart_key(), cultivator.getKhNo(),
+				cultivator.getCr_vcode());
+		anubhavadarExtent = anubhavadarExtent == null ? 0.0 : anubhavadarExtent;
+		return anubhavadarExtent;
+	}
+	
+	public Double getTotalOccupantExtent(Cultivator cultivator) {
+		Double totalOccupantExtent = repo.getTotalOccupantExtent(cultivator.getPart_key(), cultivator.getKhNo(),
+				cultivator.getCr_vcode());
+		totalOccupantExtent = totalOccupantExtent == null ? 0.0 : totalOccupantExtent;
+		return totalOccupantExtent;
 	}
 
 }

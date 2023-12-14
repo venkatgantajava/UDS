@@ -203,10 +203,41 @@ function editCultivatorDetails(index) {
 		document.getElementById("fatherName" + index).disabled = true;
 		$("#update" + index).css({ 'display': 'none' });
 	}
-	var availableExtent = parseFloat($("#availableExtent" + index).val());
-	$('#occupantExtent' + index).attr('title', 'Available Extent is : ' + availableExtent);
-	$('#occupantExtent' + index).tooltip();
+
+	$.ajax({
+		type: "GET",
+		url: "cultivator/extent",
+		data: {
+			"part_key": $("#part_key" + index).val(),
+			"khNo": $("#fromKhnoId").val(),
+			"cr_vcode": $("#wbvcode").val(),
+		},
+		dataType: 'json',
+		success: function(responseJson) {
+			console.log(responseJson.anubhavadarExtent);
+			var anubhavadarExtent = parseFloat(responseJson.anubhavadarExtent);
+			var totalOccupantExtent = parseFloat(responseJson.occupantExtent);
+			var availableExtent = anubhavadarExtent - totalOccupantExtent;
+
+
+			$("#availableExtent" + index).val(availableExtent);
+
+			$("#totalOccupantExtent" + index).val(totalOccupantExtent);
+
+			$("#anubhavadarExtent" + index).val(anubhavadarExtent);
+
+			$('#occupantExtent' + index).attr('title', "Total Extent is : " + anubhavadarExtent + " and Available Extent is : " + availableExtent);
+			$('#occupantExtent' + index).tooltip();
+		},
+		error: function(xhr, err) {
+			console.log(err);
+			console.log("Failed to Update Details");
+		}
+	});
+
+
 }
+
 function updateCultivatorDetails(index) {
 
 
@@ -238,8 +269,19 @@ function updateCultivatorDetails(index) {
 		return;
 	}
 
-	var newAvailableExtent = parseFloat($("#availableExtent" + index).val()) + parseFloat($("#existingOccupantExtent" + index).val());
+	var anubhavadarExtent = parseFloat($("#anubhavadarExtent" + index).val());
 	var occupantExtent = parseFloat($("#occupantExtent" + index).val());
+	var existingOccupantExtent = parseFloat($("#existingOccupantExtent" + index).val());
+	var totalOccupantExtent = parseFloat($("#totalOccupantExtent" + index).val());
+
+	console.log("anubhavadarExtent:" + anubhavadarExtent);
+	console.log("occupantExtent:" + occupantExtent);
+	console.log("existingOccupantExtent:" + existingOccupantExtent);
+	console.log("totalOccupantExtent:" + totalOccupantExtent);
+	totalOccupantExtent = totalOccupantExtent - existingOccupantExtent;
+
+	totalOccupantExtent = totalOccupantExtent + occupantExtent;
+
 
 	if (occupantExtent === '') {
 		Swal.fire({
@@ -248,8 +290,8 @@ function updateCultivatorDetails(index) {
 		});
 		return;
 	} else {
-		if (occupantExtent > newAvailableExtent) {
-			swal.fire("Sorry!", "Entered Occupant Extent is morethan available extent. Allowed Extent is - " + newAvailableExtent, "warning");
+		if (totalOccupantExtent > anubhavadarExtent) {
+			swal.fire("Sorry!", "Entered Occupant Extent is morethan available extent. Allowed Extent is - " + anubhavadarExtent, "warning");
 			return false;
 		}
 	}
@@ -259,12 +301,6 @@ function updateCultivatorDetails(index) {
 	var bookingId = $("#bookingId" + index).val();
 
 
-	/*
-		if (occupantExtent > availableExtent) {
-			swal.fire("Sorry!", "Entered Occupant Extent is morethan available extent. Allowed Extent is - " + availableExtent, "warning");
-			return false;
-		}
-	*/
 	$.ajax({
 		type: "PUT",
 		url: "cultivator/update",

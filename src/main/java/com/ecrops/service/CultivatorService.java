@@ -11,8 +11,6 @@ public interface CultivatorService {
 
 	public List<Cultivator> listAll();
 
-	public Cultivator get(Integer id);
-
 	public List<Cultivator> getCultivatorsByKathaNo(Cultivator cultivator);
 
 	public int updateOwnerOrEnjoerDetails(Cultivator cultivator);
@@ -22,5 +20,9 @@ public interface CultivatorService {
 	public int updateCultivatorDetails(Cultivator cultivator);
 
 	public void deleteCultivatorDetails(Cultivator cultivator);
+
+	public Double getAnubhavadarExtent(Cultivator cultivator);
+
+	public Double getTotalOccupantExtent(Cultivator cultivator);
 
 }

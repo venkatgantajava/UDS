@@ -1,8 +1,12 @@
 package com.ecrops.controller;
 
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +17,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ecrops.entity.ActiveSeason;
 import com.ecrops.entity.Cultivator;
 import com.ecrops.service.CultivatorService;
 import com.ecrops.service.impl.ActiveSeasonServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Controller
 public class CultivatorController {
@@ -54,7 +60,7 @@ public class CultivatorController {
 		List<Cultivator> ownersList = allCultiVatorsList.stream().map(pc -> {
 			Double availableExtent = 0.0;
 			if ("O".equals(pc.getOwner_tenant())) {
-				availableExtent = pc.getAnubhavadarExtent();
+				availableExtent = pc.getAnubhavadarExtent() == null ? 0.0 : pc.getAnubhavadarExtent();
 				if ("O".equals(pc.getCultivatorType())) {
 					availableExtent = availableExtent - pc.getOccupantExtent();
 				} else if ("L".equals(pc.getCultivatorType())) {
@@ -106,7 +112,7 @@ public class CultivatorController {
 		return "addupdatecultivator";
 
 	}
-	
+
 	@PutMapping("/cultivator/update")
 	public String updateCultivatorDetails(Cultivator cultivator, RedirectAttributes redirectAttributes) {
 
@@ -123,6 +129,33 @@ public class CultivatorController {
 
 		return "addupdatecultivator";
 
+	}
+
+	@GetMapping("/cultivator/extent")
+	public String getAnubhavadarAndOccupantExtent(Cultivator cultivator, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws JsonProcessingException {
+		Double anubhavadarExtent = cultivatorService.getAnubhavadarExtent(cultivator);
+
+		Double totalOccupantExtent = cultivatorService.getTotalOccupantExtent(cultivator);
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		cultivator.setAnubhavadarExtent(anubhavadarExtent);
+		cultivator.setOccupantExtent(totalOccupantExtent);
+
+		String jsonMap = mapper.writeValueAsString(cultivator);
+
+		response.setContentType("json");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(jsonMap);
+			out.flush();
+			return null;
+		} catch (Exception e) {
+		}
+
+		return null;
 	}
 
 }

@@ -39,7 +39,7 @@ public class MainController {
 
 		return "home";
 	}
-	
+		
 	@GetMapping("/login")
 	public String loginPage(@ModelAttribute AuthenticationRequest authenticationRequest, Model model,
 			HttpServletRequest request) {
@@ -66,6 +66,7 @@ public class MainController {
 				httpSession.setAttribute("name", entity.getName());
 				httpSession.setAttribute("userid", entity.getUserid());
 				httpSession.setAttribute("typename", entity.getUserTypesEntity().getTypeName());
+				httpSession.setAttribute("userType", entity.getUserTypesEntity().getUserType());
 				httpSession.setAttribute("wbedname", entity.getWebMaster().getWbedname());
 				httpSession.setAttribute("wbemname", entity.getWebMaster().getWbemname());
 				httpSession.setAttribute("wbevname", entity.getWebMaster().getWbevname());

@@ -155,10 +155,14 @@
 								th:id="'cr_season_c'+${cultivatorStat.index}">
 							<input type="hidden" th:value="${cultivator.owner_tenant}"
 								th:id="'owner_tenant_c'+${cultivatorStat.index}">
+							<input type="hidden" th:value="${cultivator.occupantExtent}"
+								th:id="'existingOccupantExtent_c'+${cultivatorStat.index}">
 							<input type="hidden" th:value="${cultivator.availableExtent}"
 								th:id="'availableExtent_c'+${cultivatorStat.index}">
 							<input type="hidden" th:value="${cultivator.occupantExtent}"
-								th:id="'existingOccupantExtent_c'+${cultivatorStat.index}">
+								th:id="'totalOccupantExtent_c'+${cultivatorStat.index}">
+							<input type="hidden" th:value="${cultivator.anubhavadarExtent}"
+								th:id="'anubhavadarExtent_c'+${cultivatorStat.index}">
 
 						</td>
 						<td style="width:8%;">
