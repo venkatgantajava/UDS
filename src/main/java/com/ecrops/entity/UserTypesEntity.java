@@ -17,7 +17,7 @@ public class UserTypesEntity {
 	public String typeName;
 
 	public Integer getUserType() {
-		return userType;
+		return userType == null ? 0 : userType;
 	}
 
 	public void setUserType(Integer userType) {

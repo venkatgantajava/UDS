@@ -2,8 +2,11 @@
 	<center>
 		<p style="font-size: larger;"> Welcome to <b><span th:text="${session.name}"></span></b> from District ::
 			<b> <span th:text="${session.wbedname}"></span></b> , Mandal :: <b>
-				<span th:text="${session.wbemname}"></span> </b>, Village :: <b>
-				<span th:if="${session.usertype == '5'}" th:text="${session.wbevname}"></span>
-				<span th:unless="${session.usertype == '5'}" th:text="${session.wbevname}"></span></b></p>
+				<span th:text="${session.wbemname}"></span></b>
+			<label th:if="${session.userType == 25}">,Village ::
+				<b>
+					<span th:text="${session.wbevname}"></span>
+			</label>
+		</p>
 	</center>
 </div>
