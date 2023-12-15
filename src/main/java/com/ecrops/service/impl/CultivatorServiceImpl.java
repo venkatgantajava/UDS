@@ -54,7 +54,7 @@ public class CultivatorServiceImpl implements CultivatorService {
 	}
 
 	public Cultivator saveCultivatorsData(Cultivator cultivator) {
-		cultivator.setEntry_date(Timestamp.from(ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).toInstant()));
+		cultivator.setUpdateon(Timestamp.from(ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).toInstant()));
 		return repo.save(cultivator);
 	}
 
@@ -85,17 +85,17 @@ public class CultivatorServiceImpl implements CultivatorService {
 
 	}
 
-	public Double getAnubhavadarExtent(Cultivator cultivator) {
-		Double anubhavadarExtent = repo.getAnubhavadarExtent(cultivator.getPart_key(), cultivator.getKhNo(),
-				cultivator.getCr_vcode());
-		anubhavadarExtent = anubhavadarExtent == null ? 0.0 : anubhavadarExtent;
+	public Float getAnubhavadarExtent(Cultivator cultivator) {
+		Float anubhavadarExtent = repo.getAnubhavadarExtent(cultivator.getPart_key(), cultivator.getKhNo(),
+				cultivator.getCr_vcode(), cultivator.getCrSno());
+		anubhavadarExtent = anubhavadarExtent == null ? 0.0f : anubhavadarExtent;
 		return anubhavadarExtent;
 	}
 	
-	public Double getTotalOccupantExtent(Cultivator cultivator) {
-		Double totalOccupantExtent = repo.getTotalOccupantExtent(cultivator.getPart_key(), cultivator.getKhNo(),
-				cultivator.getCr_vcode());
-		totalOccupantExtent = totalOccupantExtent == null ? 0.0 : totalOccupantExtent;
+	public Float getTotalOccupantExtent(Cultivator cultivator) {
+		Float totalOccupantExtent = repo.getTotalOccupantExtent(cultivator.getPart_key(), cultivator.getKhNo(),
+				cultivator.getCr_vcode(), cultivator.getCrSno());
+		totalOccupantExtent = totalOccupantExtent == null ? 0.0f : totalOccupantExtent;
 		return totalOccupantExtent;
 	}
 

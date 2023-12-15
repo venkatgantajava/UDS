@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cr_booking")
+@Table(name = "cr_booking", schema = "ecrop2023")
 public class CultivatorDto {
 
 	@EmbeddedId
@@ -18,16 +18,16 @@ public class CultivatorDto {
 	private String crSno;
 
 	@Column(name = "tot_extent")
-	private Double totalExtent;
+	private Float totalExtent;
 
 	@Column(name = "cr_farmeruid")
-	private Long aadharNo;
+	private String aadharNo;
 
 	@Column(name = "oc_fname")
 	private String fatherName;
 
 	@Column(name = "occupant_extent")
-	private Double occupantExtent;
+	private Float occupantExtent;
 
 	@Column(name = "kh_no")
 	private Integer khNo;
@@ -54,19 +54,13 @@ public class CultivatorDto {
 	private String cultivatorType;
 
 	@Column(name = "anubhavadar_extent")
-	private Double anubhavadarExtent;
+	private Float anubhavadarExtent;
 
 	@Column(name = "cr_dist_code")
 	private Integer crDistCode;
 
 	@Column(name = "cr_mand_code")
 	private Integer crMandCode;
-
-	@Column(name = "entry_by", updatable = false)
-	private String entry_by;
-
-	@Column(name = "entry_date", updatable = false)
-	private Timestamp entry_date;
 
 	@Column(name = "updatedby")
 	private String updatedby;
@@ -93,19 +87,19 @@ public class CultivatorDto {
 		this.crSno = crSno;
 	}
 
-	public Double getTotalExtent() {
+	public Float getTotalExtent() {
 		return totalExtent;
 	}
 
-	public void setTotalExtent(Double totalExtent) {
+	public void setTotalExtent(Float totalExtent) {
 		this.totalExtent = totalExtent;
 	}
 
-	public Long getAadharNo() {
+	public String getAadharNo() {
 		return aadharNo;
 	}
 
-	public void setAadharNo(Long aadharNo) {
+	public void setAadharNo(String aadharNo) {
 		this.aadharNo = aadharNo;
 	}
 
@@ -117,11 +111,11 @@ public class CultivatorDto {
 		this.fatherName = fatherName;
 	}
 
-	public Double getOccupantExtent() {
+	public Float getOccupantExtent() {
 		return occupantExtent;
 	}
 
-	public void setOccupantExtent(Double occupantExtent) {
+	public void setOccupantExtent(Float occupantExtent) {
 		this.occupantExtent = occupantExtent;
 	}
 
@@ -189,11 +183,11 @@ public class CultivatorDto {
 		this.cultivatorType = cultivatorType;
 	}
 
-	public Double getAnubhavadarExtent() {
+	public Float getAnubhavadarExtent() {
 		return anubhavadarExtent;
 	}
 
-	public void setAnubhavadarExtent(Double anubhavadarExtent) {
+	public void setAnubhavadarExtent(Float anubhavadarExtent) {
 		this.anubhavadarExtent = anubhavadarExtent;
 	}
 
@@ -211,22 +205,6 @@ public class CultivatorDto {
 
 	public void setCrMandCode(Integer crMandCode) {
 		this.crMandCode = crMandCode;
-	}
-
-	public String getEntry_by() {
-		return entry_by;
-	}
-
-	public void setEntry_by(String entry_by) {
-		this.entry_by = entry_by;
-	}
-
-	public Timestamp getEntry_date() {
-		return entry_date;
-	}
-
-	public void setEntry_date(Timestamp entry_date) {
-		this.entry_date = entry_date;
 	}
 
 	public String getUpdatedby() {

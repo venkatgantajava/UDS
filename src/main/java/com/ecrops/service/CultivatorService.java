@@ -21,8 +21,8 @@ public interface CultivatorService {
 
 	public void deleteCultivatorDetails(Cultivator cultivator);
 
-	public Double getAnubhavadarExtent(Cultivator cultivator);
+	public Float getAnubhavadarExtent(Cultivator cultivator);
 
-	public Double getTotalOccupantExtent(Cultivator cultivator);
+	public Float getTotalOccupantExtent(Cultivator cultivator);
 
 }

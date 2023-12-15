@@ -14,6 +14,11 @@ $(document).ready(function() {
 	})
 	alertify.set('notifier', 'position', 'top-right');
 
+	Number.prototype.round = function(p) {
+		p = p || 10;
+		return parseFloat(this.toFixed(p));
+	};
+	
 });
 
 
@@ -35,7 +40,7 @@ function onUserTypeChange(index, selectedValue) {
 		document.getElementById("aadharNo" + index).disabled = true;
 		$('#ownerOrEnjoyerModal').modal('show');
 	} else if (selectedValue === '2') {
-		var availableExtent = parseFloat($("#availableExtent" + index).val());
+		var availableExtent = parseFloat($("#availableExtent" + index).val()).round(3);
 		if (availableExtent > 0) {
 			setModalValues(index, "K", "Cultivator");
 			$('#cultivatorModal').modal('show');
@@ -211,12 +216,13 @@ function editCultivatorDetails(index) {
 			"part_key": $("#part_key" + index).val(),
 			"khNo": $("#fromKhnoId").val(),
 			"cr_vcode": $("#wbvcode").val(),
+			"crSno": $("#crSno" + index).val(),
 		},
 		dataType: 'json',
 		success: function(responseJson) {
 			console.log(responseJson.anubhavadarExtent);
-			var anubhavadarExtent = parseFloat(responseJson.anubhavadarExtent);
-			var totalOccupantExtent = parseFloat(responseJson.occupantExtent);
+			var anubhavadarExtent = parseFloat(responseJson.anubhavadarExtent).round(3);
+			var totalOccupantExtent = parseFloat(responseJson.occupantExtent).round(3);
 			var availableExtent = anubhavadarExtent - totalOccupantExtent;
 
 
@@ -269,18 +275,24 @@ function updateCultivatorDetails(index) {
 		return;
 	}
 
-	var anubhavadarExtent = parseFloat($("#anubhavadarExtent" + index).val());
-	var occupantExtent = parseFloat($("#occupantExtent" + index).val());
-	var existingOccupantExtent = parseFloat($("#existingOccupantExtent" + index).val());
-	var totalOccupantExtent = parseFloat($("#totalOccupantExtent" + index).val());
+	var anubhavadarExtent = parseFloat($("#anubhavadarExtent" + index).val()).round(3);
+	var occupantExtent = parseFloat($("#occupantExtent" + index).val()).round(3);
+	var existingOccupantExtent = parseFloat($("#existingOccupantExtent" + index).val()).round(3);
+	var totalOccupantExtent = parseFloat($("#totalOccupantExtent" + index).val()).round(3);
+
+
 
 	console.log("anubhavadarExtent:" + anubhavadarExtent);
 	console.log("occupantExtent:" + occupantExtent);
 	console.log("existingOccupantExtent:" + existingOccupantExtent);
-	console.log("totalOccupantExtent:" + totalOccupantExtent);
+	console.log("totalOccupantExtent_1:" + totalOccupantExtent);
+	var existingAvailableExtent = anubhavadarExtent - totalOccupantExtent;
 	totalOccupantExtent = totalOccupantExtent - existingOccupantExtent;
 
 	totalOccupantExtent = totalOccupantExtent + occupantExtent;
+
+	console.log("totalOccupantExtent_2:" + totalOccupantExtent);
+
 
 
 	if (occupantExtent === '') {
@@ -291,7 +303,14 @@ function updateCultivatorDetails(index) {
 		return;
 	} else {
 		if (totalOccupantExtent > anubhavadarExtent) {
-			swal.fire("Sorry!", "Entered Occupant Extent is morethan available extent. Allowed Extent is - " + anubhavadarExtent, "warning");
+			var allowedOccupantExtent = existingOccupantExtent + existingAvailableExtent;
+			swal.fire("Existing Occupant Extent is :: " + existingOccupantExtent + ", Available Extent is :: " + existingAvailableExtent
+				+ " and Allowed Total Occupant Extent is :: " + allowedOccupantExtent, "",  "warning");
+			return false;
+		}
+
+		if (totalOccupantExtent > anubhavadarExtent) {
+			swal.fire("Entered Occupant Extent is morethan available extent. Allowed Extent is: " + existingAvailableExtent, "", "warning");
 			return false;
 		}
 	}
@@ -402,10 +421,10 @@ function saveCultivatorData() {
 
 
 	var index = $("#cultivatorIndex").val();
-	var availableExtent = parseFloat($("#availableExtent" + index).val());
-	var occupantExtent = parseFloat($("#occupantExtent").val());
+	var availableExtent = parseFloat($("#availableExtent" + index).val()).round(3);
+	var occupantExtent = parseFloat($("#occupantExtent").val()).round(3);
 	if (occupantExtent > availableExtent) {
-		swal.fire("Sorry!", "Entered Occupant Extent is morethan available extent. Allowed Extent is - " + availableExtent, "warning");
+		swal.fire("Entered Occupant Extent is morethan available extent. Allowed Extent is - " + availableExtent,"", "warning");
 		return false;
 	}
 
@@ -428,7 +447,7 @@ function saveCultivatorData() {
 			"refBookingId": $("#refBookingId").val(),
 			"cultivatorType": $("#cultivatorType").val(),
 			"owner_tenant": $("#owner_tenant").val(),
-			"entry_by": $("#userid").val(),
+			"updatedby": $("#userid").val(),
 		},
 		success: function(data) {
 			searchData();

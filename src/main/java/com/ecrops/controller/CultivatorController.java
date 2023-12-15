@@ -58,9 +58,9 @@ public class CultivatorController {
 				.collect(Collectors.toList());
 
 		List<Cultivator> ownersList = allCultiVatorsList.stream().map(pc -> {
-			Double availableExtent = 0.0;
+			Float availableExtent = 0.00f;
 			if ("O".equals(pc.getOwner_tenant())) {
-				availableExtent = pc.getAnubhavadarExtent() == null ? 0.0 : pc.getAnubhavadarExtent();
+				availableExtent = pc.getAnubhavadarExtent() == null ? 0.00f : pc.getAnubhavadarExtent();
 				if ("O".equals(pc.getCultivatorType())) {
 					availableExtent = availableExtent - pc.getOccupantExtent();
 				} else if ("L".equals(pc.getCultivatorType())) {
@@ -73,7 +73,7 @@ public class CultivatorController {
 					}
 				}
 			}
-			pc.setAvailableExtent(Double.valueOf(String.format("%1.2f", availableExtent)));
+			pc.setAvailableExtent(Float.valueOf(String.format("%1.4f", availableExtent)));
 			return pc;
 		}).filter(c -> "O".equalsIgnoreCase(c.getOwner_tenant())).collect(Collectors.toList());
 
@@ -134,9 +134,9 @@ public class CultivatorController {
 	@GetMapping("/cultivator/extent")
 	public String getAnubhavadarAndOccupantExtent(Cultivator cultivator, Model model, HttpServletRequest request,
 			HttpServletResponse response) throws JsonProcessingException {
-		Double anubhavadarExtent = cultivatorService.getAnubhavadarExtent(cultivator);
+		Float anubhavadarExtent = cultivatorService.getAnubhavadarExtent(cultivator);
 
-		Double totalOccupantExtent = cultivatorService.getTotalOccupantExtent(cultivator);
+		Float totalOccupantExtent = cultivatorService.getTotalOccupantExtent(cultivator);
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);

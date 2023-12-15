@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cr_booking")
+@Table(name = "cr_booking", schema = "ecrop2023")
 public class Cultivator {
 
 	@Id
@@ -25,16 +25,16 @@ public class Cultivator {
 	private String crSno;
 
 	@Column(name = "tot_extent")
-	private Double totalExtent;
+	private Float totalExtent;
 
 	@Column(name = "cr_farmeruid")
-	private Long aadharNo;
+	private String aadharNo;
 
 	@Column(name = "oc_fname")
 	private String fatherName;
 
 	@Column(name = "occupant_extent")
-	private Double occupantExtent;
+	private Float occupantExtent;
 
 	@Column(name = "kh_no")
 	private Integer khNo;
@@ -61,7 +61,7 @@ public class Cultivator {
 	private String cultivatorType;
 
 	@Column(name = "anubhavadar_extent")
-	private Double anubhavadarExtent;
+	private Float anubhavadarExtent;
 
 	@Column(name = "cr_dist_code")
 	private Integer crDistCode;
@@ -70,18 +70,12 @@ public class Cultivator {
 	private Integer crMandCode;
 
 	@Column(name = "available_extent", insertable = false, updatable = false)
-	private Double availableExtent;
+	private Float availableExtent;
 
-	@Column(name = "entry_by")
-	private String entry_by;
-
-	@Column(name = "entry_date")
-	private Timestamp entry_date;
-
-	@Column(name = "updatedby", insertable = false, updatable = false)
+	@Column(name = "updatedby", insertable = true, updatable = false)
 	private String updatedby;
 
-	@Column(name = "updateon", insertable = false, updatable = false)
+	@Column(name = "updateon", insertable = true, updatable = false)
 	private Timestamp updateon;
 
 	@Column(name = "downloaded", insertable = false, updatable = false)
@@ -111,19 +105,19 @@ public class Cultivator {
 		this.crSno = crSno;
 	}
 
-	public Double getTotalExtent() {
+	public Float getTotalExtent() {
 		return totalExtent;
 	}
 
-	public void setTotalExtent(Double totalExtent) {
-		this.totalExtent = totalExtent;
+	public void setTotalExtent(Float totalExtent) {
+		this.totalExtent = Float.valueOf(String.format("%.3f", totalExtent));
 	}
 
-	public Long getAadharNo() {
+	public String getAadharNo() {
 		return aadharNo;
 	}
 
-	public void setAadharNo(Long aadharNo) {
+	public void setAadharNo(String aadharNo) {
 		this.aadharNo = aadharNo;
 	}
 
@@ -135,12 +129,12 @@ public class Cultivator {
 		this.fatherName = fatherName;
 	}
 
-	public Double getOccupantExtent() {
+	public Float getOccupantExtent() {
 		return occupantExtent;
 	}
 
-	public void setOccupantExtent(Double occupantExtent) {
-		this.occupantExtent = occupantExtent;
+	public void setOccupantExtent(Float occupantExtent) {
+		this.occupantExtent = Float.valueOf(String.format("%.3f", occupantExtent));
 	}
 
 	public Integer getKhNo() {
@@ -207,12 +201,12 @@ public class Cultivator {
 		this.cultivatorType = cultivatorType;
 	}
 
-	public Double getAnubhavadarExtent() {
+	public Float getAnubhavadarExtent() {
 		return anubhavadarExtent;
 	}
 
-	public void setAnubhavadarExtent(Double anubhavadarExtent) {
-		this.anubhavadarExtent = anubhavadarExtent;
+	public void setAnubhavadarExtent(Float anubhavadarExtent) {
+		this.anubhavadarExtent = Float.valueOf(String.format("%.3f", anubhavadarExtent));
 	}
 
 	public Integer getCrDistCode() {
@@ -231,28 +225,12 @@ public class Cultivator {
 		this.crMandCode = crMandCode;
 	}
 
-	public Double getAvailableExtent() {
+	public Float getAvailableExtent() {
 		return availableExtent;
 	}
 
-	public void setAvailableExtent(Double availableExtent) {
-		this.availableExtent = availableExtent;
-	}
-
-	public String getEntry_by() {
-		return entry_by;
-	}
-
-	public void setEntry_by(String entry_by) {
-		this.entry_by = entry_by;
-	}
-
-	public Timestamp getEntry_date() {
-		return entry_date;
-	}
-
-	public void setEntry_date(Timestamp entry_date) {
-		this.entry_date = entry_date;
+	public void setAvailableExtent(Float availableExtent) {
+		this.availableExtent = Float.valueOf(String.format("%.3f", availableExtent));
 	}
 
 	public String getUpdatedby() {
