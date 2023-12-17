@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.ecrops.entity.AppUser;
 
 @Repository
-public interface AppUserRepo extends JpaRepository<AppUser, Long>{
-	
+public interface AppUserRepo extends JpaRepository<AppUser, String> {
+
 	AppUser findByUserid(String userid);
 
 }

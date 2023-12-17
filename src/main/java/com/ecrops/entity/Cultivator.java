@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cr_booking", schema = "ecrop2023")
+@Table(name = "cr_booking")
 public class Cultivator {
 
 	@Id

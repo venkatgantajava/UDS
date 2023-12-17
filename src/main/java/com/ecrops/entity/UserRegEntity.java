@@ -31,30 +31,26 @@ public class UserRegEntity {
 	private String encpassword;
 
 	@Column(name = "district")
-	private Integer distCode;
+	private String distCode;
 
 	@Column(name = "blockortehsil")
-	private Integer mandCode;
+	private String mandCode;
 
 	@Column(name = "village")
-	private Integer villCode;
+	private String villCode;
 
 	@Column(name = "wbmcode")
 	private Integer wbMcode;
 
 	@Column(name = "wbdcode")
-	private String wbDcode;
+	private Integer wbDcode;
 
 	@Column(name = "wbvcode")
-	private String wbvcode;
+	private Integer wbvcode;
 
 	@OneToOne
 	@JoinColumn(name = "usertype", insertable = false, updatable = false)
 	private UserTypesEntity userTypesEntity;
-
-	@OneToOne
-	@JoinColumn(name = "wbvcode", insertable = false, updatable = false)
-	private WbMaster webMaster;
 
 	public String getName() {
 		return name;
@@ -104,27 +100,27 @@ public class UserRegEntity {
 		this.encpassword = encpassword;
 	}
 
-	public Integer getDistCode() {
+	public String getDistCode() {
 		return distCode;
 	}
 
-	public void setDistCode(Integer distCode) {
+	public void setDistCode(String distCode) {
 		this.distCode = distCode;
 	}
 
-	public Integer getMandCode() {
+	public String getMandCode() {
 		return mandCode;
 	}
 
-	public void setMandCode(Integer mandCode) {
+	public void setMandCode(String mandCode) {
 		this.mandCode = mandCode;
 	}
 
-	public Integer getVillCode() {
+	public String getVillCode() {
 		return villCode;
 	}
 
-	public void setVillCode(Integer villCode) {
+	public void setVillCode(String villCode) {
 		this.villCode = villCode;
 	}
 
@@ -136,14 +132,6 @@ public class UserRegEntity {
 		this.wbMcode = wbMcode;
 	}
 
-	public String getWbDcode() {
-		return wbDcode;
-	}
-
-	public void setWbDcode(String wbDcode) {
-		this.wbDcode = wbDcode;
-	}
-
 	public UserTypesEntity getUserTypesEntity() {
 		return userTypesEntity;
 	}
@@ -152,53 +140,20 @@ public class UserRegEntity {
 		this.userTypesEntity = userTypesEntity;
 	}
 
-	public WbMaster getWebMaster() {
-		return webMaster;
+	public Integer getWbDcode() {
+		return wbDcode;
 	}
 
-	public void setWebMaster(WbMaster webMaster) {
-		this.webMaster = webMaster;
+	public void setWbDcode(Integer wbDcode) {
+		this.wbDcode = wbDcode;
 	}
 
-	public String getWbvcode() {
+	public Integer getWbvcode() {
 		return wbvcode;
 	}
 
-	public void setWbvcode(String wbvcode) {
+	public void setWbvcode(Integer wbvcode) {
 		this.wbvcode = wbvcode;
-	}
-
-	public UserRegEntity(String name, String aadhaar_id, String type_user, String mobile_phone, String userid,
-			String encpassword, Integer distCode, Integer mandCode, Integer villCode, Integer wbMcode, String wbDcode,
-			String wbvcode, UserTypesEntity userTypesEntity, WbMaster webMaster) {
-		super();
-		this.name = name;
-		this.aadhaar_id = aadhaar_id;
-		this.type_user = type_user;
-		this.mobile_phone = mobile_phone;
-		this.userid = userid;
-		this.encpassword = encpassword;
-		this.distCode = distCode;
-		this.mandCode = mandCode;
-		this.villCode = villCode;
-		this.wbMcode = wbMcode;
-		this.wbDcode = wbDcode;
-		this.wbvcode = wbvcode;
-		this.userTypesEntity = userTypesEntity;
-		this.webMaster = webMaster;
-	}
-
-	public UserRegEntity() {
-		super();
-	}
-
-	@Override
-	public String toString() {
-		return "UserRegEntity [name=" + name + ", aadhaar_id=" + aadhaar_id + ", type_user=" + type_user
-				+ ", mobile_phone=" + mobile_phone + ", userid=" + userid + ", encpassword=" + encpassword
-				+ ", distCode=" + distCode + ", mandCode=" + mandCode + ", villCode=" + villCode + ", wbMcode="
-				+ wbMcode + ", wbDcode=" + wbDcode + ", wbvcode=" + wbvcode + ", userTypesEntity=" + userTypesEntity
-				+ ", webMaster=" + webMaster + "]";
 	}
 
 }

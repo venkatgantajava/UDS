@@ -16,8 +16,10 @@ import com.ecrops.config.Encrypt;
 import com.ecrops.dto.AuthenticationRequest;
 import com.ecrops.entity.AppUser;
 import com.ecrops.entity.UserRegEntity;
+import com.ecrops.entity.WbMaster;
 import com.ecrops.service.AuthenticationService;
 import com.ecrops.service.UserRegService;
+import com.ecrops.service.WbMasterService;
 
 @Controller
 public class MainController {
@@ -31,6 +33,9 @@ public class MainController {
 	@Autowired
 	UserRegService userRegService;
 
+	@Autowired
+	WbMasterService wbMasterService;
+
 	AppUser user;
 
 	@GetMapping("/home")
@@ -39,7 +44,7 @@ public class MainController {
 
 		return "home";
 	}
-		
+
 	@GetMapping("/login")
 	public String loginPage(@ModelAttribute AuthenticationRequest authenticationRequest, Model model,
 			HttpServletRequest request) {
@@ -49,31 +54,15 @@ public class MainController {
 
 	@PostMapping("/login-auth")
 	public String loginUser(@ModelAttribute AuthenticationRequest authenticationRequest, Model model,
-			HttpServletRequest request, HttpSession httpSession) {
+			HttpServletRequest request, HttpSession session) {
 		try {
 			final UserDetails userDetails = authenticationService
 					.loadUserByUsername(authenticationRequest.getUsername());
-			String password = userDetails.getPassword();
 			String encpassword = authenticationRequest.getPassword();
-			String passwrd = encrypt.setSha256Password(password);
-			if (encpassword.equals(passwrd)) {
-				UserRegEntity entity = userRegService.getSessionValues(authenticationRequest.getUsername());
-
-				httpSession.setAttribute("dcode", entity.getDistCode());
-				httpSession.setAttribute("mcode", entity.getMandCode());
-				httpSession.setAttribute("village", entity.getVillCode());
-				httpSession.setAttribute("role", entity.getType_user());
-				httpSession.setAttribute("name", entity.getName());
-				httpSession.setAttribute("userid", entity.getUserid());
-				httpSession.setAttribute("typename", entity.getUserTypesEntity().getTypeName());
-				httpSession.setAttribute("userType", entity.getUserTypesEntity().getUserType());
-				httpSession.setAttribute("wbedname", entity.getWebMaster().getWbedname());
-				httpSession.setAttribute("wbemname", entity.getWebMaster().getWbemname());
-				httpSession.setAttribute("wbevname", entity.getWebMaster().getWbevname());
-				
-				httpSession.setAttribute("wbvcode", entity.getWbvcode());
-				httpSession.setAttribute("wbdcode", entity.getWbDcode());
-				httpSession.setAttribute("wbmcode", entity.getWbMcode());
+			String password = encrypt.setSha256Password(userDetails.getPassword());
+			if (encpassword.equals(password)) {
+				UserRegEntity userRegEntity = userRegService.getSessionValues(authenticationRequest.getUsername());
+				setSessionValues(session, userRegEntity);
 				return "home";
 			} else {
 				model.addAttribute("msg", "Invalid Credentials");
@@ -85,6 +74,41 @@ public class MainController {
 		}
 
 		return "home";
+	}
+
+	public void setSessionValues(HttpSession httpSession, UserRegEntity userRegEntity) {
+		String userType = userRegEntity.getType_user();
+		WbMaster wbMaster = null;
+
+		if (userType != null && "17".equalsIgnoreCase(userType)) {
+		} else if (userType != null && "5".equalsIgnoreCase(userType)) {
+			wbMaster = wbMasterService.getWbMasterDetailsForMandal(userRegEntity.getWbMcode(),
+					userRegEntity.getWbDcode());
+			httpSession.setAttribute("wbedname", wbMaster.getWbedname());
+			httpSession.setAttribute("wbemname", wbMaster.getWbemname());
+			httpSession.setAttribute("dcode", userRegEntity.getDistCode());
+			httpSession.setAttribute("mcode", userRegEntity.getMandCode());
+			httpSession.setAttribute("wbdcode", userRegEntity.getWbDcode());
+			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
+		} else if (userType != null && "25".equalsIgnoreCase(userType)) {
+			wbMaster = wbMasterService.getWbMasterDetailsForVillage(userRegEntity.getWbvcode(),
+					userRegEntity.getWbMcode(), userRegEntity.getWbDcode());
+			httpSession.setAttribute("wbedname", wbMaster.getWbedname());
+			httpSession.setAttribute("wbemname", wbMaster.getWbemname());
+			httpSession.setAttribute("wbevname", wbMaster.getWbevname());
+			httpSession.setAttribute("dcode", userRegEntity.getDistCode());
+			httpSession.setAttribute("wbdcode", userRegEntity.getWbDcode());
+			httpSession.setAttribute("mcode", userRegEntity.getMandCode());
+			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
+			httpSession.setAttribute("wbvcode", userRegEntity.getWbvcode());
+		}
+
+		httpSession.setAttribute("role", userRegEntity.getType_user());
+		httpSession.setAttribute("name", userRegEntity.getName());
+		httpSession.setAttribute("userid", userRegEntity.getUserid());
+		httpSession.setAttribute("typename", userRegEntity.getUserTypesEntity().getTypeName());
+		httpSession.setAttribute("userType", userRegEntity.getUserTypesEntity().getUserType());
+
 	}
 
 }

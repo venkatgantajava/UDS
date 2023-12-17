@@ -1,16 +1,22 @@
 package com.ecrops.repo;
 
-import java.util.List;
-import java.util.Map;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-public interface WbMasterRepo {
+import com.ecrops.entity.WbMaster;
 
-	@Query(value = "SELECT DISTINCT wbedname, wbemname, user_registration.userid AS uid FROM user_registration INNER JOIN wbvillage_mst ON wbvillage_mst.wbdcode = user_registration.wbdcode AND wbvillage_mst.wbmcode = user_registration.wbmcode WHERE wbvillage_mst.wbdcode = :wbedname AND wbvillage_mst.wbmcode = :wbemname AND user_registration.userid = :userId", nativeQuery = true)
-	public List<Map<String, Object>> getSessionValues(@Param("userId") String uid);
-	
-	
+@Repository
+public interface WbMasterRepo extends JpaRepository<WbMaster, Integer>  {
+
+	@Query(value = "select wb.wbedname, wb.wbemname, wb.wbevname, wb.wbdcode, wb.wbmcode, wb.wbvcode from wbvillage_mst wb where wb.wbdcode = :wbdcode and wb.wbmcode = :wbmcode limit 1", nativeQuery = true)
+
+	public WbMaster getWbMasterDetailsForMandal(@Param("wbmcode") Integer wbmcode, @Param("wbdcode") Integer wbdcode);
+
+	@Query(value = "select wb.wbedname, wb.wbemname, wb.wbevname, wb.wbdcode, wb.wbmcode, wb.wbvcode from wbvillage_mst wb where  wb.wbdcode = :wbdcode and wb.wbmcode = :wbmcode and wb.wbvcode = :wbvcode", nativeQuery = true)
+
+	public WbMaster getWbMasterDetailsForVillage(@Param("wbvcode") Integer wbvcode, @Param("wbmcode") Integer wbmcode,
+			@Param("wbdcode") Integer wbdcode);
 
 }

@@ -12,7 +12,7 @@ public class Districts {
 	
 	@Id 
 	@Column(name="wbdcode")
-	private int dcode;
+	private Integer dcode;
 	
 	private String dname;
 
@@ -21,17 +21,17 @@ public class Districts {
 	}
 	
 	
-	public Districts(int dcode, String dname) {
+	public Districts(Integer dcode, String dname) {
 		super();
 		this.dcode = dcode;
 		this.dname = dname;
 	}
 
-	public int getDcode() {
+	public Integer getDcode() {
 		return dcode;
 	}
 
-	public void setDcode(int dcode) {
+	public void setDcode(Integer dcode) {
 		this.dcode = dcode;
 	}
 

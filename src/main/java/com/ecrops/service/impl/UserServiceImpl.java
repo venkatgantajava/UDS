@@ -20,13 +20,7 @@ public class UserServiceImpl implements UserRegService {
 
 	@Override
 	public UserRegEntity getSessionValues(String userId) {
-		String userType = userRegRepo.getUserType(userId);
-		
-		if (userType != null && "5".equalsIgnoreCase(userType)) {
-			return userRegRepo.getSessionValuesWithoutVcode(userId);
-		} else {
-			return userRegRepo.getSessionValuesWithVcode(userId);
-		}
+		return userRegRepo.getSessionValues(userId);
 	}
 
 }
