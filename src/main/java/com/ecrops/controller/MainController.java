@@ -80,7 +80,9 @@ public class MainController {
 		String userType = userRegEntity.getType_user();
 		WbMaster wbMaster = null;
 
+		String typeName = userRegEntity.getUserTypesEntity().getTypeName();
 		if (userType != null && "17".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
 		} else if (userType != null && "5".equalsIgnoreCase(userType)) {
 			wbMaster = wbMasterService.getWbMasterDetailsForMandal(userRegEntity.getWbMcode(),
 					userRegEntity.getWbDcode());
@@ -90,6 +92,10 @@ public class MainController {
 			httpSession.setAttribute("mcode", userRegEntity.getMandCode());
 			httpSession.setAttribute("wbdcode", userRegEntity.getWbDcode());
 			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
+
+			getHeaderMessage(userRegEntity.getName(), typeName, wbMaster.getWbedname(),
+					wbMaster.getWbemname(), "", httpSession);
+
 		} else if (userType != null && "25".equalsIgnoreCase(userType)) {
 			wbMaster = wbMasterService.getWbMasterDetailsForVillage(userRegEntity.getWbvcode(),
 					userRegEntity.getWbMcode(), userRegEntity.getWbDcode());
@@ -101,6 +107,30 @@ public class MainController {
 			httpSession.setAttribute("mcode", userRegEntity.getMandCode());
 			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
 			httpSession.setAttribute("wbvcode", userRegEntity.getWbvcode());
+
+			getHeaderMessage(userRegEntity.getName(), typeName, wbMaster.getWbedname(),
+					wbMaster.getWbemname(), wbMaster.getWbevname(), httpSession);
+
+		} else if (userType != null && "31".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
+		} else if (userType != null && "9".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
+		} else if (userType != null && "22".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
+		} else if (userType != null && "19".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
+		} else if (userType != null && "18".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
+		} else if (userType != null && "30".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
+		} else if (userType != null && "2".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
+		} else if (userType != null && "46".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
+		} else if (userType != null && "44".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
+		} else if (userType != null && "45".equalsIgnoreCase(userType)) {
+			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
 		}
 
 		httpSession.setAttribute("role", userRegEntity.getType_user());
@@ -109,6 +139,26 @@ public class MainController {
 		httpSession.setAttribute("typename", userRegEntity.getUserTypesEntity().getTypeName());
 		httpSession.setAttribute("userType", userRegEntity.getUserTypesEntity().getUserType());
 
+	}
+
+	public void getHeaderMessage(String name, String typeName, String district, String mandal, String village,
+			HttpSession httpSession) {
+
+		String headerMessage = String.format("Welcome to %s %s %s %s %s", name, typeName, getVillage(village),
+				getMandal(mandal), getDistrict(district));
+		httpSession.setAttribute("headerMessage", headerMessage);
+	}
+
+	public String getVillage(String village) {
+		return village != null && !village.isEmpty() ? village + ", " : "";
+	}
+
+	public String getMandal(String mandal) {
+		return mandal != null && !mandal.isEmpty() ? mandal + ", " : "";
+	}
+
+	public String getDistrict(String district) {
+		return district != null && !district.isEmpty() ? district + " District" : "";
 	}
 
 }
