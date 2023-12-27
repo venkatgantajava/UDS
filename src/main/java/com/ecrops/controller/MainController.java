@@ -93,8 +93,8 @@ public class MainController {
 			httpSession.setAttribute("wbdcode", userRegEntity.getWbDcode());
 			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
 
-			getHeaderMessage(userRegEntity.getName(), typeName, wbMaster.getWbedname(),
-					wbMaster.getWbemname(), "", httpSession);
+			getHeaderMessage(userRegEntity.getName(), typeName, wbMaster.getWbedname(), wbMaster.getWbemname(), "",
+					httpSession);
 
 		} else if (userType != null && "25".equalsIgnoreCase(userType)) {
 			wbMaster = wbMasterService.getWbMasterDetailsForVillage(userRegEntity.getWbvcode(),
@@ -108,13 +108,11 @@ public class MainController {
 			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
 			httpSession.setAttribute("wbvcode", userRegEntity.getWbvcode());
 
-			getHeaderMessage(userRegEntity.getName(), typeName, wbMaster.getWbedname(),
-					wbMaster.getWbemname(), wbMaster.getWbevname(), httpSession);
+			getHeaderMessage(userRegEntity.getName(), typeName, wbMaster.getWbedname(), wbMaster.getWbemname(),
+					wbMaster.getWbevname(), httpSession);
 
 		} else if (userType != null && "31".equalsIgnoreCase(userType)) {
 			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
-			
-			
 		} else if (userType != null && "9".equalsIgnoreCase(userType)) {
 			getHeaderMessage(userRegEntity.getName(), typeName, "", "", "", httpSession);
 		} else if (userType != null && "22".equalsIgnoreCase(userType)) {
@@ -156,7 +154,7 @@ public class MainController {
 	}
 
 	public String getMandal(String mandal) {
-		return mandal != null && !mandal.isEmpty() ? mandal + "::Mandal, ": "";
+		return mandal != null && !mandal.isEmpty() ? mandal + "::Mandal, " : "";
 	}
 
 	public String getDistrict(String district) {
