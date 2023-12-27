@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Webland Data</title>
+</head>
+<body>
+<h2>Webland Data</h2>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>crDistCode</th>
+        <th>crMandCode</th>
+        <th>crVcode</th>
+        <th>crFarmerUid</th>
+        <th>farmerName</th>
+        <th>fatherName</th>
+        <th>mobileNo</th>
+        <th>khNo</th>
+        <th>crSno</th>
+        <th>totExtent</th>
+        <th>dtCrt</th>
+        <th>occupName</th>
+        <th>occupFname</th>
+        <th>occupExtent</th>
+        <th>regNo</th>
+        <th>sJointOccupant</th>
+        <th>cultivableLand</th>
+        <th>uncultivableLand</th>
+        <th>cropYear</th>
+        <th>season</th>
+        <th>status</th>
+        <th>insflag</th>
+        <th>partKey</th>
+        <th>digitallySigned</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over downloaded data and display each record -->
+    <tr th:each="data : ${cropDetails}">
+        <td th:text="${data.crDistCode}"/>
+        <td th:text="${data.crMandCode}"/>
+        <td th:text="${data.crVcode}"/>
+        <td th:text="${data.crFarmeruid}"/>
+        <td th:text="${data.farmername}"/>
+        <td th:text="${data.fathername}"/>
+        <td th:text="${data.mobileno}"/>
+        <td th:text="${data.khNo}"/>
+        <td th:text="${data.crSno}"/>
+        <td th:text="${data.totExtent}"/>
+        <td th:text="${data.dtCrt}"/>
+        <td th:text="${data.occupname}"/>
+        <td th:text="${data.occupfname}"/>
+        <td th:text="${data.occupExtent}"/>
+        <td th:text="${data.regno}"/>
+        <td th:text="${data.sjointoccupant}"/>
+        <td th:text="${data.cultivableLand}"/>
+        <td th:text="${data.uncultivableLand}"/>
+        <td th:text="${data.cropyear}"/>
+        <td th:text="${data.season}"/>
+        <td th:text="${data.status}"/>
+        <td th:text="${data.insflag}"/>
+        <td th:text="${data.partKey}"/>
+        <td th:text="${data.digitallySigned}"/>
+    </tr>
+    </tbody>
+</table>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(function(){
+        var message='[[${message}]]';
+        alert(message);
+    });
+</script>
+</body>
+
+</html>

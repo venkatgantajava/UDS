@@ -3,7 +3,6 @@ package com.ecrops.entity;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "user_registration", uniqueConstraints = @UniqueConstraint(columnNames = "userid"))
+@Table(name = "user_registration")
 public class AppUser {
 
 	@Id
@@ -25,19 +24,14 @@ public class AppUser {
 	private String userid;
 
 	private String encpassword;
-	
-  @Column(name="wbdcode")
-	private int dcode;
-  
-  @Column(name="wbmcode")
 
-	private int mcode;
+	private String district;
 
-	private String status;
+	private String blockortehsil;
+
+	private String village;
 
 	private String type_user;
-	
-	// private int opunitcode;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userid"), inverseJoinColumns = @JoinColumn(name = "id"))
@@ -45,21 +39,6 @@ public class AppUser {
 
 	public AppUser() {
 		super();
-	}
-
-	public AppUser(String userid, String encpassword, int dcode, int mcode, String status, String type_user,
-			Collection<Roles> roles) {
-		super();
-		this.userid = userid;
-		this.encpassword = encpassword;
-		this.dcode = dcode;
-		this.mcode = mcode;
-		this.status = status;
-		this.type_user = type_user;
-		this.roles = roles;
-
-		// this.opunitcode = opunitcode;
-		
 	}
 
 	public String getUserid() {
@@ -78,36 +57,28 @@ public class AppUser {
 		this.encpassword = encpassword;
 	}
 
-	public Collection<Roles> getRoles() {
-		return roles;
+	public String getDistrict() {
+		return district;
 	}
 
-	public void setRoles(Collection<Roles> roles) {
-		this.roles = roles;
+	public void setDistrict(String district) {
+		this.district = district;
 	}
 
-	public int getDcode() {
-		return dcode;
+	public String getBlockortehsil() {
+		return blockortehsil;
 	}
 
-	public void setDcode(int dcode) {
-		this.dcode = dcode;
+	public void setBlockortehsil(String blockortehsil) {
+		this.blockortehsil = blockortehsil;
 	}
 
-	public int getMcode() {
-		return mcode;
+	public String getVillage() {
+		return village;
 	}
 
-	public void setMcode(int mcode) {
-		this.mcode = mcode;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setVillage(String village) {
+		this.village = village;
 	}
 
 	public String getType_user() {
@@ -118,11 +89,36 @@ public class AppUser {
 		this.type_user = type_user;
 	}
 
-//	 	public int getOpunitcode() { 
-//		return opunitcode; }
-//	
-//	 public void setOpunitcode(int opunitcode) { 
-//	 this.opunitcode = opunitcode; 
-//	 }
+	public Collection<Roles> getRoles() {
+		return roles;
+	}
 
+	public void setRoles(Collection<Roles> roles)
+	{
+		this.roles = roles;
+	}
+
+	@Override
+	public String toString() {
+		return "AppUser [userid=" + userid + ", encpassword=" + encpassword + ", district=" + district
+				+ ", blockortehsil=" + blockortehsil + ", village=" + village + ", type_user=" + type_user + ", roles="
+				+ roles + ", getUserid()=" + getUserid() + ", getEncpassword()=" + getEncpassword() + ", getDistrict()="
+				+ getDistrict() + ", getBlockortehsil()=" + getBlockortehsil() + ", getVillage()=" + getVillage()
+				+ ", getType_user()=" + getType_user() + ", getRoles()=" + getRoles() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
+	public AppUser(String userid, String encpassword, String district, String blockortehsil, String village,
+			String type_user, Collection<Roles> roles) {
+		super();
+		this.userid = userid;
+		this.encpassword = encpassword;
+		this.district = district;
+		this.blockortehsil = blockortehsil;
+		this.village = village;
+		this.type_user = type_user;
+		this.roles = roles;
+	}
+
+	
 }

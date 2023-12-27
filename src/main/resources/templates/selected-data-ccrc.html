@@ -1,0 +1,73 @@
+<!-- WeblandCropDetails.html -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+ 
+    <title>Crop Details</title>
+
+    <style>
+        /* Custom styles for the selected crop details */
+        .webland-container {
+            background-color: #f8f9fa; /* Light gray background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .selected-village {
+            font-weight: bold;
+            color: darkgreen;
+        }
+
+        .total-records {
+            font-weight: bold;
+            color: #007bff; /* Blue color */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Include your common header content -->
+    <div th:replace="homePage :: content"></div>
+
+    <div class="container-fluid header-design-login">
+        <div class="row justify-content-center align-items-center" style="height: 10vh;">
+            <div class="webland-container">
+                <h5 style="color:black">Selected Crop Details</h5>
+                <br />
+                <div>
+                    <p class="selected-village">Selected Village: <span th:text="${selectedVillageName}"></span></p>
+                    <p class="total-records">Total No. Records: <span th:text="${TotalRecords}"></span></p>
+                    
+                     <!-- "GO BACK" button -->
+                    <button type="button" class="btn btn-info go-back-button" onclick="goBack()">Go Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function () {
+            var message = '[[${message}]]';
+            alert(message);
+        });
+
+        // Function to go back to the first page
+        function goBack() {
+            window.location.href = '/ccrcCropEntry'; // Replace with the actual URL of your first page
+        }
+    </script>
+</body>
+
+</html>

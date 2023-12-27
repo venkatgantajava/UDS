@@ -10,11 +10,11 @@ import com.ecrops.entity.WbMaster;
 @Repository
 public interface WbMasterRepo extends JpaRepository<WbMaster, Integer>  {
 
-	@Query(value = "select wb.wbedname, wb.wbemname, wb.wbevname, wb.wbdcode, wb.wbmcode, wb.wbvcode from wbvillage_mst wb where wb.wbdcode = :wbdcode and wb.wbmcode = :wbmcode limit 1", nativeQuery = true)
+	@Query(value = "select wb.wbvname, wb.wbedname, wb.wbemname, wb.wbevname, wb.wbdcode, wb.wbmcode, wb.wbvcode from wbvillage_mst wb where wb.wbdcode = :wbdcode and wb.wbmcode = :wbmcode limit 1", nativeQuery = true)
 
 	public WbMaster getWbMasterDetailsForMandal(@Param("wbmcode") Integer wbmcode, @Param("wbdcode") Integer wbdcode);
 
-	@Query(value = "select wb.wbedname, wb.wbemname, wb.wbevname, wb.wbdcode, wb.wbmcode, wb.wbvcode from wbvillage_mst wb where  wb.wbdcode = :wbdcode and wb.wbmcode = :wbmcode and wb.wbvcode = :wbvcode", nativeQuery = true)
+	@Query(value = "select wb.wbvname, wb.wbedname, wb.wbemname, wb.wbevname, wb.wbdcode, wb.wbmcode, wb.wbvcode from wbvillage_mst wb where  wb.wbdcode = :wbdcode and wb.wbmcode = :wbmcode and wb.wbvcode = :wbvcode", nativeQuery = true)
 
 	public WbMaster getWbMasterDetailsForVillage(@Param("wbvcode") Integer wbvcode, @Param("wbmcode") Integer wbmcode,
 			@Param("wbdcode") Integer wbdcode);

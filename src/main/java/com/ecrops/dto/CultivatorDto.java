@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cr_booking")
+@Table(name = "cr_booking",schema = "ecrop2023")
 public class CultivatorDto {
 
 	@EmbeddedId

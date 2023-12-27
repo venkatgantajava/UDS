@@ -65,7 +65,7 @@
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script>jQuery(document).ready(function ($) {
 			$('img').removeAttr('width height');
 		});
@@ -78,7 +78,8 @@
 	<script src="<%=request.getContextPath()%>/scripts/hscripts/custom.js"></script>-->
 
 	<!--JQcharts-->
-	<!----><script src="<%=request.getContextPath()%>/script/validations.js" language="javascript"></script>
+	<!---->
+	<script src="<%=request.getContextPath()%>/script/validations.js" language="javascript"></script>
 	<script language="javascript" src="./js/jquery1/md5_1.js"></script>
 	<script language="javascript" src="./js/sha256.js"></script>
 	<!-- JAVASCRIPTS -->
@@ -88,7 +89,7 @@
 	<script src="layout/scripts/jquery.flexslider-min.js"></script>-->
 	<!-- IE9 Placeholder Support -->
 	<!--<script src="layout/scripts/jquery.placeholder.min.js"></script>-->
-	
+
 
 
 	<script type="text/javascript">
@@ -115,14 +116,17 @@
 			var final = a + b + c + d + e;
 			document.getElementById("capt").value = final;
 		}
-		function validcap() {
-			var stg1 = document.getElementById('capt').value;
-			var stg2 = document.getElementById('textinput').value;
-			if (stg1 != stg2) {
-				alert("Please enter a valid captcha");
-				return false
-			}
-		}
+		function validcap(event) {
+    var stg1 = document.getElementById('capt').value;
+    var stg2 = document.getElementById('textinput').value;
+
+    if (stg1 !== stg2) {
+        alert("Please enter a valid captcha");
+        event.preventDefault(); 
+        return false;
+    }
+}
+
 
 		window.onload = cap;
 	</script>
@@ -281,8 +285,9 @@
 					<br>
 					<div class="form-group">
 						<input type="submit" class="btn btn-lg btn-success btn-block" value="submit"
-							onclick="validcap()" />
-						
+							onclick="validcap(event)" />
+
+
 					</div>
 
 					<div>

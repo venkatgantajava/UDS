@@ -16,9 +16,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests(requests -> requests.antMatchers("/registration/**", "/custom/**", "/js/**", "/css/**",
 				"/img/**", "/images/**", "/home/**", "/cultivator/**", "/cultivator/kathaNo/**", "/bootstrap/**",
-				"/customCSS/**", "/customJS/**", "/fonts/**", "/sass/**", "/login-auth/**", "/cultivator/owner/update",  
-				"/cultivator/save", "/cultivator/update", "/cultivator/delete", "cultivator/extent").permitAll().anyRequest()
-				.permitAll()).formLogin(login -> login.loginPage("/login").permitAll().defaultSuccessUrl("/", true))
+				"/customCSS/**", "/customJS/**", "/fonts/**", "/sass/**", "/login-auth/**", "/cultivator/owner/update",
+				"/cultivator/save", "/cultivator/update", "/cultivator/delete", "cultivator/extent",
+				"/weblandCropEntry/**", "/fetch-crop-data/", "/ccrcCropEntry/**", "/fetch-ccrc-crop-data/**",
+				"/rest/api/Ccrc-Crop/**", "/rest/api/webland-crop/villages","/allocOfSurveyNo/**","/getPattaDetails/**","/saveSelection/**",
+				"/getRevenueVillage/**","/getEmployeeByRevenue/**","/getDetails/**","/selectionOfSurveyNo/**").permitAll().anyRequest().permitAll()) 
+				.formLogin(login -> login.loginPage("/login").permitAll().defaultSuccessUrl("/", true))
 				.logout(logout -> {
 					try {
 						logout.invalidateHttpSession(true).clearAuthentication(true)

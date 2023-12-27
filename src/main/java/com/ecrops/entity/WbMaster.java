@@ -28,6 +28,9 @@ public class WbMaster {
 	@Column(name = "wbvcode")
 	private Integer wbvcode;
 
+	@Column(name = "wbvname")
+	private String wbvname;
+
 	public String getWbedname() {
 		return wbedname;
 	}
@@ -75,4 +78,13 @@ public class WbMaster {
 	public void setWbvcode(Integer wbvcode) {
 		this.wbvcode = wbvcode;
 	}
+
+	public String getWbvname() {
+		return wbvname;
+	}
+
+	public void setWbvname(String wbvname) {
+		this.wbvname = wbvname;
+	}
+
 }

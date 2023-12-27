@@ -112,3 +112,20 @@ img {
 .container-xl {
 	max-width: 1520px !important;
 }
+
+
+/*CCRC*/
+
+/* Custom styles for the NProgress bar */
+#nprogress .bar {
+	background: deepskyblue !important;
+	height: 4px !important;
+	/* Set the desired thickness */
+}
+
+/* Custom styles for the "Please wait" message */
+#pleaseWaitMessage {
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 10px;
+}

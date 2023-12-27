@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cr_booking")
+@Table(name = "cr_booking",schema = "ecrop2023")
 public class Cultivator {
 
 	@Id
@@ -78,7 +78,7 @@ public class Cultivator {
 	@Column(name = "updateon", insertable = true, updatable = false)
 	private Timestamp updateon;
 
-	@Column(name = "downloaded", insertable = false, updatable = false)
+	@Column(name = "downloaded", insertable = true, updatable = true)
 	private String downloaded;
 
 	public Integer getBookingId() {

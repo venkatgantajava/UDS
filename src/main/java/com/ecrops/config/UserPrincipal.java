@@ -1,7 +1,6 @@
 package com.ecrops.config;
 
 import java.util.ArrayList;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -34,34 +33,18 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		
+		// TODO Auto-generated method stub
 		return user.getEncpassword();
 	}
 
 	@Override
 	public String getUsername() {
-	
+		// TODO Auto-generated method stub
 		return user.getUserid();
 	}
 	
-	public int getDcode() {
-		return user.getDcode();
-	}
-
-	public int getMcode() {
-		return user.getMcode();
-	}
-
-	public String getStatus() {
-		return user.getStatus();
-	}
-	 
-	 
-//	 public int getOpunitcode() { 
-//	 user.getOpunitcode(); }
-	
-	
 	public String getTypeUser() {
+		// TODO Auto-generated method stub
 		return user.getType_user();
 	}
 	
@@ -84,5 +67,6 @@ public class UserPrincipal implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+	
 
 }

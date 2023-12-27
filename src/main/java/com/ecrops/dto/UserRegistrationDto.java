@@ -10,7 +10,12 @@ public class UserRegistrationDto {
 	private String status;
 	private String type_user;
 	
-	//private int  opunitcode;
+	
+	private String district;
+	private String  blockortehsil;
+	private String village;
+	
+
 	
 	public String getStatus() {
 		return status;
@@ -25,12 +30,7 @@ public class UserRegistrationDto {
 	public void setType_user(String type_user) {
 		this.type_user = type_user;
 	}
-	
-//	public int getOpunitcode() {
-//		return opunitcode;
-//	}
-//	public void setOpunitcode(int opunitcode) {
-//		this.opunitcode = opunitcode;}
+
 		
 	public UserRegistrationDto(String userid, int dcode, int mcode, String encpassword, String status, int opunitcode,
 			String type_user) {
@@ -67,5 +67,25 @@ public class UserRegistrationDto {
 	public void setEncpassword(String encpassword) {
 		this.encpassword = encpassword;
 	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getBlockortehsil() {
+		return blockortehsil;
+	}
+	public void setBlockortehsil(String blockortehsil) {
+		this.blockortehsil = blockortehsil;
+	}
+	public String getVillage() {
+		return village;
+	}
+	public void setVillage(String village) {
+		this.village = village;
+	}
+	
+	
 
 }

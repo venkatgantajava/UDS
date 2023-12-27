@@ -18,7 +18,7 @@ $(document).ready(function() {
 		p = p || 10;
 		return parseFloat(this.toFixed(p));
 	};
-	
+
 });
 
 
@@ -37,7 +37,7 @@ function onUserTypeChange(index, selectedValue) {
 			return false;
 		}
 		setModalValues(index, "O", "Owner");
-		document.getElementById("aadharNo" + index).disabled = true;
+		//		document.getElementById("aadharNo" + index).disabled = true;
 		$('#ownerOrEnjoyerModal').modal('show');
 	} else if (selectedValue === '2') {
 		var availableExtent = parseFloat($("#availableExtent" + index).val()).round(3);
@@ -59,7 +59,7 @@ function onUserTypeChange(index, selectedValue) {
 			swal.fire("Already Registered as Owner!", "", "warning");
 			return false;
 		}
-		document.getElementById("aadharNo" + index).disabled = false;
+		//		document.getElementById("aadharNo" + index).disabled = false;
 		setModalValues(index, "L", 'Enjoyer');
 		$('#ownerOrEnjoyerModal').modal('show');
 	}
@@ -83,8 +83,9 @@ function setModalValues(index, cultivatorType, roleType) {
 	$("#ocNameLabel" + suffix).text($("#ocName" + index).val());
 	$("#fatherNameLabel" + suffix).text($("#fatherName" + index).val());
 	$("#aadharNoLabel" + suffix).text($("#aadharNo" + index).val());
-
-
+	//	if (cultivatorType == 'O') {
+	//		$("#aadharNo" + suffix).text($("#aadharNo" + index).val());
+	//	}
 	$("#cultivatorModalHeaderId" + suffix).text(roleType);
 	$("#cultivatorModalFieldId1" + suffix).text(roleType);
 
@@ -96,11 +97,17 @@ function setModalValues(index, cultivatorType, roleType) {
 	$("#cr_season" + suffix).val($("#cr_season" + index).val());
 	$("#cultivatorType" + suffix).val(cultivatorType);
 
-	if (cultivatorType == 'O' || cultivatorType == 'L') {
+	if (cultivatorType == 'O') {
 		$("#ocName" + suffix).val($("#ocName" + index).val());
 		$("#fatherName" + suffix).val($("#fatherName" + index).val());
 		$("#aadharNo" + suffix).val($("#aadharNo" + index).val());
-
+		$("#bookingId" + suffix).val($("#bookingId" + index).val());
+		$("#cultivatorIndexOE").val(index);
+	}
+	else if (cultivatorType == 'L') {
+		$("#ocName" + suffix).val($("#ocName" + index).val());
+		$("#fatherName" + suffix).val($("#fatherName" + index).val());
+		//		$("#aadharNo" + suffix).val($("#aadharNo" + index).val());
 		$("#bookingId" + suffix).val($("#bookingId" + index).val());
 		$("#cultivatorIndexOE").val(index);
 	} else {
@@ -131,6 +138,15 @@ function updateOwnerOrEnjoerDetails(sufix) {
 		return;
 	}
 
+
+	var index = $("#cultivatorIndexOE").val();
+	var availableExtent = parseFloat($("#availableExtent" + index).val()).round(3);
+	var occupantExtent = parseFloat($("#occupantExtentOE").val()).round(3);
+	if (occupantExtent > availableExtent) {
+		swal.fire("Entered Occupant Extent is more than available extent. Allowed Extent is  ::  " + availableExtent, "", "warning");
+		return false;
+	}
+
 	Swal.fire({
 		title: "Do you want to update the changes?",
 		showDenyButton: true,
@@ -149,6 +165,7 @@ function updateOwnerOrEnjoerDetails(sufix) {
 					"occupantExtent": $("#occupantExtent" + sufix).val(),
 					"updatedby": $("#userid").val(),
 					"cultivatorType": $("#cultivatorType" + sufix).val(),
+					"downloaded": 'N'
 				},
 				success: function(resData) {
 					var index = $("#cultivatorIndexOE").val();
@@ -232,7 +249,7 @@ function editCultivatorDetails(index) {
 
 			$("#anubhavadarExtent" + index).val(anubhavadarExtent);
 
-			$('#occupantExtent' + index).attr('title', "Total Extent is : " + anubhavadarExtent + " and Available Extent is : " + availableExtent);
+			//			$('#occupantExtent' + index).attr('title', "Total Extent is  ::  " + anubhavadarExtent + " and Available Extent is :: " + availableExtent);
 			$('#occupantExtent' + index).tooltip();
 		},
 		error: function(xhr, err) {
@@ -305,12 +322,12 @@ function updateCultivatorDetails(index) {
 		if (totalOccupantExtent > anubhavadarExtent) {
 			var allowedOccupantExtent = existingOccupantExtent + existingAvailableExtent;
 			swal.fire("Existing Occupant Extent is :: " + existingOccupantExtent + ", Available Extent is :: " + existingAvailableExtent
-				+ " and Allowed Total Occupant Extent is :: " + allowedOccupantExtent, "",  "warning");
+				+ " and Allowed Total Occupant Extent is :: " + allowedOccupantExtent, "", "warning");
 			return false;
 		}
 
 		if (totalOccupantExtent > anubhavadarExtent) {
-			swal.fire("Entered Occupant Extent is morethan available extent. Allowed Extent is: " + existingAvailableExtent, "", "warning");
+			swal.fire("Entered Occupant Extent is morethan available extent. Allowed Extent is :: " + existingAvailableExtent, "", "warning");
 			return false;
 		}
 	}
@@ -424,7 +441,7 @@ function saveCultivatorData() {
 	var availableExtent = parseFloat($("#availableExtent" + index).val()).round(3);
 	var occupantExtent = parseFloat($("#occupantExtent").val()).round(3);
 	if (occupantExtent > availableExtent) {
-		swal.fire("Entered Occupant Extent is morethan available extent. Allowed Extent is - " + availableExtent,"", "warning");
+		swal.fire("Entered Occupant Extent is morethan available extent. Allowed Extent is - " + availableExtent, "", "warning");
 		return false;
 	}
 
@@ -448,6 +465,7 @@ function saveCultivatorData() {
 			"cultivatorType": $("#cultivatorType").val(),
 			"owner_tenant": $("#owner_tenant").val(),
 			"updatedby": $("#userid").val(),
+			"downloaded": 'N'
 		},
 		success: function(data) {
 			searchData();

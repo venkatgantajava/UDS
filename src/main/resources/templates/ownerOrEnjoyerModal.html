@@ -23,11 +23,13 @@
 									<input name="ocNameOE" type="hidden" id="ocNameOE" />
 									<input name="fatherNameOE" type="hidden" id="fatherNameOE">
 									<input name="crSnoOE" type="hidden" id="crSnoOE" />
+<!--								<input name="downloadedOE" type="hidden" id="downloadedOE" />-->
+									<input name="downloaded" type="hidden" id="downloaded" />
 									<input name="part_keyOE" type="hidden" id="part_keyOE" />
 									<input name="cr_vcodeOE" type="hidden" id="cr_vcodeOE" />
 									<input name="cr_yearOE" type="hidden" id="cr_yearOE" />
 									<input name="cr_seasonOE" type="hidden" id="cr_seasonOE" />
-									<input name="owner_tenantOE" type="hidden" id="owner_tenantOE" />
+									<input name="availableExtentOE" type="hidden" id="availableExtentOE" />
 									<input name="cultivatorIndexOE" type="hidden" id="cultivatorIndexOE" />
 									<input name="refBookingIdOE" type="hidden" id="refBookingIdOE" />
 									<input name="khNoOE" type="hidden" id="khNoOE" />
@@ -43,10 +45,11 @@
 								<td><b id="fatherNameLabelOE"></b></td>
 							</tr>
 							<tr>
-								<td><label for="id" class="col-form-label">Aadhar No</label>
+								<td><label for="id" class="col-form-label">Aadhaar No</label>
 								</td>
 								<td> - </td>
-								<td><input type="text" name="aadharNoOE" class="form-control" id="aadharNoOE" disabled/></td>
+								<td><input type="number" name="aadharNoOE" class="form-control" id="aadharNoOE"
+										disabled /></td>
 							</tr>
 							<tr>
 								<td><label for="id" class="col-form-label">OccupantExtent</label>
@@ -55,7 +58,8 @@
 								<td>
 									<div class="col-sm-9" style="padding-left:0px;">
 										<input type="number" name="occupantExtentOE" class="form-control"
-											id="occupantExtentOE" placeholder="Please Enter Occupant Extent" required />
+											id="occupantExtentOE" placeholder="Please Enter Occupant Extent"
+											onkeypress="if(this.value.length > 11) return false" />
 										<div class="invalid-feedback">
 											Please Enter Occupant Extent.
 										</div>
