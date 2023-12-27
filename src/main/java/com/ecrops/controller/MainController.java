@@ -144,21 +144,21 @@ public class MainController {
 	public void getHeaderMessage(String name, String typeName, String district, String mandal, String village,
 			HttpSession httpSession) {
 
-		String headerMessage = String.format("Welcome to %s %s %s %s %s", name, typeName, getVillage(village),
+		String headerMessage = String.format("Welcome to %s, %s, %s %s %s", name, typeName, getVillage(village),
 				getMandal(mandal), getDistrict(district));
 		httpSession.setAttribute("headerMessage", headerMessage);
 	}
 
 	public String getVillage(String village) {
-		return village != null && !village.isEmpty() ? village + "::Village, " : "";
+		return village != null && !village.isEmpty() ? "Village :: " + village + ", ": "";
 	}
 
 	public String getMandal(String mandal) {
-		return mandal != null && !mandal.isEmpty() ? mandal + "::Mandal, " : "";
+		return mandal != null && !mandal.isEmpty() ? "Mandal :: " + mandal + ", ": "";
 	}
 
 	public String getDistrict(String district) {
-		return district != null && !district.isEmpty() ? district + " ::District" : "";
+		return district != null && !district.isEmpty() ? " District :: " + district: "";
 	}
 
 }

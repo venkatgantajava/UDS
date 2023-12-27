@@ -39,8 +39,8 @@ public class SelOfSrvyNoController {
 		System.out.println("my session vcode is"+vcode);
 		
 		List<ActiveSeasonProjection> activeSeason = cropYearRepo.getActiveSeason();
-	    List<ActiveSeasonProjection> rbk = villageRevenueRepo.getVillageListByRbk(Integer.parseInt(vcode));
-	    System.out.println("wbvcode"+rbk.get(0).getWbvname());
+	    List<ActiveSeasonProjection> rbk = villageRevenueRepo.getVillageListByRbk(Integer.parseInt(vcode != null ? vcode : "0"));
+	    
 
 		model.addAttribute("activeseason", activeSeason);
 		model.addAttribute("rbk", rbk);

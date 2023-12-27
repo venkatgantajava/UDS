@@ -12,7 +12,7 @@ import com.ecrops.projection.ActiveSeasonProjection;
 public interface VillSectionRepository extends JpaRepository<VillageSecDetEntity, Integer> {
 	
 
-	@Query(value = "select distinct vcode,vname from ecrop2023.vill_sec_det where vcode in (select rbkcode from ecrop2023.emp_rbk_map where mcode=:mcode) order by vname", nativeQuery = true)
+	@Query(value = "select distinct vcode,vname from vill_sec_det where vcode in (select rbkcode from ecrop2023.emp_rbk_map where mcode=:mcode) order by vname", nativeQuery = true)
 	public List<ActiveSeasonProjection> getRbk(@Param("mcode") Integer mcode);
 	
 	

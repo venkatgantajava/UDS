@@ -2,13 +2,10 @@ package com.ecrops.controller;
 
 import java.util.List;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.ecrops.entity.AppUser;
 import com.ecrops.entity.Employeename;
-import com.ecrops.projection.ActiveSeasonProjection;
 import com.ecrops.projection.EmployeeName;
 import com.ecrops.projection.InchargeRbkProjection;
 import com.ecrops.projection.RbkDetailsProjection;
@@ -59,59 +55,25 @@ public class EmployeeController {
 	private SaveEmployeeDeatilsRepository deatilsRepository;
 	@Autowired
 	private AppUserRepo appUsersRepo;
-	
+
 	@Autowired
 	private VillRepo villRepo;
-	
+
 	@Autowired
 	private EmpRepo empRepo;
-	
+
 	String email = "";
 	AppUser user;
-	
-	
-	
-	
+
 	@GetMapping("/employeeprofile")
 	public String employeeprofile(HttpSession httpSession, Model model) {
-		
-		String name="Welcome to";
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		email = authentication.getName();
-		user = appUsersRepo.findByUserid(email);
-		String type_user = user.getType_user();
-		String vill_Name = user.getVillage();
-		String mand_Name = user.getBlockortehsil();
-		String dist_Name = user.getDistrict();
-		List<ActiveSeasonProjection> userType = employeeService.getUserType(Integer.parseInt(type_user));
 
-		httpSession.setAttribute("dcode", user.getDistrict());
-		httpSession.setAttribute("mcode", user.getBlockortehsil());
-		httpSession.setAttribute("village", user.getVillage());
-		httpSession.setAttribute("role", user.getType_user());
-		httpSession.setAttribute("userid", user.getUserid());
-		httpSession.setAttribute("name", userType.get(0).getName());
-		
-		String  nameOfRole = (String)httpSession.getAttribute("name");
-		if (type_user.equals("25")) {
-			List<VillageName> villName = employeeService.getVillName(Integer.parseInt(vill_Name));
-			List<VillageName> mandalName = employeeService.getMandalName(Integer.parseInt(mand_Name));
-			List<VillageName> distName = employeeService.getDistName(Integer.parseInt(dist_Name));
-			name = name +" "+ nameOfRole + " " + villName.get(0).getVname() + " " +mandalName.get(0).getMname()+ " " + distName.get(0).getDname();
-			model.addAttribute("welcome", name);
-		}
-		if (type_user.equals("5")) {
-			List<VillageName> mandalName = employeeService.getMandalName(Integer.parseInt(mand_Name));
-			List<VillageName> distName = employeeService.getDistName(Integer.parseInt(dist_Name));
-			name = name +" " + nameOfRole + " " +  mandalName.get(0).getMname()+ " "+  distName.get(0).getDname();
-			model.addAttribute("welcome", name);
-		}
 		return "employeeprofile";
 	}
-	
+
 	@PostMapping("/employeeprofile")
-	public String saveEmployee(@ModelAttribute("employee") Employeename employee, HttpSession httpSession,
-			Model model, HttpServletRequest httpServletRequest) {
+	public String saveEmployee(@ModelAttribute("employee") Employeename employee, HttpSession httpSession, Model model,
+			HttpServletRequest httpServletRequest) {
 		String district = (String) httpSession.getAttribute("dcode");
 		String mandal = (String) httpSession.getAttribute("mcode");
 		String aadhar_id = employee.getAadhaar_id();
@@ -135,41 +97,7 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/rbkmapping")
-	public String rbkmapping(HttpSession httpSession, Model model) {
-		
-		String name="Welcome to";
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		email = authentication.getName();
-		user = appUsersRepo.findByUserid(email);
-		String type_user = user.getType_user();
-		String vill_Name = user.getVillage();
-		String mand_Name = user.getBlockortehsil();
-		String dist_Name = user.getDistrict();
-		List<ActiveSeasonProjection> userType = employeeService.getUserType(Integer.parseInt(type_user));
-
-		httpSession.setAttribute("dcode", user.getDistrict());
-		httpSession.setAttribute("mcode", user.getBlockortehsil());
-		httpSession.setAttribute("village", user.getVillage());
-		httpSession.setAttribute("role", user.getType_user());
-		httpSession.setAttribute("userid", user.getUserid());
-		httpSession.setAttribute("name", userType.get(0).getName());
-		
-		String  nameOfRole = (String)httpSession.getAttribute("name");
-		if (type_user.equals("25")) {
-			List<VillageName> villName = employeeService.getVillName(Integer.parseInt(vill_Name));
-			List<VillageName> mandalName = employeeService.getMandalName(Integer.parseInt(mand_Name));
-			List<VillageName> distName = employeeService.getDistName(Integer.parseInt(dist_Name));
-			name = name +" "+ nameOfRole + " " + villName.get(0).getVname() + " " +mandalName.get(0).getMname()+ " " + distName.get(0).getDname();
-			model.addAttribute("welcome", name);
-		}
-		if (type_user.equals("5")) {
-			List<VillageName> mandalName = employeeService.getMandalName(Integer.parseInt(mand_Name));
-			List<VillageName> distName = employeeService.getDistName(Integer.parseInt(dist_Name));
-			name = name +" " + nameOfRole + " " +  mandalName.get(0).getMname()+ " "+  distName.get(0).getDname();
-			model.addAttribute("welcome", name);
-
-		}
-		
+	public String rbkmappingTest(Model model, HttpSession httpSession) {
 		String village = (String) httpSession.getAttribute("village");
 		String mandal = (String) httpSession.getAttribute("mcode");
 
@@ -185,58 +113,24 @@ public class EmployeeController {
 	@PostMapping("/rbkSaveprofile")
 	public String saverbk(@ModelAttribute("rbk") Employeename employee, HttpServletRequest httpServletRequest,
 			HttpSession httpSession, Model model) {
-		
-		String name="Welcome to";
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		email = authentication.getName();
-		user = appUsersRepo.findByUserid(email);
-		String type_user = user.getType_user();
-		String vill_Name = user.getVillage();
-		String mand_Name = user.getBlockortehsil();
-		String dist_Name = user.getDistrict();
-		List<ActiveSeasonProjection> userType = employeeService.getUserType(Integer.parseInt(type_user));
-
-		httpSession.setAttribute("dcode", user.getDistrict());
-		httpSession.setAttribute("mcode", user.getBlockortehsil());
-		httpSession.setAttribute("village", user.getVillage());
-		httpSession.setAttribute("role", user.getType_user());
-		httpSession.setAttribute("userid", user.getUserid());
-		httpSession.setAttribute("name", userType.get(0).getName());
-		
-		String  nameOfRole = (String)httpSession.getAttribute("name");
-		if (type_user.equals("25")) {
-			List<VillageName> villName = employeeService.getVillName(Integer.parseInt(vill_Name));
-			List<VillageName> mandalName = employeeService.getMandalName(Integer.parseInt(mand_Name));
-			List<VillageName> distName = employeeService.getDistName(Integer.parseInt(dist_Name));
-			name = name +" "+ nameOfRole + " " + villName.get(0).getVname() + " " +mandalName.get(0).getMname()+ " " + distName.get(0).getDname();
-			model.addAttribute("welcome", name);
-		}
-		if (type_user.equals("5")) {
-			List<VillageName> mandalName = employeeService.getMandalName(Integer.parseInt(mand_Name));
-			List<VillageName> distName = employeeService.getDistName(Integer.parseInt(dist_Name));
-			name = name +" " + nameOfRole + " " +  mandalName.get(0).getMname()+ " "+  distName.get(0).getDname();
-			model.addAttribute("welcome", name);
-
-		}
-
 
 		String district = (String) httpSession.getAttribute("dcode");
-		
+
 		String mandal = (String) httpSession.getAttribute("mcode");
-		
+
 		String userId = (String) httpSession.getAttribute("userid");
 
 		String incharge = employee.getIncharge();
-		
+
 		String rbkCode = userId.substring(4);
-	
+
 		String emp = httpServletRequest.getParameter("employee");
-		System.out.println("emp----->"+emp);
-		
+		System.out.println("emp----->" + emp);
+
 		String villageCode = httpServletRequest.getParameter("village");
-		System.out.println("vill---->"+villageCode);
-		
-		String rbkUserId = "RBK_"+villageCode;
+		System.out.println("vill---->" + villageCode);
+
+		String rbkUserId = "RBK_" + villageCode;
 		String incsts = "";
 		String empcode = "", emp_name = "", email = "", mobile = "", aadhaar_id = "", rbkuserid2 = "";
 		String dcode = "", emp_code = "", mcode = "", rbkcode2 = "", rbkuserid = "", wbdcode = "", wbmcode = "";
@@ -248,15 +142,20 @@ public class EmployeeController {
 		String wbmcode2 = webLandDetails.get(0).getWbmcode();
 		List<RbkDetailsProjection> savedEmp = employeeService.getEmployeeDetails(Integer.parseInt(district),
 				Integer.parseInt(mandal), Integer.parseInt(emp));
-		empcode = savedEmp.get(0).getEmp_code();System.out.println("empcode---->"+empcode);
-		emp_name = savedEmp.get(0).getEmp_name();System.out.println("emp_name---->"+emp_name);
-		email = savedEmp.get(0).getEmail();System.out.println("email---->"+email);
-		mobile = savedEmp.get(0).getMobile();System.out.println("mobile---->"+mobile);
-		aadhaar_id = savedEmp.get(0).getAadhaar_id();System.out.println("aadhaar_id---->"+aadhaar_id);
+		empcode = savedEmp.get(0).getEmp_code();
+		System.out.println("empcode---->" + empcode);
+		emp_name = savedEmp.get(0).getEmp_name();
+		System.out.println("emp_name---->" + emp_name);
+		email = savedEmp.get(0).getEmail();
+		System.out.println("email---->" + email);
+		mobile = savedEmp.get(0).getMobile();
+		System.out.println("mobile---->" + mobile);
+		aadhaar_id = savedEmp.get(0).getAadhaar_id();
+		System.out.println("aadhaar_id---->" + aadhaar_id);
 //		rbkuserid2 = savedEmp.get(0).getRbkuserid();System.out.println("rbkuserid2---->"+rbkuserid2);
 		if (incharge.equals("R")) {
 			List<InchargeRbkProjection> inchargeStatus = employeeService.getInchargeStatus(Integer.parseInt(rbkCode));
-			System.out.println("incjharge---->"+inchargeStatus);
+			System.out.println("incjharge---->" + inchargeStatus);
 			if (inchargeStatus.size() > 0) {
 				String incharge_sts = inchargeStatus.get(0).getInchargests();
 				if (inchargeStatus.size() > 0) {
@@ -318,66 +217,33 @@ public class EmployeeController {
 				|| saveUserDetails2 > 0 && saveEmpRbkMap > 0 || saveEmpRbkMapIncharge > 0) {
 			model.addAttribute("msg", "Successfully  Added");
 		}
-		
-		List<RbkDetailsProjection> regDet = employeeService.getRegDMcode(Integer.parseInt(district), Integer.parseInt(mandal));
-		model.addAttribute("regDet",regDet);
+
+		List<RbkDetailsProjection> regDet = employeeService.getRegDMcode(Integer.parseInt(district),
+				Integer.parseInt(mandal));
+		model.addAttribute("regDet", regDet);
 
 		return "rbkmapping";
 	}
-	
+
 	@GetMapping("/incharge_det")
 	public String incharge(HttpSession httpSession, Model model) {
-		
-		String name="Welcome to";
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		email = authentication.getName();
-		user = appUsersRepo.findByUserid(email);
-		String type_user = user.getType_user();
-		String vill_Name = user.getVillage();
-		String mand_Name = user.getBlockortehsil();
-		String dist_Name = user.getDistrict();
-		List<ActiveSeasonProjection> userType = employeeService.getUserType(Integer.parseInt(type_user));
 
-		httpSession.setAttribute("dcode", user.getDistrict());
-		httpSession.setAttribute("mcode", user.getBlockortehsil());
-		httpSession.setAttribute("village", user.getVillage());
-		httpSession.setAttribute("role", user.getType_user());
-		httpSession.setAttribute("userid", user.getUserid());
-		httpSession.setAttribute("name", userType.get(0).getName());
-		
-		String  nameOfRole = (String)httpSession.getAttribute("name");
-		if (type_user.equals("25")) {
-			List<VillageName> villName = employeeService.getVillName(Integer.parseInt(vill_Name));
-			List<VillageName> mandalName = employeeService.getMandalName(Integer.parseInt(mand_Name));
-			List<VillageName> distName = employeeService.getDistName(Integer.parseInt(dist_Name));
-			name = name +" "+ nameOfRole + " " + villName.get(0).getVname() + " " +mandalName.get(0).getMname()+ " " + distName.get(0).getDname();
-			model.addAttribute("welcome", name);
-		}
-		if (type_user.equals("5")) {
-			List<VillageName> mandalName = employeeService.getMandalName(Integer.parseInt(mand_Name));
-			List<VillageName> distName = employeeService.getDistName(Integer.parseInt(dist_Name));
-			name = name +" " + nameOfRole + " " +  mandalName.get(0).getMname()+ " "+  distName.get(0).getDname();
-			model.addAttribute("welcome", name);
-
-		}
-		
-		
 		String district = (String) httpSession.getAttribute("dcode");
 		String mandal = (String) httpSession.getAttribute("mcode");
-		List<InchargeRbkProjection> regIncDet = employeeService.getDMcode(Integer.parseInt(district), Integer.parseInt(mandal));
-		model.addAttribute("InchAdd",regIncDet);
+		List<InchargeRbkProjection> regIncDet = employeeService.getDMcode(Integer.parseInt(district),
+				Integer.parseInt(mandal));
+		model.addAttribute("InchAdd", regIncDet);
 		return "incharge_det";
 	}
-	
+
 	@GetMapping("/RbkInchDet")
 	public String RbkInchDet(HttpSession httpSession, Model model) {
 		String district = (String) httpSession.getAttribute("dcode");
 		String mandal = (String) httpSession.getAttribute("mcode");
-		List<RbkDetailsProjection> regDet = employeeService.getRegDMcode(Integer.parseInt(district), Integer.parseInt(mandal));
-		model.addAttribute("RegDet",regDet);
+		List<RbkDetailsProjection> regDet = employeeService.getRegDMcode(Integer.parseInt(district),
+				Integer.parseInt(mandal));
+		model.addAttribute("RegDet", regDet);
 		return "RbkInchDet";
 	}
-	
-	}
-	
-	
+
+}
