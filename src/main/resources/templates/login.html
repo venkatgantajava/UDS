@@ -117,15 +117,15 @@
 			document.getElementById("capt").value = final;
 		}
 		function validcap(event) {
-    var stg1 = document.getElementById('capt').value;
-    var stg2 = document.getElementById('textinput').value;
+			var stg1 = document.getElementById('capt').value;
+			var stg2 = document.getElementById('textinput').value;
 
-    if (stg1 !== stg2) {
-        alert("Please enter a valid captcha");
-        event.preventDefault(); 
-        return false;
-    }
-}
+			if (stg1 !== stg2) {
+				alert("Please enter a valid captcha");
+				event.preventDefault();
+				return false;
+			}
+		}
 
 
 		window.onload = cap;
@@ -185,7 +185,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-7" style="padding-top: 70px;">
+			<div class="col-7" style="padding-top: 35px;">
 				<div id="carouselExampleControls" class="carousel slide dev" data-bs-ride="carousel">
 					<div class="carousel-inner">
 						<!--					    <div class="carousel-item active">-->
@@ -253,8 +253,8 @@
 				</div>
 			</div>
 
-
-			<div id="login">
+			<div id="login" class="col-lg-5"
+				style="padding-bottom:50px; padding-top:20px;padding-left:50px;padding-right:50px ">
 
 				<h2>Login</h2>
 				<form th:action="@{/login-auth}" method="post">

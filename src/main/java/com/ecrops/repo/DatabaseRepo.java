@@ -17,16 +17,16 @@ public class DatabaseRepo {
 
 	@PersistenceContext
 	EntityManager entityManager;
-	
-	public List<PattadharPojo> methods(String wbdcode, String cropyear,String season, String vcode) {
+
+	public List<PattadharPojo> methods(String wbdcode, String cropyear, String season, String vcode) {
 		List<PattadharPojo> l = new ArrayList<>();
-		String qry=null;
+		String qry = null;
 		String crbooknwb = "cr_booking_nwb";
 		String efishTab = "cr_details_efish";
 		String partitionName = "pattadarmast_wb_partition_";
 		String rbksrnoMapTab = "rbk_surveyno_mapping_";
 		String partKey = "";
-		String activeYear="2023";
+		String activeYear = "2023";
 
 		if (Integer.parseInt(wbdcode) <= 9) {
 			partitionName = partitionName + season + "0" + wbdcode + cropyear;
@@ -47,41 +47,39 @@ public class DatabaseRepo {
 		} else {
 			partitionName = partitionName;
 		}
-		qry =  "(select rec_id as bookingid,'W',cr_wsno,cr_dist_code,cr_mand_code,cr_vcode,cr_farmeruid,"
+		qry = "(select rec_id as bookingid,'W',cr_wsno,cr_dist_code,cr_mand_code,cr_vcode,cr_farmeruid,"
 				+ "farmername,fathername,mobileno,kh_no,cr_sno,tot_extent, occupname,occupfname,"
 				+ "occup_extent  from " + partitionName + " where status='Y' and cr_vcode=" + vcode + " "
 				+ "and  kh_no not in (select code from obj_unobj where trim(crb_remarks) in ('No'))  "
 				+ " and (cr_sno,kh_no,cr_vcode) " + "not in (select cr_sno,kh_no,vcode from   " + rbksrnoMapTab
-				+ " where vcode=" + vcode + " ) " + " order by cr_wsno,kh_no) " 
-				+ "UNION "
+				+ " where vcode=" + vcode + " ) " + " order by cr_wsno,kh_no) " + "UNION "
 				+ "select rec_id as bookingid,data_src, cr_wsno,cr_dist_code,cr_mand_code,cr_vcode, "
 				+ "cr_farmeruid,oc_name,oc_fname,mobileno,kh_no,cr_sno,tot_extent, occupname,occupfname,"
 				+ "occupant_extent from " + crbooknwb + " where cr_vcode=" + vcode + " and vs_sel is null"
 				+ " order by cr_wsno,kh_no limit 5";
-		//List<PattadharPojo> pojo = method(qry);
-		   
-	return  l;
-	}
-	
+		// List<PattadharPojo> pojo = method(qry);
 
-	public List<PattadharPojo> pattadharDetails(String var, String partitionName, String vcode, String efishTab, String rbksrnoMapTab, String crbooknwb) {
-		
-		var =  "(select rec_id as bookingid,'W',cr_wsno,cr_dist_code,cr_mand_code,cr_vcode,cr_farmeruid,"
+		return l;
+	}
+
+	public List<PattadharPojo> pattadharDetails(String var, String partitionName, String vcode, String efishTab,
+			String rbksrnoMapTab, String crbooknwb) {
+
+		var = "(select rec_id as bookingid,'W',cr_wsno,cr_dist_code,cr_mand_code,cr_vcode,cr_farmeruid,"
 				+ "farmername,fathername,mobileno,kh_no,cr_sno,tot_extent, occupname,occupfname,"
 				+ "occup_extent  from " + partitionName + " where status='Y' and cr_vcode=" + vcode + " "
 				+ " and  kh_no not in (select code from obj_unobj where trim(crb_remarks) in ('No')) "
 				+ "and cast(cr_vcode as text)||cast(kh_no as text)||cr_sno not in "
 				+ "(select cast(cr_vcode as text)||cast(kh_no as text)||cr_sno from " + efishTab + "  "
 				+ "where cr_vcode=" + vcode + ") and (cr_sno,kh_no,cr_vcode) not in "
-				+ "(select cr_sno,kh_no,vcode from   " + rbksrnoMapTab
-				+ " where vcode=" + vcode + " ) " + " order by cr_wsno,kh_no) " 
-				+ "UNION "
+				+ "(select cr_sno,kh_no,vcode from   " + rbksrnoMapTab + " where vcode=" + vcode + " ) "
+				+ " order by cr_wsno,kh_no) " + "UNION "
 				+ "select rec_id as bookingid,data_src, cr_wsno,cr_dist_code,cr_mand_code,cr_vcode, "
 				+ "cr_farmeruid,oc_name,oc_fname,mobileno,kh_no,cr_sno,tot_extent, occupname,occupfname,"
 				+ "occupant_extent from " + crbooknwb + " where cr_vcode=" + vcode + " and vs_sel is null"
 				+ " order by cr_wsno,kh_no limit 500";
 		List<PattadharPojo> pojo = new ArrayList<>();
-		
+
 		Query query = entityManager.createNativeQuery(var);
 		List<Object> objects = query.getResultList();
 
@@ -90,15 +88,19 @@ public class DatabaseRepo {
 			for (Object patta : objects) {
 
 				Object[] row = (Object[]) patta;
-				
+
 				PattadharPojo pojos = new PattadharPojo();
 				pojos.setDatasrc(row[1].toString());
-				
+
 				pojos.setSurveyno(row[11].toString());
-		pojos.setWholesurveyno(row[2].toString());
+
+				if (row[2] != null) {
+					pojos.setWholesurveyno(row[2].toString());
+				}
+
 				pojos.setKhathano(row[10].toString());
-			pojos.setTotalextent(row[12].toString());
-				
+				pojos.setTotalextent(row[12].toString());
+
 				pojos.setBkid(Integer.parseInt(row[0].toString()));
 
 				pojo.add(pojos);
@@ -137,15 +139,14 @@ public class DatabaseRepo {
 
 	public String getRbkUserid(String qry1) {
 		Query query = entityManager.createNativeQuery(qry1);
-		Object obj=  query.getSingleResult();
+		Object obj = query.getSingleResult();
 		return obj.toString();
 	}
 
 	public List<Object> getPattadharResult(String query) {
-	
-		  Query  result = entityManager.createNativeQuery(query);
-		    return result.getResultList();
+
+		Query result = entityManager.createNativeQuery(query);
+		return result.getResultList();
 	}
-	
-	   
+
 }
