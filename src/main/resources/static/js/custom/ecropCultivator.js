@@ -517,3 +517,16 @@ function searchData() {
 		}
 	});
 }
+
+
+function searchRepCultivatorDtls() {
+	var seasonvalueArr = $("#cropYearId").val().split('@');
+	$("#contentDivId").html('');
+	$.ajax({
+		type: "GET",
+		url: '/repCultivatorDtls/aadharNo/'+$("#aadharNo").val()+'?cropYear='+seasonvalueArr[1]+'&season='+seasonvalueArr[0],
+		success: function(data) {
+			$("#contentDivId").html(data)
+		}
+	});
+}

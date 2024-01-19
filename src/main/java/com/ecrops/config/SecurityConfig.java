@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/weblandCropEntry/**", "/fetch-crop-data/", "/ccrcCropEntry/**", "/fetch-ccrc-crop-data/**",
 				"/rest/api/Ccrc-Crop/**", "/rest/api/webland-crop/villages","/allocOfSurveyNo/**","/getPattaDetails/**","/saveSelection/**",
 				"/getRevenueVillage/**","/getEmployeeByRevenue/**","/getDetails/**","/selectionOfSurveyNo/**","/VroRejectReasons/**","/saveSelection/**",
-				"/nonweblandfarmersdata/**","/surveyno/**","/postdata/**").permitAll().anyRequest().permitAll()) 
+				"/nonweblandfarmersdata/**","/surveyno/**","/postdata/**", "/repCultivatorDtls/**").permitAll().anyRequest().permitAll())
 	
 		
 		

@@ -36,8 +36,8 @@
 										<div class="form-group" style="margin-bottom: 5px;">
 											<div class="input-group">
 												<select class="form-control" id="dropOperator" required="required">
-													<option th:each="cropyear : ${crYearList}" th:value="${cropyear}"
-														th:text="${cropyear}" selected>
+													<option th:each="cropyear : ${crYearList}" th:value="${cropyear.cropyear}"
+														th:text="${cropyear.seasonvalue}" selected>
 													</option>
 												</select>
 												<span id="dropdownError" style="color: red;"></span>

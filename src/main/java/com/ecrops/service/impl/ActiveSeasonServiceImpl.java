@@ -17,7 +17,7 @@ public class ActiveSeasonServiceImpl implements ActiveSeasonService{
 
 	public List<ActiveSeason> listAll() {
 
-		return repo.findByActiveAndCurrentSeason("A", "C");
+		return repo.findByActiveAndCurrentSeason();
 	}
 
 }

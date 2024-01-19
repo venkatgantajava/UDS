@@ -34,9 +34,8 @@
 									<div class="col-md-7">
 										<div class="form-group" style="margin-bottom: 5px;">
 											<div class="input-group">
-												<select class="form-control" id="dropOperator" required="required">
-													<option th:each="cropyear : ${crYearList}" th:value="${cropyear}"
-														th:text="${cropyear}" selected>
+												<select class="form-control" id="cropYearId" name="cropYearId" required="required">
+													<option th:each="cropyear : ${crYearList}" th:value="${cropyear.seasonvalue}" th:text="${cropyear.seasonvalue}" selected>
 													</option>
 												</select>
 												<span id="dropdownError" style="color: red;"></span>
@@ -45,14 +44,14 @@
 									</div>
 								</div>
 								
-								<div class="col-md-3">
+								<div class="col-md-5">
 									<div class="col-md-5">
 										<label>Enter Farmer Aadhar No</label>
 									</div>
 									<div class="col-md-7">
 										<div class="form-group" style="margin-bottom: 5px;">
 											<div class="input-group">
-												<input type="number" name="fromKhno" id="fromKhnoId"
+												<input type="number" name="aadharNo" id="aadharNo"
 													class="form-control">
 											</div>
 										</div>
@@ -66,7 +65,7 @@
 											<div class="input-group">
 												<div style="margin: 0 auto; width: 155px; color: #000;">
 													<button type="button" class="btn btn-primary" id="searchId"
-														onclick="searchData()"
+														onclick="searchRepCultivatorDtls()"
 														title="Search Opposition Details">Submit</button>
 													<button type="button" class="btn btn-warning" id="resetId"
 														title="To reset all the details">Reset</button>
@@ -93,5 +92,4 @@
 	<div class="container" id="contentDivId"></div>
 
 </body>
-
 </html>

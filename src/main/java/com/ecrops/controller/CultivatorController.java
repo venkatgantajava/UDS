@@ -41,9 +41,7 @@ public class CultivatorController {
 	@GetMapping("/cultivator")
 	public String loadAddOrUpdateCultivator(Model model) {
 		List<ActiveSeason> cropYearActiveSeasonList = activeSeasonService.listAll();
-		model.addAttribute("crYearList", Arrays
-				.stream(cropYearActiveSeasonList.stream().mapToInt(ActiveSeason::getCropyear).distinct().toArray())
-				.boxed().collect(Collectors.toList()));
+		model.addAttribute("crYearList", cropYearActiveSeasonList);
 		model.addAttribute("cultivator", new Cultivator());
 
 		return "cultivatorHomePage";

@@ -29,8 +29,11 @@ public class ActiveSeason {
 	@Column(name = "fassal_year")
 	private Integer fassalYear;
 
+	@Column(name = "seasonvalue")
+	private String seasonvalue;
+
 	public ActiveSeason(String season, Integer cropyear, String active, String distributionInitiated,
-			String currentSeason, Integer fassalYear) {
+			String currentSeason, Integer fassalYear, String seasonvalue) {
 		super();
 		this.season = season;
 		this.cropyear = cropyear;
@@ -38,6 +41,7 @@ public class ActiveSeason {
 		this.distributionInitiated = distributionInitiated;
 		this.currentSeason = currentSeason;
 		this.fassalYear = fassalYear;
+		this.seasonvalue = seasonvalue;
 	}
 
 	public ActiveSeason() {
@@ -95,7 +99,15 @@ public class ActiveSeason {
 	public String toString() {
 		return "ActiveSeason [season=" + season + ", cropyear=" + cropyear + ", active=" + active
 				+ ", distributionInitiated=" + distributionInitiated + ", currentSeason=" + currentSeason
-				+ ", fassalYear=" + fassalYear + "]";
+				+ ", fassalYear=" + fassalYear
+				+ ", seasonvalue=" + seasonvalue + "]";
 	}
 
+	public String getSeasonvalue() {
+		return seasonvalue;
+	}
+
+	public void setSeasonvalue(String seasonvalue) {
+		this.seasonvalue = seasonvalue;
+	}
 }
