@@ -1,5 +1,7 @@
 package com.ecrops.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +20,12 @@ public interface WbMasterRepo extends JpaRepository<WbMaster, Integer>  {
 
 	public WbMaster getWbMasterDetailsForVillage(@Param("wbvcode") Integer wbvcode, @Param("wbmcode") Integer wbmcode,
 			@Param("wbdcode") Integer wbdcode);
+
+	@Query(value="select distinct(wbvcode),wbvname,wbdcode,wbedname,wbemname,wbevname,wbmcode from wbvillage_mst where dcode=:dcode and mcode=:mcode order by wbvname",nativeQuery=true)
+	List<WbMaster> findWebVcodeAndVname(@Param("dcode")Integer dcode,@Param("mcode") Integer mcode);
+	
+	@Query(value="select wbvname,wbvcode,wbdcode,wbedname,wbemname,wbevname,wbmcode from wbvillage_mst where dcode=:dcode and mcode=:mcode and wbvcode=:vcode order by wbvname",nativeQuery=true)
+	List<WbMaster> findVillageName(Integer dcode, Integer mcode, Integer vcode);
+	
 
 }

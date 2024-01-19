@@ -93,10 +93,6 @@ public class AllocationOfSrvyNoController {
 		return "AllocOfSurveyNo";
 	}
 	
-	
-	
-
-	
 
 	@PostMapping("/getPattaDetails")
 	public String pattadharProfile(HttpServletRequest httpServletRequest, HttpSession httpSession, Model model) {

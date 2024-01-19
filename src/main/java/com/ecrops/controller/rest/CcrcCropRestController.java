@@ -21,17 +21,65 @@ public class CcrcCropRestController {
     private CcrcCropRepository cropRepository;
         
     
+//    @GetMapping("/villages")
+//	private List<VillageDataCcrc> getVillages(@RequestParam("activeSeason") String activeSeason, HttpSession session) {		
+//		Integer mCode = (Integer) session.getAttribute("mcode");
+//		if (mCode != null) {
+//		    System.out.println("mcode : " + mCode);
+//		    int activeYear = Integer.parseInt(activeSeason.split("@")[1]);
+//		    String season = activeSeason.split("@")[0];
+//
+//		    
+//		    List<VillageDataCcrc> villages = cropRepository.getVillages(mCode, activeYear, season);
+//			   System.out.println("Villages:");
+//			   for (VillageDataCcrc village : villages) {
+//			       System.out.println("Village code: " + village.getWbvcode() + ", VillageName: " + village.getWbvname());
+//			   }
+//		    return villages;
+//		} else {
+//		    		    return Collections.emptyList();
+//		}
+//}
+    
+    
+    
     @GetMapping("/villages")
-	private List<VillageDataCcrc> getVillages(@RequestParam("activeSeason") String activeSeason, HttpSession session) {		
-		Integer mCode = Integer.valueOf((String) session.getAttribute("mcode"));
-		if (mCode != null) {
-		    System.out.println("mcode : " + mCode);
-		    int activeYear = Integer.parseInt(activeSeason.split("@")[1]);
-		    String season = activeSeason.split("@")[0];
+	private List<VillageDataCcrc> getVillages(@RequestParam("activeSeason") String activeSeason, HttpSession session) {
+    	int mCode = Integer.valueOf((String)session.getAttribute("mcode"));
+	    System.out.println("mcode : " + mCode);
 
-		    return cropRepository.getVillages(mCode, activeYear, season);
-		} else {
-		    		    return Collections.emptyList();
-		}
-}
+	    // Check if activeSeason contains the expected delimiter "@"
+	    String[] seasonParts = activeSeason.split("@");
+	    int activeYear = Integer.parseInt(seasonParts[1]);
+	    String season = seasonParts[0];
+
+//	   List<VillageData> villages= cropRepository.getVillages(mCode, activeYear, season);
+//	   System.out.println("villages:-------->"+villages.toString());
+	   
+//	   List<VillageDataCcrc> villages = cropRepository.getVillages(mCode, activeYear, season);
+//	   System.out.println("Villages:");
+//	   for (VillageDataCcrc village : villages) {
+//	       System.out.println("Village code: " + village.getWbvcode() + ", VillageName: " + village.getWbvname());
+//	   }
+//
+//	     
+//	     return villages;
+	    
+	    
+	    List<VillageDataCcrc> villages = cropRepository.getVillages(mCode);
+		   System.out.println("Villages:");
+		   for (VillageDataCcrc village : villages) {
+		       System.out.println("Village code: " + village.getWbvcode() + ", VillageName: " + village.getWbvname());
+		   }
+
+		     
+		     return villages;
+		    
+	    
+	}
+
+    
+    
+    
+    
 }

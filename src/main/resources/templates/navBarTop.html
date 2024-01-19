@@ -37,7 +37,11 @@
 						<ul class="dropdown-menu" aria-labelledby="transactionDropdown">
 							<li th:if="${session.userType == 25}"><a class="dropdown-item" href="/cultivator">Add/Update
 									Cultivator</a></li>
-
+							<li th:if="${session.userType == 25}"><a class="dropdown-item" href="VroRejectReasons">Vro Reject Reasons</a></li>
+							
+							<li th:if="${session.userType == 25}"><a class="dropdown-item" href="nonweblandfarmersdata">NonWeblandData</a></li>
+					
+					
 							<li th:if="${session.userType == 5}"><a class="dropdown-item btn btn-primary"
 									href="weblandCropEntry">Preparation Of Data For Crop
 									Booking From Webland</a></li>

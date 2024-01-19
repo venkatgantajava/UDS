@@ -1,36 +1,43 @@
 package com.ecrops.repo.crop;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
-import org.apache.commons.lang.StringEscapeUtils;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.ecrops.dto.crop.response.CCRCPullResponse;
 import com.ecrops.dto.crop.response.CcrcCropDetails;
 import com.ecrops.dto.webland.CCRCCropData;
 import com.ecrops.entity.crop.CCRC_DetailsEntity;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.reflect.TypeToken;
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.lang.StringEscapeUtils;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Service
 @Transactional
+
 public class CcrcCropServiceRepo {
 
 	@PersistenceContext
@@ -38,7 +45,6 @@ public class CcrcCropServiceRepo {
 
 	@Transactional(readOnly = true)
 	public List<CCRC_DetailsEntity> getCropDetails(int dCode, int villageCode, String season, int cropYear) {
-		// String tableName = "pattadarmast_wb_partition_" + season + dCode + cropYear;
 
 		String ccrcdetTab = "ccrc_details";
 
@@ -73,17 +79,17 @@ public class CcrcCropServiceRepo {
 			entity.setExtent((Double) ob[12]);
 			entity.setEnrolldate((Date) ob[13]);
 			entity.setEnrollenddate((Date) ob[14]);
-			entity.setGender((String) ob[15]);
+			entity.setGender((Character) ob[15]);
 			entity.setDt_crt((Timestamp) ob[16]);
 			entity.setCaste((Integer) ob[17]);
 			entity.setCr_year((Integer) ob[18]);
-			entity.setCr_season((String) ob[19]);
-			entity.setCultivable_land((Double) ob[20]);
-			entity.setUncultivable_land((Double) ob[21]);
-			entity.setTot_extent((Double) ob[22]);
+			entity.setCr_season((Character) ob[19]);
+			entity.setCultivable_land(((BigDecimal) ob[20]));
+			entity.setUncultivable_land(((BigDecimal) ob[21]));
+			entity.setTot_extent(((BigDecimal) ob[22]));
 			entity.setPname((String) ob[23]);
 			entity.setPfname((String) ob[24]);
-			entity.setAnubhavadar_extent((Double) ob[25]);
+			entity.setAnubhavadar_extent(((BigDecimal) ob[25]));
 			entity.setPart_key((String) ob[26]);
 			entity.setDcode((Integer) ob[27]);
 			entity.setMcode((Integer) ob[28]);
@@ -93,7 +99,6 @@ public class CcrcCropServiceRepo {
 			entity.setLand_nature((String) ob[32]);
 			entity.setAnubhavdar_name((String) ob[33]);
 			entity.setAnubhavdar_fathername((String) ob[34]);
-			entity.setDiff_rec((Character) ob[35]);
 			entities.add(entity);
 		}
 		return entities;
@@ -104,7 +109,7 @@ public class CcrcCropServiceRepo {
 		try {
 			String downtab = "ecrop" + cropYear + "." + "ccrcdownloaddetails";
 			String QRY_GET_RECORDS_CNT = "select no_of_records as count from " + downtab
-					+ " where  vcode=?1 and cr_year=?2 and cr_season=?3";
+					+ " where  vcode=? and cr_year=? and cr_season=?";
 
 			Query query = entityManager.createNativeQuery(QRY_GET_RECORDS_CNT);
 			query.setParameter(1, villageCode);
@@ -122,28 +127,21 @@ public class CcrcCropServiceRepo {
 			return 0;
 		}
 	}
-
+	
+	
 	@Transactional
 	public CCRCPullResponse checkInsertAndViewCccrcCropDetails(int activeYear, String userId, String ipAddress,
 			int wDCode, int villageCode, int wMCode, String season, int cropYear, int mandalCode, int districtCode)
 			throws Exception {
-		ModelMapper mapper = new ModelMapper();
-		int count = 0, existingCnt = 0, b = 0, cdowndet = 0, bookIns = 0, diffIns = 0, totccrc = 0;
-
+		int cdowndet = 0, bookIns = 0, diffIns = 0, totccrc = 0;
+		 int existingCnt=0;
 		boolean newVcode = false;
 
 		CCRCPullResponse pullResponse = new CCRCPullResponse();
 
-		int recordCount = checkRecordIsAvailableInDatabase(villageCode, season, cropYear);
-		if (recordCount > 0) {
-			List<CCRC_DetailsEntity> cropDetails = getCropDetails(wDCode, villageCode, season, cropYear);
-			List<CcrcCropDetails> collect = mapper.map(cropDetails, new TypeToken<List<CcrcCropDetails>>() {
-			}.getType());
-
-			pullResponse.setMessage("Records already available in the database");
-			pullResponse.setCropDataCcrc(collect);
-			return pullResponse;
-		}
+		ModelMapper mapper = new ModelMapper();
+		int recordCounts = checkRecordIsAvailableInDatabase(villageCode, season, cropYear);
+	    
 
 		String ccrcdetTab = "ccrc_details";
 		String ccrcTempTab = "ccrc_details_temp";
@@ -210,7 +208,6 @@ public class CcrcCropServiceRepo {
 
 		if (diffIns >= 0) {
 
-			System.out.println("is calalllllllllllllllll");
 			String QRY_INS_RECORDS_INT = "", partkey = "";
 			String wbdist = String.valueOf(wDCode);
 			if (wbdist.length() == 1) {
@@ -263,7 +260,7 @@ public class CcrcCropServiceRepo {
 
 				System.out.println("bookIns------->" + bookIns);
 
-				String qry4 = "DELETE FROM " + ccrcTempTab + " WHERE vcode=?1 AND cr_year=?2 AND cr_season=?3";
+				String qry4 = "DELETE FROM " + ccrcTempTab + " WHERE vcode=? AND cr_year=? AND cr_season=? ";
 
 				Query deleteQuery = entityManager.createNativeQuery(qry4);
 				deleteQuery.setParameter(1, villageCode);
@@ -275,73 +272,69 @@ public class CcrcCropServiceRepo {
 				System.out.println("delTemp------->" + delTemp);
 
 			}
+			
+			 String qry6 = "SELECT no_of_records as prevCnt FROM " + cccrdownloadTab
+						+ " WHERE vcode=? AND cr_year=? AND cr_season=? ";
 
-			String qry6 = "SELECT no_of_records as prevCnt FROM " + cccrdownloadTab
-					+ " WHERE vcode=?1 AND cr_year=?2 AND cr_season=?3";
+				Query countQuery = entityManager.createNativeQuery(qry6);
+				countQuery.setParameter(1, villageCode);
+				countQuery.setParameter(2, cropYear);
+				countQuery.setParameter(3, season);
 
-			Query countQuery = entityManager.createNativeQuery(qry6);
-			countQuery.setParameter(1, villageCode);
-			countQuery.setParameter(2, cropYear);
-			countQuery.setParameter(3, season);
+				System.out.println("COUNTQUERY------->" + countQuery);
 
-			System.out.println("COUNTQUERY------->" + countQuery);
+				try {
+					Integer result = (Integer) countQuery.getSingleResult();
+					System.out.println("result-----" + result);
+					existingCnt = result;
+				} catch (NoResultException e) {
+					newVcode = true;
+				}
 
-			try {
-				Integer result = (Integer) countQuery.getSingleResult();
-				System.out.println("result-----" + result);
-				existingCnt = result;
-			} catch (NoResultException e) {
-				newVcode = true;
+				if (newVcode) {
+					String QRY_INS_USER_DET = "INSERT INTO " + cccrdownloadTab
+							+ "( vcode, userId, no_of_records, downloadtime, ipaddress, ccrc_status, cr_year, cr_season)\n"
+							+ "VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)";
+
+					Query insertCdown = entityManager.createNativeQuery(QRY_INS_USER_DET);
+					insertCdown.setParameter(1, villageCode);
+					insertCdown.setParameter(2, userId);
+					insertCdown.setParameter(3, ccrcIns);
+					insertCdown.setParameter(4, ipAddress);
+					insertCdown.setParameter(5, "C");
+					insertCdown.setParameter(6, cropYear);
+					insertCdown.setParameter(7, season);
+
+					cdowndet = insertCdown.executeUpdate();
+
+					System.out.println("cdowndet---------->" + cdowndet);
+				} else {
+					diffIns = bookIns;
+					totccrc = existingCnt + diffIns;
+
+					System.out.println("totccrc------->" + totccrc);
+
+					String updateQuery = (" update  " + cccrdownloadTab
+							+ "   set ccrc_status='C', no_of_records=? ,ipaddress=? where vcode=? and userid=?    and cr_year=? and cr_season=?");
+					Query insertCdown = entityManager.createNativeQuery(updateQuery);
+					insertCdown.setParameter(1, totccrc);
+					insertCdown.setParameter(2, ipAddress);
+					insertCdown.setParameter(3, villageCode);
+					insertCdown.setParameter(4, userId);
+					insertCdown.setParameter(5, cropYear);
+					insertCdown.setParameter(6, season);
+					cdowndet = insertCdown.executeUpdate();
+
+					System.out.println("Else cdowndet---------->" + cdowndet);
+				}
+
+				System.out.println("bookIns:" + bookIns);
+				totccrc = existingCnt + bookIns;
+				System.out.println("totccrc::" + totccrc + "--extcnt:" + existingCnt + "--diffIns:" + diffIns);
 			}
-
-			if (newVcode) {
-				String QRY_INS_USER_DET = "INSERT INTO " + cccrdownloadTab
-						+ "( vcode, userId, no_of_records, downloadtime, ipaddress, ccrc_status, cr_year, cr_season)\n"
-						+ "VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)";
-
-				Query insertCdown = entityManager.createNativeQuery(QRY_INS_USER_DET);
-				insertCdown.setParameter(1, villageCode);
-				insertCdown.setParameter(2, userId);
-				insertCdown.setParameter(3, ccrcIns);
-				insertCdown.setParameter(4, ipAddress);
-				insertCdown.setParameter(5, "C");
-				insertCdown.setParameter(6, cropYear);
-				insertCdown.setParameter(7, season);
-
-				cdowndet = insertCdown.executeUpdate();
-
-				System.out.println("cdowndet---------->" + cdowndet);
-			} else {
-				diffIns = bookIns;
-				totccrc = existingCnt + diffIns;
-
-				System.out.println("totccrc------->" + totccrc);
-
-				String updateQuery = (" update  " + cccrdownloadTab
-						+ "   set ccrc_status='C', no_of_records=? ,ipaddress=? where vcode=? and userid=?    and cr_year=? and cr_season=?");
-				Query insertCdown = entityManager.createNativeQuery(updateQuery);
-				insertCdown.setParameter(1, existingCnt + diffIns);
-				insertCdown.setParameter(2, ipAddress);
-				insertCdown.setParameter(3, villageCode);
-				insertCdown.setParameter(4, userId);
-				insertCdown.setParameter(5, cropYear);
-				insertCdown.setParameter(6, season);
-				cdowndet = insertCdown.executeUpdate();
-
-				System.out.println("Else cdowndet---------->" + cdowndet);
-			}
-
-			System.out.println("bookIns:" + bookIns);
-			totccrc = existingCnt + bookIns;
-			System.out.println("totccrc::" + totccrc + "--extcnt:" + existingCnt + "--diffIns:" + diffIns);
-		}
-		System.out.println("bookIns:" + bookIns + ", ccrcIns----->" + ccrcIns + ", diffIns------->" + diffIns
-				+ ", cdowndet---->" + cdowndet);
-
-//		if (ccrcIns > 0 && bookIns > 0 && diffIns == bookIns && cdowndet > 0) {
-//		} else {
-//			throw new Exception("Transaction failed due to certain conditions not met.");
-//		}
+			System.out.println("bookIns:" + bookIns + ", ccrcIns----->" + ccrcIns + ", diffIns------->" + diffIns
+					+ ", cdowndet---->" + cdowndet);
+			
 		List<CCRC_DetailsEntity> cropDetails = getCropDetails(wDCode, villageCode, season, cropYear);
 		List<CcrcCropDetails> collect = mapper.map(cropDetails, new TypeToken<List<CcrcCropDetails>>() {
 		}.getType());
@@ -350,13 +343,14 @@ public class CcrcCropServiceRepo {
 
 		System.out.println("bookIns + \"@\" + totccrc + \"\";:-------->" + bookIns + "@" + totccrc + "");
 
-		return pullResponse;
+//	    pullResponse.setMessage("No records found for the specified criteria.");
+       return pullResponse;
+//    }
 	}
 
 	@Transactional
 	private int insertCropDetailsFromWebland(int dCode, int mCode, int villageCode, String insertQuery,
 			int districtCode, int mandalCode, String season, int cropYear) {
-		ModelMapper mapper = new ModelMapper();
 
 		List<CCRCCropData> cropDataList = getCcrcCropData(String.valueOf(dCode), String.valueOf(mCode),
 				String.valueOf(villageCode));
@@ -500,7 +494,7 @@ public class CcrcCropServiceRepo {
 			connection = (HttpURLConnection) apiUrl.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setDoOutput(true);
-			connection.setConnectTimeout(30000);
+			connection.setConnectTimeout(60000);
 
 			// Set request headers
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -550,13 +544,10 @@ public class CcrcCropServiceRepo {
 
 	private void handleConnectionTimeoutException(RuntimeException e) {
 		System.out.println("Connection timeout: Unable to connect to the server");
-		e.printStackTrace(); // Log the exception or handle it as needed
-	}
-
-	private void handleOtherException(Exception e) {
 		e.printStackTrace();
 	}
 
+	
 	public static String decodeUnicodeEscapeSequences(String input) {
 		return StringEscapeUtils.unescapeJava(input);
 	}

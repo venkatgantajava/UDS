@@ -1,5 +1,6 @@
 package com.ecrops.entity.crop;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -49,7 +50,7 @@ public class CCRC_DetailsEntity {
 	private String surveyno;
 
 	@Column(name = "extent")
-	private double extent;
+	private Double extent;
 
 	@Column(name = "enrolldate")
 	private Date enrolldate;
@@ -58,7 +59,7 @@ public class CCRC_DetailsEntity {
 	private Date enrollenddate;
 
 	@Column(name = "gender")
-	private String gender;
+	private Character gender;
 
 	@Column(name = "dt_crt")
 	private Timestamp dt_crt;
@@ -70,16 +71,16 @@ public class CCRC_DetailsEntity {
 	private Integer cr_year;
 
 	@Column(name = "cr_season")
-	private String cr_season;
+	private Character cr_season;
 
 	@Column(name = "cultivable_land")
-	private double cultivable_land;
+	private BigDecimal cultivable_land;
 
 	@Column(name = "uncultivable_land")
-	private double uncultivable_land;
+	private BigDecimal uncultivable_land;
 
 	@Column(name = "tot_extent")
-	private double tot_extent;
+	private BigDecimal tot_extent;
 
 	@Column(name = "pname")
 	private String pname;
@@ -88,7 +89,7 @@ public class CCRC_DetailsEntity {
 	private String pfname;
 
 	@Column(name = "anubhavadar_extent")
-	private double anubhavadar_extent;
+	private BigDecimal anubhavadar_extent;
 
 	@Column(name = "part_key")
 	private String part_key;
@@ -256,11 +257,11 @@ public class CCRC_DetailsEntity {
 		this.surveyno = surveyno;
 	}
 
-	public double getExtent() {
+	public Double getExtent() {
 		return extent;
 	}
 
-	public void setExtent(double extent) {
+	public void setExtent(Double extent) {
 		this.extent = extent;
 	}
 
@@ -280,11 +281,11 @@ public class CCRC_DetailsEntity {
 		this.enrollenddate = enrollenddate;
 	}
 
-	public String getGender() {
+	public Character getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Character gender) {
 		this.gender = gender;
 	}
 
@@ -312,35 +313,35 @@ public class CCRC_DetailsEntity {
 		this.cr_year = cr_year;
 	}
 
-	public String getCr_season() {
+	public Character getCr_season() {
 		return cr_season;
 	}
 
-	public void setCr_season(String cr_season) {
+	public void setCr_season(Character cr_season) {
 		this.cr_season = cr_season;
 	}
 
-	public double getCultivable_land() {
+	public BigDecimal getCultivable_land() {
 		return cultivable_land;
 	}
 
-	public void setCultivable_land(double cultivable_land) {
+	public void setCultivable_land(BigDecimal cultivable_land) {
 		this.cultivable_land = cultivable_land;
 	}
 
-	public double getUncultivable_land() {
+	public BigDecimal getUncultivable_land() {
 		return uncultivable_land;
 	}
 
-	public void setUncultivable_land(double uncultivable_land) {
+	public void setUncultivable_land(BigDecimal uncultivable_land) {
 		this.uncultivable_land = uncultivable_land;
 	}
 
-	public double getTot_extent() {
+	public BigDecimal getTot_extent() {
 		return tot_extent;
 	}
 
-	public void setTot_extent(double tot_extent) {
+	public void setTot_extent(BigDecimal tot_extent) {
 		this.tot_extent = tot_extent;
 	}
 
@@ -360,11 +361,11 @@ public class CCRC_DetailsEntity {
 		this.pfname = pfname;
 	}
 
-	public double getAnubhavadar_extent() {
+	public BigDecimal getAnubhavadar_extent() {
 		return anubhavadar_extent;
 	}
 
-	public void setAnubhavadar_extent(double anubhavadar_extent) {
+	public void setAnubhavadar_extent(BigDecimal anubhavadar_extent) {
 		this.anubhavadar_extent = anubhavadar_extent;
 	}
 

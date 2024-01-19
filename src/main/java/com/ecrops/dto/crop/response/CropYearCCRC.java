@@ -4,5 +4,6 @@ public interface CropYearCCRC {
 
     String getSeasonvalue();
     String getCropyear();
+	int getVillageSize();
 
 }

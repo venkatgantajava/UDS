@@ -24,6 +24,7 @@ public class ActiveSeason {
 
 	@Column(name = "current_season")
 	private String currentSeason;
+	
 
 	@Column(name = "fassal_year")
 	private Integer fassalYear;

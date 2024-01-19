@@ -118,7 +118,18 @@
 				}
 			}
 			if (flag) {
-				return true;
+			var checkboxes = document
+					.querySelectorAll('input[type="checkbox"][name="selectedBkIds"]')
+			var totCheckBoxCnt = checkboxes.length;
+			for (var i = 0; i < totCheckBoxCnt; i++) {
+
+				if ((document.getElementById("checkBoxId" + i).checked) === true) {
+				}
+			}
+			if (confirm("PLease Ensure That All the Details are Entered Correctly.") === true) {
+				return submitClosure();
+			}
+			return true;
 			} else {
 				alert("please select atleast one record to submit");
 				return false;
@@ -151,6 +162,22 @@
 					headerCheckbox.checked = allChecked;
 				});
 		}
+		
+		function submitClosure() {
+		var dataSrcLst = "";
+		var checkboxes = document.querySelectorAll('input[type="checkbox"][name="selectedBkIds"]')
+        var totCheckBoxCnt = checkboxes.length;
+		for(var i = 0; i < totCheckBoxCnt; i++) {
+			if ((document.getElementById("checkBoxId" + i).checked) === true) {
+				dataSrcLst = dataSrcLst + document.getElementById("dataSrc" + i).value +",";
+				alert("data---->"+dataSrcLst);
+			}
+			document.getElementById("dataSrcList").value =dataSrcLst;
+		}		
+	}
+		
+		
+		
 	</script>
 </body>
 

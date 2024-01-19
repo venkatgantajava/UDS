@@ -16,7 +16,7 @@ public class CcrcCropDetails {
     private String tenantFather;
     private String caste;
     private Integer khataNo;
-    private Integer surveyNo;
+    private String surveyNo;
     private double weblandTotalExtent;
     private double weblandOccupantExtent;
     private String landNature;
@@ -30,10 +30,17 @@ public class CcrcCropDetails {
     private double weblandCultivatableLand;
     private String weblandOccupantName;
     private String weblandOccupantFatherName;
+    
+    
+    
+    public CcrcCropDetails() {
+        // Default constructor, you can leave it empty or initialize default values
+    }
+
 
 
     // Constructor
-    public CcrcCropDetails(Integer ccrcId, String docId, Integer district, String dName, Integer mandal, String mName, Integer village, String vName, String nameOfTheLandOwner, String landOwnerFather, String tenantAadhar, String nameOfTheTenantFarmer, String tenantFather, String caste, Integer khataNo, Integer surveyNo, double weblandTotalExtent, double weblandOccupantExtent, String landNature, double cardExtent, String enrollDate, String enrollEndDate, String tenantAddress, long tenantMobile, String tenantGender, double weblandUncultivatedLand, double weblandCultivatableLand, String weblandOccupantName, String weblandOccupantFatherName) {
+    public CcrcCropDetails(Integer ccrcId, String docId, Integer district, String dName, Integer mandal, String mName, Integer village, String vName, String nameOfTheLandOwner, String landOwnerFather, String tenantAadhar, String nameOfTheTenantFarmer, String tenantFather, String caste, Integer khataNo, String surveyNo, double weblandTotalExtent, double weblandOccupantExtent, String landNature, double cardExtent, String enrollDate, String enrollEndDate, String tenantAddress, long tenantMobile, String tenantGender, double weblandUncultivatedLand, double weblandCultivatableLand, String weblandOccupantName, String weblandOccupantFatherName) {
         this.ccrcId = ccrcId;
         this.docId = docId;
         this.district = district;
@@ -216,12 +223,12 @@ public class CcrcCropDetails {
 	}
 
 
-	public Integer getSurveyNo() {
+	public String getSurveyNo() {
 		return surveyNo;
 	}
 
 
-	public void setSurveyNo(Integer surveyNo) {
+	public void setSurveyNo(String surveyNo) {
 		this.surveyNo = surveyNo;
 	}
 
