@@ -7,6 +7,6 @@ import java.util.List;
 
 @Service
 public interface RepCultivatorDtlsService {
-    public List<Cultivator> getRepCultivatorsDtlsByAadharNo(Integer aadharNo, String userId, String tableName);
+    public List<Cultivator> getRepCultivatorsDtlsByAadharNo(String aadharNo, String userId, String tableName);
 
 }

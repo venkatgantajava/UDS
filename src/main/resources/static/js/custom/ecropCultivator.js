@@ -530,3 +530,50 @@ function searchRepCultivatorDtls() {
 		}
 	});
 }
+
+//Change Label Text based on Search Type in Edit Crop Booking details Page
+function searchValueLabelText(){
+	var searchType = $("#searchType").val();
+	if (searchType === "1") {
+		$('#searchValueLabelId').text('Survey No');
+	} else if (searchType === "2") {
+		$('#searchValueLabelId').text('Katha No');
+	} else if (searchType === "3") {
+		$('#searchValueLabelId').text('Aadhar No');
+	}
+}
+function searchEditCrBookingDetails() {
+	var searchType = $("#searchType").val();
+	var aadharNo = '';
+	var kathaNo = '';
+	var surveyNo = '';
+
+	if(searchType === 1){
+		surveyNo = $("#searchValue").val();
+	}else if(searchType === 2){
+		kathaNo = $("#searchValue").val();
+	}else if(searchType === 3){
+		aadharNo = $("#searchValue").val();
+	}
+
+	$("#contentDivId").html('');
+	$.ajax({
+		type: "GET",
+		url: 'editCropBookingDtls/details',
+		data: {
+			"cropYear": $("#cropYear").val(),
+			"vCode": $("#vcode").val(),
+			"correctionType": $("#correctionType").val(),
+			"searchType": searchType,
+			"kathaNo": kathaNo,
+			"surveyNo": surveyNo,
+			"aadharNo": aadharNo,
+		},
+		success: function(data) {
+			$("#tableTitleTextId").css({ 'display': '' });
+			$("#tableTitleTextId").text($("#correctionType option:selected").text());
+			$("#contentDivId").html(data)
+		}
+	});
+}
+

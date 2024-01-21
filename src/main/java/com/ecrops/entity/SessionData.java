@@ -1,36 +1,28 @@
 package com.ecrops.entity;
 
 public class SessionData {
-    public String wbedname;
+    private String wbedname;
+    private String wbemname;
 
-    public String wbemname;
+    private String dcode;
 
-    public String dcode;
+    private String mcode;
 
-    public String mcode;
+    private Integer wbdcode;
 
-    public String wbdcode;
+    private String wbmcode;
+    private String wbevname;
 
-    public String wbmcode;
+    private String wbvcode;
 
-    public String wbevname;
+    private String role;
 
-    public String wbvcode;
+    private String name;
 
-    public String role;
-
-    public String name;
-
-    public String userid;
-
-    public String typename;
-
-    public String userType;
-
-
-    public String getWbedname() {
-        return wbedname;
-    }
+    private String userid;
+    private String typename;
+    private String userType;
+    private String vsCode;
 
     public void setWbedname(String wbedname) {
         this.wbedname = wbedname;
@@ -60,11 +52,11 @@ public class SessionData {
         this.mcode = mcode;
     }
 
-    public String getWbdcode() {
+    public Integer getWbdcode() {
         return wbdcode;
     }
 
-    public void setWbdcode(String wbdcode) {
+    public void setWbdcode(Integer wbdcode) {
         this.wbdcode = wbdcode;
     }
 
@@ -130,5 +122,13 @@ public class SessionData {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getVsCode() {
+        return vsCode;
+    }
+
+    public void setVsCode(String vsCode) {
+        this.vsCode = vsCode;
     }
 }

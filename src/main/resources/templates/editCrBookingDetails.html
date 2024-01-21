@@ -1,0 +1,81 @@
+
+    <div class="panel panel-primary">
+
+        <div class="panel-body">
+
+            <table id="ownerGrid" class="table table-bordered table-striped dataTable">
+                <thead class="color-palette" style="background-color: #9494b8;">
+                <tr>
+                    <th style="color: white; width:10%;">S.No.</th>
+                    <th style="color: white; width:10%;">Booking Id</th>
+                    <th style="color: white; width:19%;">Pattadhar Name</th>
+                    <th style="color: white; width:19%;">Pattadhar Father Name</th>
+                    <th style="color: white; width:19%;">Cultivator Name</th>
+                    <th style="color: white; width:19%;">Pattadhar Father Name</th>
+                    <th style="color: white; width:7%;">Survey No</th>
+                    <th style="color: white; width:7%;">Khata No</th>
+                    <th style="color: white; width:8%;">Crop Name</th>
+                    <th style="color: white; width:10%;">Variety Name</th>
+                    <th style="color: white; width:8%;">Existing Aadhaar No</th>
+                    <th style="color: white; width:10%;">New Aadhaar No</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:id="${ebd.bookingId}" th:each="ebd:${editCrBookingDetailsList}">
+                    <td style="width:10%;">
+                        <span th:text="${ebdStat.index}"></span>
+                    </td>
+                    <td style="width:10%;">
+                        <span th:text="${ebd.bookingId}"></span>
+                        <input type="hidden" th:value="${ebd.bookingId}" th:id="'bookingId'+${ebdStat.index}">
+                    </td>
+                    <td style="width:10%;">
+                        <span th:text="${ebd.pattadharName}"></span>
+                        <input type="hidden" th:value="${ebd.pattadharName}" th:id="'pattadharName'+${ebdStat.index}">
+                    </td>
+                    <td style="width:10%;">
+                        <span th:text="${ebd.pattadharFatherName}"></span>
+                        <input type="hidden" th:value="${ebd.pattadharFatherName}"
+                               th:id="'pattadharFatherName'+${ebdStat.index}">
+                    </td>
+                    <td style="width:13%;">
+                        <span th:text="${ebd.cultivatorName}"></span>
+                        <input type="hidden" th:value="${ebd.cultivatorName}"
+                               th:id="'cultivatorName'+${ebdStat.index}">
+                    </td>
+                    <td style="width:15%;">
+                        <span th:text="${ebd.cultivatorFatherName}"></span>
+                        <input type="hidden" th:value="${ebd.cultivatorFatherName}"
+                               th:id="'cultivatorFatherName'+${ebdStat.index}">
+                    </td>
+                    <td style="width:10%;">
+                        <span th:text="${ebd.surveyNo}"></span>
+                        <input type="hidden" th:value="${ebd.surveyNo}"
+                               th:id="'surveyNo'+${ebdStat.index}">
+                    </td>
+                    <td style="width:10%;">
+                        <span th:text="${ebd.kathaNo}"></span>
+                        <input type="hidden" th:value="${ebd.kathaNo}"
+                               th:id="'kathaNo'+${ebdStat.index}">
+                    </td>
+                    <td style="width:10%;">
+                        <span th:text="${ebd.cropName}"></span>
+                        <input type="hidden" th:value="${ebd.cropName}"
+                               th:id="'cropName'+${ebdStat.index}">
+                    </td>
+                    <td style="width:10%;">
+                        <span th:text="${ebd.existingAadharNo}"></span>
+                        <input type="hidden" th:value="${ebd.existingAadharNo}"
+                               th:id="'existingAadharNo'+${ebdStat.index}">
+                    </td>
+                    <td style="width:10%;">
+                        <span th:text="${ebd.newAadharNo}"></span>
+                        <input type="hidden" th:value="${ebd.newAadharNo}"
+                               th:id="'newAadharNo'+${ebdStat.index}">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

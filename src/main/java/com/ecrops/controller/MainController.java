@@ -3,7 +3,7 @@ package com.ecrops.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.ecrops.util.CultivatorUtility;
+import com.ecrops.util.ECropUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -70,11 +70,10 @@ public class MainController {
 				return "login";
 			}
 
-		} catch (BadCredentialsException e) {
-			e.printStackTrace();
+		} catch (Throwable e) {
+			return "login";
 		}
 
-		return "home";
 	}
 
 	public void setSessionValues(HttpSession httpSession, UserRegEntity userRegEntity) {
@@ -94,7 +93,7 @@ public class MainController {
 			httpSession.setAttribute("wbdcode", userRegEntity.getWbDcode());
 			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
 
-			httpSession.setAttribute("ACTIVEYEAR", CultivatorUtility.getActiveYear());
+			httpSession.setAttribute("ACTIVEYEAR", ECropUtility.getActiveYear());
 
 			getHeaderMessage(userRegEntity.getName(), typeName, wbMaster.getWbedname(), wbMaster.getWbemname(), "",
 					httpSession);
@@ -110,6 +109,7 @@ public class MainController {
 			httpSession.setAttribute("mcode", userRegEntity.getMandCode());
 			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
 			httpSession.setAttribute("wbvcode", userRegEntity.getWbvcode());
+			httpSession.setAttribute("vscode", userRegEntity.getVillCode());
 
 			getHeaderMessage(userRegEntity.getName(), typeName, wbMaster.getWbedname(), wbMaster.getWbemname(),
 					wbMaster.getWbevname(), httpSession);

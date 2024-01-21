@@ -15,7 +15,7 @@ public class RepCultivatorDtlsServiceImpl implements RepCultivatorDtlsService {
     private RepCultivatorDtlsRepository repCultivatorDtlsRepository;
 
 
-    public List<Cultivator> getRepCultivatorsDtlsByAadharNo(Integer aadharNo, String userId, String tableName) {
+    public List<Cultivator> getRepCultivatorsDtlsByAadharNo(String aadharNo, String userId, String tableName) {
         return repCultivatorDtlsRepository.getRepCultivatorsDtlsByAadharNo(aadharNo, userId, tableName);
     }
 
