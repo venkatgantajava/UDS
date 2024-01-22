@@ -2,8 +2,6 @@ package com.ecrops.model;
 
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
-
 @Component
 public class EditCropBookingDetailsModel {
 
@@ -20,6 +18,8 @@ public class EditCropBookingDetailsModel {
     private String kathaNo;
 
     private String surveyNo;
+
+    private String season;
 
     public Integer getCropYear() {
         return cropYear;
@@ -46,7 +46,7 @@ public class EditCropBookingDetailsModel {
     }
 
     public String getSearchType() {
-        return searchType;
+        return searchType != null ? searchType : "";
     }
 
     public void setSearchType(String searchType) {
@@ -75,5 +75,13 @@ public class EditCropBookingDetailsModel {
 
     public void setSurveyNo(String surveyNo) {
         this.surveyNo = surveyNo;
+    }
+
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
     }
 }

@@ -547,27 +547,29 @@ function searchEditCrBookingDetails() {
 	var aadharNo = '';
 	var kathaNo = '';
 	var surveyNo = '';
+	var cropYearVal = $("#cropYear").val();
+	var seasonCropYear = cropYearVal.split('@');
 
-	if(searchType === 1){
+	if(searchType == 1){
 		surveyNo = $("#searchValue").val();
-	}else if(searchType === 2){
+	}else if(searchType == 2){
 		kathaNo = $("#searchValue").val();
-	}else if(searchType === 3){
+	}else if(searchType == 3){
 		aadharNo = $("#searchValue").val();
 	}
-
 	$("#contentDivId").html('');
 	$.ajax({
 		type: "GET",
 		url: 'editCropBookingDtls/details',
 		data: {
-			"cropYear": $("#cropYear").val(),
+			"cropYear": seasonCropYear[1],
 			"vCode": $("#vcode").val(),
 			"correctionType": $("#correctionType").val(),
 			"searchType": searchType,
 			"kathaNo": kathaNo,
 			"surveyNo": surveyNo,
 			"aadharNo": aadharNo,
+			"season":seasonCropYear[0],
 		},
 		success: function(data) {
 			$("#tableTitleTextId").css({ 'display': '' });

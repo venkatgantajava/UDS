@@ -35,5 +35,7 @@ public class ECropUtility {
 
         return sessionData;
     }
-
+    public static void setSessionData() {
+        ECropUtility.sessionData = null;
+    }
 }

@@ -57,6 +57,7 @@ public class MainController {
 	public String loginUser(@ModelAttribute AuthenticationRequest authenticationRequest, Model model,
 			HttpServletRequest request, HttpSession session) {
 		try {
+			ECropUtility.setSessionData();
 			final UserDetails userDetails = authenticationService
 					.loadUserByUsername(authenticationRequest.getUsername());
 			String encpassword = authenticationRequest.getPassword();
