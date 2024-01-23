@@ -25,5 +25,8 @@ public class EditCrBookingDetailsServiceImpl implements EditCrBookingDetailsServ
     public List<EditCrBookingDtlsEntity> geEditCrBookingDetails(EditCropBookingDetailsModel ecbd) {
         return editCrBookingDetailsRepository.geEditCrBookingDetails(ecbd);
     }
+    public void updateCrAadharNo(EditCrBookingDtlsEntity ecbd){
+        editCrBookingDetailsRepository.updateCrAadharNo(ecbd);
+    }
 
 }

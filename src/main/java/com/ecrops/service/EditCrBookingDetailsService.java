@@ -10,5 +10,6 @@ import java.util.List;
 @Service
 public interface EditCrBookingDetailsService {
     List<EditCrBookingDtlsEntity> geEditCrBookingDetails(EditCropBookingDetailsModel ecbd);
+    void updateCrAadharNo(EditCrBookingDtlsEntity ecbd);
 
 }

@@ -15,7 +15,13 @@ public class EditCrBookingDtlsEntity {
     private String cr_sow_date;
     private String variety;
     private String cr_farmeruid;
-    //Pattadhar Name
+
+    private String season;
+
+    private Integer cropyear;
+
+    private  Integer wbdcode;
+    private String newAadharNo;
 
     public String getOccupname() {
         return occupname;
@@ -119,5 +125,37 @@ public class EditCrBookingDtlsEntity {
 
     public void setOc_fname(String oc_fname) {
         this.oc_fname = oc_fname;
+    }
+
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    public String getNewAadharNo() {
+        return newAadharNo;
+    }
+
+    public void setNewAadharNo(String newAadharNo) {
+        this.newAadharNo = newAadharNo;
+    }
+
+    public Integer getCropyear() {
+        return cropyear;
+    }
+
+    public void setCropyear(Integer cropyear) {
+        this.cropyear = cropyear;
+    }
+
+    public Integer getWbdcode() {
+        return wbdcode;
+    }
+
+    public void setWbdcode(Integer wbdcode) {
+        this.wbdcode = wbdcode;
     }
 }
