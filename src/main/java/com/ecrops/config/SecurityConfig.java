@@ -1,47 +1,277 @@
 package com.ecrops.config;
 
+import java.beans.Customizer;
+import java.security.SecureRandom;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
+import org.springframework.session.web.http.HttpSessionIdResolver;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.ecrops.captcha.CaptchaAuthenticatioFilter;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests(requests -> requests.antMatchers("/registration/**", "/custom/**", "/js/**", "/css/**",
-				"/img/**", "/images/**", "/home/**", "/cultivator/**", "/cultivator/kathaNo/**", "/bootstrap/**",
-				"/customCSS/**", "/customJS/**", "/fonts/**", "/sass/**", "/login-auth/**", "/cultivator/owner/update",
-				"/cultivator/save", "/cultivator/update", "/cultivator/delete", "cultivator/extent",
-				"/weblandCropEntry/**", "/fetch-crop-data/", "/ccrcCropEntry/**", "/fetch-ccrc-crop-data/**",
-				"/rest/api/Ccrc-Crop/**", "/rest/api/webland-crop/villages","/allocOfSurveyNo/**","/getPattaDetails/**","/saveSelection/**",
-				"/getRevenueVillage/**","/getEmployeeByRevenue/**","/getDetails/**","/selectionOfSurveyNo/**","/VroRejectReasons/**","/saveSelection/**",
-				"/nonweblandfarmersdata/**","/surveyno/**","/postdata/**", "/repCultivatorDtls/**", "/editCropBookingDtls/**", "editCropBookingDtls/updateUid/**").permitAll().anyRequest().permitAll())
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig   {
 	
-		
-		
-				.formLogin(login -> login.loginPage("/login").permitAll().defaultSuccessUrl("/", true))
-				.logout(logout -> {
-					try {
-						logout.invalidateHttpSession(true).clearAuthentication(true)
-								.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-								.logoutSuccessUrl("/login?logout").and().csrf().disable().cors();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				});
+	@Autowired
+	private UserDetailsService userDetailsService;
+	int rnd=(int) Math.random();
+//	@Autowired
+//	private CaptchaAuthenticatioFilter captchaAuthenticatioFilter;
 
-	}
+ 
+    
+//	@Bean
+//	public PasswordEncoder  passwordEncoder() {
+//		return new CustomPasswordEncoder();
+//	}
+	
+//	   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//	        auth.userDetailsService(userDetailsService)
+//	            .passwordEncoder(passwordEncoder());
+//	    }
+	
+	 protected void configure(HttpSecurity http) throws Exception {
+	        http
+	            .sessionManagement()
+	                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	                .and()
+	            .csrf().disable() // Disable CSRF for simplicity
+	            .authorizeRequests()
+	                .anyRequest().authenticated()
+	                .and()
+	            .httpBasic();
+	    }
 
-	@Override
+	    // Register HttpSessionEventPublisher to enable handling of HttpSession events
+	    @Bean
+	    public HttpSessionEventPublisher httpSessionEventPublisher() {
+	        return new HttpSessionEventPublisher();
+	    }
+	
+	
+	
+	
 	@Bean
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+	public PasswordEncoder  passwordEncoder() {
+	//	System.out.println("password encoder called");
+		return new CustomPasswordEncoder();
 	}
 
+	@Bean
+	public AuthenticationProvider authenticationProvider() {
+		//System.out.println("callllllll");
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();		
+		provider.setUserDetailsService(userDetailsService);	
+		provider.setPasswordEncoder(passwordEncoder());
+	//	provider.setPasswordEncoder(passwordEncoder());
+
+
+		//System.out.println("sdfsd:"+passwordEncoder().toString());
+		return provider;
+	}
+    
+    
+	
+	
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() throws Exception{
+		
+		return (web)->web.ignoring().antMatchers("/css/","/img/","/js/","/webjars/","/fonts/","/icon-fonts/");
+		
+	}
+    
+    
+	 
+		@Bean
+		protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+			  
+			return http
+					
+			        .sessionManagement(session -> session
+			        		.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+			        		.invalidSessionStrategy(new MyCustomInvalidSessionStrategy())
+			            .maximumSessions(1)
+			            .maxSessionsPreventsLogin(false)
+			            .sessionRegistry(sessionRegistry())			         
+			            .expiredUrl("/?logout")
+			            .and()
+			            
+			            .sessionFixation().newSession()
+//			            .sessionFixation((sessionFixation) -> sessionFixation
+//			                    .newSession()
+//			                )
+			            
+			        )
+			        
+			        .headers(headers -> headers
+			    		   // .contentSecurityPolicy("default-src 'self'").and().	
+			    		  
+			    		   // .cacheControl(). // Disable the default Cache-Control header
+			                //.addHeaderWriter(new StaticHeadersWriter("Server", ""))
+			               
+			    		    .addHeaderWriter((request, response) -> {
+			    		    	response.setHeader("X-Content-Type-Options", "nosniff");
+			    		        response.setHeader("X-XSS-Protection", "1; mode=block");
+			    		        response.setHeader("X-Frame-Options", "deny");
+			    		        response.setHeader("Content-Security-Policy", "form-action 'self' default-src 'self' script-src 'self'  ;");
+			    		        
+ 			    		          
+			    		        response.setHeader("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
+			    		        response.setHeader("Server", "");
+			    		    //    response.setHeader("Content-Security-Policy", "form-action 'self' 'nonce- + generatedNonce + ' ;");
+			    		        
+			    		   //Set additional cookie attributes
+			    		    //  response.setHeader("Set-Cookie", "JSESSIONID=; HttpOnly; Secure; SameSite=Strict; Expires=0");
+			    		     //response.setHeader("Set-Cookie", "myCustomCookie=myCookieValue; HttpOnly; Secure; SameSite=Strict; Expires=0; Path=/login");
+			    		    
+			    		    })
+			    		    
+			    		   
+			    		)
+
+//			        .headers()
+//	              //  .httpStrictTransportSecurity().disable()
+//			        .addHeaderWriter(new StaticHeadersWriter("Content-Security-Policy",
+//			                "script-src-elem 'self'; script-src 'self';unsafe-inline' 'nonce-" + generatedNonce + "'; report-uri /csp-report-endpoint"))
+//	                .and()
+//	                
+//			        .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+	//
+//			        .and()
+//			        
+//			        
+			        .csrf(csrf -> csrf
+				            .ignoringAntMatchers("/easyPayResponse")
+				            .csrfTokenRepository(csrfTokenRepository())
+				        )
+			       
+			        .csrf()
+			            .csrfTokenRepository(csrfTokenRepository())
+			        .and()
+			        .authorizeRequests()
+			        .antMatchers("/?logout").permitAll()
+			      .antMatchers("/rbkroles/**").hasAuthority("25")
+			      .antMatchers("/maoroles/**").hasAuthority("5")
+			      .antMatchers("/horoles/**").hasAuthority("22")
+			      .antMatchers("/ddap/**").hasAuthority("17")
+			      .antMatchers("/horoles/**").hasAuthority("18")
+			      .antMatchers("/mro/**").hasAuthority("2")
+			      .antMatchers("/dao/**").hasAuthority("9") 
+
+			      .antMatchers("/rdo/**").hasAuthority("46") 
+			      .antMatchers("/vro/**").hasAuthority("30")
+			      .antMatchers("/ada/**").hasAuthority("31")
+			      .antMatchers("/fmadmin/**").hasAuthority("62")
+			      .antMatchers("/manufacturer/**").hasAuthority("63")
+			        .and()
+			        .formLogin()
+ 			            .loginPage("/")
+			            .permitAll()
+			            .defaultSuccessUrl("/login-auth", true)
+			            .failureUrl("/?error=true")
+			        .and()
+			        
+			        .logout()
+			        		
+			            
+			            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			        
+			            .invalidateHttpSession(true)
+			            .clearAuthentication(true)
+			            .deleteCookies("JSESSIONID")
+			            .logoutUrl("/logout")
+//			            .logoutSuccessHandler(new LogoutSuccessHandler() {
+	//
+
+			            .logoutSuccessUrl("/?logout").permitAll()
+			        .and()
+			        
+			        .exceptionHandling()
+			            .accessDeniedPage("/403")
+			            .accessDeniedPage("/400")
+			            .accessDeniedPage("/404")
+			            .accessDeniedPage("/500")
+			        .and()
+			     //   .httpBasic(Customizer.withDefaults())
+			      // .addFilterBefore(captchaAuthenticatioFilter,  UsernamePasswordAuthenticationFilter.class)
+			       .addFilterBefore(new CaptchaAuthenticatioFilter ("/","/?captcha_error") ,  UsernamePasswordAuthenticationFilter.class)
+			
+			        .build();
+		}
+	
+		@Bean
+	    public SecureRandom secureRandom() {
+	        return new SecureRandom();
+	    }
+
+	
+//	@Bean
+//	public HttpSessionEventPublisher httpSessionEventPublisher() {
+//	    return new HttpSessionEventPublisher();
+//	}
+		
+	
+	@Bean
+    public SessionRegistry sessionRegistry() {
+		 return new SessionRegistryImpl();
+	       
+    }
+	
+
+	@Bean
+    public SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+        return new SessionFixationProtectionStrategy();
+    }
+	
+	@Bean
+	public SessionFixationProtectionStrategy sessionFixation() {
+	    SessionFixationProtectionStrategy sessionFixationProtectionStrategy =
+	            new SessionFixationProtectionStrategy();
+	    // Configure additional settings if needed
+	    sessionFixationProtectionStrategy.setMigrateSessionAttributes(true);
+	    return sessionFixationProtectionStrategy;
+	}
+	
+	@Bean
+    public CsrfTokenRepository csrfTokenRepository() {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setHeaderName("X-CSRF-TOKEN");
+        return repository;
+    }
+
+	
+	@Bean
+    public HttpSessionIdResolver httpSessionIdResolver() {
+        return HeaderHttpSessionIdResolver.xAuthToken(); // Example: using a header-based session resolver
+    }
+	
 }

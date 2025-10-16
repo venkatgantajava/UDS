@@ -15,7 +15,10 @@ public class DistrictCsEntity {
 	
 	@Column(name="dname")
 	private String  dname;
-
+	
+	@Column(name="wbdcode")
+	private String  wbdcode;
+	
 	public Integer getDcode() {
 		return dcode;
 	}
@@ -30,6 +33,14 @@ public class DistrictCsEntity {
 
 	public void setDname(String dname) {
 		this.dname = dname;
+	}
+
+	public String getWbdcode() {
+		return wbdcode;
+	}
+
+	public void setWbdcode(String wbdcode) {
+		this.wbdcode = wbdcode;
 	}
 	
 	

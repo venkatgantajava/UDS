@@ -18,6 +18,14 @@ public class SessionData {
     private String role;
 
     private String name;
+    
+    private String season;
+    
+
+
+    private String currentSeason;
+    private Integer cropYear;
+
 
     private String userid;
     private String typename;
@@ -128,7 +136,44 @@ public class SessionData {
         return vsCode;
     }
 
-    public void setVsCode(String vsCode) {
+    public void setSeason(String season) {
+		this.season = season;
+	}
+
+	public void setVsCode(String vsCode) {
         this.vsCode = vsCode;
     }
+
+	public String getSeason() {
+		return season;
+	}
+
+	public String getCurrentSeason() {
+		return currentSeason;
+	}
+
+	public void setCurrentSeason(String currentSeason) {
+		this.currentSeason = currentSeason;
+	}
+
+	public Integer getCropYear() {
+		return cropYear;
+	}
+
+	public void setCropYear(Integer cropYear) {
+		this.cropYear = cropYear;
+	}
+
+	public String getWbedname() {
+		return wbedname;
+	}
+	
+	
+
+//	public void setSeason(String attribute) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
+    
 }

@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="activeseason")
+@Table(name="activeseason",schema="farmmechanization")
 public class ActiveSeasonEntity {
 	
 	@Column(name="season")

@@ -1,16 +1,33 @@
 package com.ecrops.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Entity
-@Table(name = "user_registration")
+@Table(name = "user_registration",schema="public")
 public class UserRegEntity {
 
+	
+	@Column(name = "usertype")
+	public Integer userType;
+	
 	@Column(name = "name")
 	private String name;
 
@@ -27,133 +44,196 @@ public class UserRegEntity {
 	@Column(name = "userid")
 	private String userid;
 
-	@Column(name = "encpassword")
-	private String encpassword;
+	//@Column(name = "uds_encpassword")
+	private String uds_encpassword;
 
 	@Column(name = "district")
-	private String distCode;
+	private String district;
 
 	@Column(name = "blockortehsil")
-	private String mandCode;
+	private String blockortehsil;
 
 	@Column(name = "village")
-	private String villCode;
+	private String village;
 
 	@Column(name = "wbmcode")
-	private Integer wbMcode;
+	private Integer wbmcode;
 
 	@Column(name = "wbdcode")
-	private Integer wbDcode;
+	private Integer wbdcode;
+	
+	@Email(message = "Email should be valid")
+	@Column(name = "emailid")
+	private String emailid;
 
 	@Column(name = "wbvcode")
 	private Integer wbvcode;
+	
+	@ManyToMany(cascade =CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "userroles_v",schema="public",joinColumns = @JoinColumn(name = "userid"),
+	inverseJoinColumns = @JoinColumn(name = "usertype"))
+	Set<UserTypesEntity> roles = new HashSet<UserTypesEntity>();
+	
+	
+	public UserRegEntity() {
+		
+	}
 
-	@OneToOne
-	@JoinColumn(name = "usertype", insertable = false, updatable = false)
-	private UserTypesEntity userTypesEntity;
+
+	public Integer getUserType() {
+		return userType;
+	}
+
+
+	public void setUserType(Integer userType) {
+		this.userType = userType;
+	}
+
 
 	public String getName() {
 		return name;
 	}
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 	public String getAadhaar_id() {
 		return aadhaar_id;
 	}
 
+
 	public void setAadhaar_id(String aadhaar_id) {
 		this.aadhaar_id = aadhaar_id;
 	}
+
 
 	public String getType_user() {
 		return type_user;
 	}
 
+
 	public void setType_user(String type_user) {
 		this.type_user = type_user;
 	}
+
 
 	public String getMobile_phone() {
 		return mobile_phone;
 	}
 
+
 	public void setMobile_phone(String mobile_phone) {
 		this.mobile_phone = mobile_phone;
 	}
+
 
 	public String getUserid() {
 		return userid;
 	}
 
+
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 
-	public String getEncpassword() {
-		return encpassword;
+
+	public String getUds_encpassword() {
+		return uds_encpassword;
 	}
 
-	public void setEncpassword(String encpassword) {
-		this.encpassword = encpassword;
+
+	public void setUds_encpassword(String uds_encpassword) {
+		this.uds_encpassword = uds_encpassword;
 	}
 
-	public String getDistCode() {
-		return distCode;
+
+	public String getDistrict() {
+		return district;
 	}
 
-	public void setDistCode(String distCode) {
-		this.distCode = distCode;
+
+	public void setDistrict(String district) {
+		this.district = district;
 	}
 
-	public String getMandCode() {
-		return mandCode;
+
+	public String getBlockortehsil() {
+		return blockortehsil;
 	}
 
-	public void setMandCode(String mandCode) {
-		this.mandCode = mandCode;
+
+	public void setBlockortehsil(String blockortehsil) {
+		this.blockortehsil = blockortehsil;
 	}
 
-	public String getVillCode() {
-		return villCode;
+
+	public String getVillage() {
+		return village;
 	}
 
-	public void setVillCode(String villCode) {
-		this.villCode = villCode;
+
+	public void setVillage(String village) {
+		this.village = village;
 	}
 
-	public Integer getWbMcode() {
-		return wbMcode;
+
+	public Integer getWbmcode() {
+		return wbmcode;
 	}
 
-	public void setWbMcode(Integer wbMcode) {
-		this.wbMcode = wbMcode;
+
+	public void setWbmcode(Integer wbmcode) {
+		this.wbmcode = wbmcode;
 	}
 
-	public UserTypesEntity getUserTypesEntity() {
-		return userTypesEntity;
+
+	public Integer getWbdcode() {
+		return wbdcode;
 	}
 
-	public void setUserTypesEntity(UserTypesEntity userTypesEntity) {
-		this.userTypesEntity = userTypesEntity;
+
+	public void setWbdcode(Integer wbdcode) {
+		this.wbdcode = wbdcode;
 	}
 
-	public Integer getWbDcode() {
-		return wbDcode;
+
+	public String getEmailid() {
+		return emailid;
 	}
 
-	public void setWbDcode(Integer wbDcode) {
-		this.wbDcode = wbDcode;
+
+	public void setEmailid(String emailid) {
+		this.emailid = emailid;
 	}
+
 
 	public Integer getWbvcode() {
 		return wbvcode;
 	}
 
+
 	public void setWbvcode(Integer wbvcode) {
 		this.wbvcode = wbvcode;
 	}
 
+
+	public Set<UserTypesEntity> getRoles() {
+		return roles;
+	}
+
+
+	public void setRoles(Set<UserTypesEntity> roles) {
+		this.roles = roles;
+	}
+
+
+	
+
+	
+	
 }
+
+

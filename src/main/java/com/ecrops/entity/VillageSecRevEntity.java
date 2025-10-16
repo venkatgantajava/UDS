@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "villsec_rev_v")
+@Table(name = "villsec_rev_v" ,schema = "ecrop2024")
 public class VillageSecRevEntity {
 
 	@Id
@@ -15,6 +15,60 @@ public class VillageSecRevEntity {
 
 	@Column(name = "wbvname")
 	private String wbvname;
+	
+	private String wbedname;
+	
+	private String wbemname;
+	
+private Integer wbdcode;
+
+private Integer wbmcode;
+
+private Integer vscode;
+
+
+
+
+
+	public String getWbedname() {
+	return wbedname;
+}
+
+public void setWbedname(String wbedname) {
+	this.wbedname = wbedname;
+}
+
+public String getWbemname() {
+	return wbemname;
+}
+
+public void setWbemname(String wbemname) {
+	this.wbemname = wbemname;
+}
+
+public Integer getWbdcode() {
+	return wbdcode;
+}
+
+public void setWbdcode(Integer wbdcode) {
+	this.wbdcode = wbdcode;
+}
+
+public Integer getWbmcode() {
+	return wbmcode;
+}
+
+public void setWbmcode(Integer wbmcode) {
+	this.wbmcode = wbmcode;
+}
+
+public Integer getVscode() {
+	return vscode;
+}
+
+public void setVscode(Integer vscode) {
+	this.vscode = vscode;
+}
 
 	public Integer getVcode() {
 		return vcode;
@@ -30,6 +84,12 @@ public class VillageSecRevEntity {
 
 	public void setWbvname(String wbvname) {
 		this.wbvname = wbvname;
+	}
+
+	@Override
+	public String toString() {
+		return "VillageSecRevEntity [vcode=" + vcode + ", wbvname=" + wbvname + ", wbedname=" + wbedname + ", wbemname="
+				+ wbemname + ", wbdcode=" + wbdcode + ", wbmcode=" + wbmcode + ", vscode=" + vscode + "]";
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.ecrops.util;
 
 import com.ecrops.entity.SessionData;
+
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -9,8 +10,13 @@ import java.time.Year;
 @Component
 public class ECropUtility {
     private static SessionData sessionData = null;
+    
     public static Integer getActiveYear(){
         return Year.now().getValue();
+    }
+    
+    public static String getSeason(){
+        return null;
     }
 
     public static SessionData sessionData(HttpSession session){
@@ -31,6 +37,10 @@ public class ECropUtility {
             sessionData.setTypename(String.valueOf(session.getAttribute("typename")));
             sessionData.setUserType(String.valueOf(session.getAttribute("userType")));
             sessionData.setVsCode(String.valueOf(session.getAttribute("vscode")));
+            sessionData.setSeason((String) session.getAttribute("season"));
+            
+            sessionData.setCurrentSeason(String.valueOf(session.getAttribute("CURRENT_SEASON")));
+            sessionData.setCropYear((Integer)session.getAttribute("CROP_YEAR"));
         }
 
         return sessionData;
@@ -38,4 +48,9 @@ public class ECropUtility {
     public static void setSessionData() {
         ECropUtility.sessionData = null;
     }
+
+    public static String getDcode(Integer dcode){
+        return (dcode !=null && dcode<10) ? "0"+dcode : String.valueOf(dcode);
+    }
+
 }

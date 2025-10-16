@@ -7,6 +7,9 @@ import java.util.List;
 
 @Service
 public interface VillageSecService {
+	
     public List<ActiveSeasonProjection> getVillageListByRbk(Integer vsCode);
+    
+    public List<ActiveSeasonProjection> getVillageList(Integer vscode);
 
 }

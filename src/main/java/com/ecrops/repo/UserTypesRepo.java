@@ -11,6 +11,6 @@ import com.ecrops.projection.ActiveSeasonProjection;
 
 public interface UserTypesRepo extends JpaRepository<UserTypes, Integer>{
 
-	@Query(value = "select name from usertypes where usertype=:usertype", nativeQuery = true)
+	@Query(value = "select name from public.usertypes where usertype=:usertype", nativeQuery = true)
 	public List<ActiveSeasonProjection> getUserType(@Param("usertype") Integer usertype);
 }

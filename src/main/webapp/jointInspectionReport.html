@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Joint Inspection Report</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 10px;
+		}
+
+		th,
+		td {
+			border: 1px solid black;
+			padding: 8px;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+
+<body>
+	<h2 style="text-align: center;">GOVT OF ANDHRA PRADESH DEPT OF AGRICULTURE</h2>
+	<h3 style="text-align: center;">JOINT INSPECTION REPORT OF DELIVERY OF IMPLEMENTS UNDER SMAM</h3>
+
+	<div class="section" th:each="order : ${jointInspection}">
+		<p><strong>FARMER NAME : </strong><span th:text="${order.farmerName}"></span></p>
+		<p><strong>Registration Number : </strong><span th:text="${order.applicationId}"></span></p>
+		<p><strong>Address : </strong><span th:text="${order.address}"></span></p> <strong>Village : </strong><span th:text="${order.wbvname}"></span></p>
+			<strong>Mandal : </strong><span th:text="${order.wbemname}"></span></p> <strong>District:</strong> <span
+				th:text="${order.wbedname}"></span><br>
+	</div>
+
+	<table>
+		<thead>
+			<tr>
+
+				<th>Name of the Farm Machinery/Make & Model/Manufacturer/Dealer</th>
+				<th>Unit Cost (Rs)</th>
+				<th>No. of Units</th>
+				<th>Total Amount (Rs)</th>
+				<th>Remarks</th>
+			</tr>
+		</thead>
+		<tbody>
+			<div class="section" th:each="order : ${jointInspection}">
+
+				<td>
+					<span th:text="${order.impName}"></span>
+					<b>/</b>
+					<span th:text="${order.model}"></span>
+					<b>/</b>
+					<span th:text="${order.manufacturer}"></span>
+					<b>/</b>
+				</td>
+				<td th:text="${order.fullcost}"></td>
+				<td th:text="${order.quantity}"></td>
+				<td th:text="${order.totamount}"></td>
+				<td></td>
+				</tr>
+
+		</tbody>
+	</table>
+
+
+	<h3>Checklist (copies to be enclosed):</h3>
+	<ol>
+		<li>Purchase Order</li>
+		<li>Document Proof Showing the Payment of Non-Subsidy</li>
+		<li>Invoice</li>
+		<li>Delivery Challan</li>
+		<li>Joint Inspection Photo</li>
+	</ol>
+<div class="section" th:each="order : ${jointInspection}">
+	<p><strong>Date : </strong><td th:text="${order.joint_insp_dt}"></td></p>
+</div>
+	<h3>Signatures:</h3>
+	<p>1. Individual: _______________________</p>
+	<p>2. Village Agriculture Assistant: _______________________</p>
+	<p>3. Mandal Agricultural Officer: _______________________</p>
+</body>
+
+</html>

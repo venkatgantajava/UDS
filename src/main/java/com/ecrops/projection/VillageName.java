@@ -5,4 +5,6 @@ public interface VillageName {
 	public String getVname();
 	public String getMname();
 	public String getDname();
+	public String getMcode();
+	public String getUserid();
 }

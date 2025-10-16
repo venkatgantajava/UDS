@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "usertypes")
+@Table(name = "usertypes",schema="public")
 public class UserTypesEntity {
 
 	@Id
@@ -16,8 +16,24 @@ public class UserTypesEntity {
 	@Column(name = "name")
 	public String typeName;
 
+	
+	@Column(name = "type_user")
+	public String typeuserforroles;
+	
+	public UserTypesEntity() {
+		// TODO Auto-generated constructor stub
+	}
+	
+
+	public UserTypesEntity(Integer userType, String typeName, String typeuserforroles) {
+		super();
+		this.userType = userType;
+		this.typeName = typeName;
+		this.typeuserforroles = typeuserforroles;
+	}
+
 	public Integer getUserType() {
-		return userType == null ? 0 : userType;
+		return userType;
 	}
 
 	public void setUserType(Integer userType) {
@@ -32,9 +48,18 @@ public class UserTypesEntity {
 		this.typeName = typeName;
 	}
 
-	@Override
-	public String toString() {
-		return "UserTypesEntity [userType=" + userType + ", typeName=" + typeName + "]";
+	public String getTypeuserforroles() {
+		return typeuserforroles;
 	}
 
+	public void setTypeuserforroles(String typeuserforroles) {
+		this.typeuserforroles = typeuserforroles;
+	}
+
+
+	@Override
+	public String toString() {
+		return "UserTypesEntity [userType=" + userType + ", typeName=" + typeName + ", typeuserforroles="
+				+ typeuserforroles + "]";
+	}
 }

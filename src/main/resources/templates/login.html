@@ -1,96 +1,218 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
+<head >
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Scripts -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="./js/jquery/jquery.cookie.js"></script>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	
+	<script src="./js/jquery-3.7.0.js"></script>
+	 <script src="./js/jquery.js"></script> 
+	<link rel="stylesheet"  type="text/css" href="./css/bootstrap1.min.css">
 	<title>Login Page</title>
-	<style>
-		#login {
-			width: 30%;
-			height: 400px;
-			background-color: #fff;
-			border-radius: 8px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-			padding: 40px;
-			margin-top: 5%;
-			margin-left: 7%;
-			/*    width: 100px;*/
-			text-align: center;
+    <style>
+        /* Custom CSS */
+        body {
+            background-image: url("./images/udsbg.png"); /* Replace with your background image */
+            background-size: cover;         
+            height: 100%;
+            margin: 0;  
+            background-repeat: no-repeat;
+        }
 
-			/*    margin-right: 15%;*/
-		}
+        .carousel-container {
+            padding-top: 120px;
+            margin: auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 100px;
+            
+        }
+     
+        .carousel-item img {
+            max-height: 450px;
+            object-fit: cover;
+            width: 80%;
+        }
 
-		body {
-			width: 100%;
-		}
+        .header {
+            width: 100%;
+            max-height: 185px;
+        }
+
+        .top {
+            position: relative;
+            top: 1000;
+            width: 100%;
+            text-align: center;
+        }
+#answer{
+	width:380px;
+	border-radius: 30px;
+}
+        .form-container {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;        
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            margin-left:250px;
+            height: 500px;
+            margin-top: 10px;
+        }
+        
+        
+        @media (max-width: 376px) {
+           .form-container {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;        
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            margin-left:0px;
+            height: 500px;
+            margin-top: 10px;
+    }
+    
+.image-fluid{
+	max-height: 65%;
+}
+
+}
+        
+        
+        form{
+            margin-top: 50px;
+           margin-left: 0px;
+           margin-right: 0;
+           padding: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .captcha-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .captcha-text {
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 3px;
+            background: #FFE0CD;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .captcha-box button {
+            color: #FFE0CD;
+        }
+
+        button {
+            width: 70%;
+            padding: 10px;
+            background: #f4d0d0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width:60%;
+        }
+
+        button:hover {
+            background: #b36500;
+        }
+
+        .head {
+            color: white;
+        }
+        .form{
+          padding-top:100px;
+
+        }
+
+        /* @media (min-width: 992px) {
+            .form-container {
+                position: absolute;
+                right: 10%;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        } */
+
+        @media (max-width: 376px) {
+        .carousel-container {
+    padding-top: 120px;
+    margin: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0px;
+}
+        }
+        .footer {
+    width: 100%;
+    height: 80px;
+    margin-top:50px;
+    font-size: 16px;
+    background-color:white;
+    max-height:100%;
+    font-weight:bold;
+    letter-spacing:1px;
+   
+
+}
+.col-lg-6{
+max-height: 100%;
+
+}
+
+a{
+    color: skyblue;
+}
 
 
+button[type="submit"] {
+    margin-top: 20px; /* Increase the space */
+    background-color: #8a5f5f;
+    width: 100%;
+}
 
-		.col-50 {
-			width: 50%;
-			float: left;
-			padding: 10px;
-		}
-
-
-
-		.image_refresh {
-			width: 30px;
-			height: 25px;
-		}
-
-		.slide {
-			margin-right: 20%;
-
-		}
-
-		.dev {
-			justify-content: space-between;
-			flex-direction: row;
-			display: flex;
-		}
-	</style>
+    h5{
+        color:white;
+    }
+    .column{
+        padding-top: 50px;
+        width:250px;
+    }
+    .container{
+        max-width: 1520px;
+    }
+    
+    </style>
+  
 
 
-
-
-
-
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script>jQuery(document).ready(function ($) {
 			$('img').removeAttr('width height');
 		});
 
 
 	</script>
-	<!--<script
-		src="<%=request.getContextPath()%>/scripts/hscripts/responsiveslides.js-v1.53/responsiveslides.min.js"></script>
-	<script src="<%=request.getContextPath()%>/scripts/hscripts/jquery-mobilemenu.min.js"></script>
-	<script src="<%=request.getContextPath()%>/scripts/hscripts/custom.js"></script>-->
-
-	<!--JQcharts-->
-	<!---->
-	<script src="<%=request.getContextPath()%>/script/validations.js" language="javascript"></script>
+	
+	<script src="./script/validations.js" language="javascript"></script>
 	<script language="javascript" src="./js/jquery1/md5_1.js"></script>
 	<script language="javascript" src="./js/sha256.js"></script>
-	<!-- JAVASCRIPTS -->
-	<!--<script src="layout/scripts/jquery.min.js"></script>-->
-	<!--<script src="layout/scripts/jquery.backtotop.js"></script>
-	<script src="layout/scripts/jquery.mobilemenu.js"></script>
-	<script src="layout/scripts/jquery.flexslider-min.js"></script>-->
-	<!-- IE9 Placeholder Support -->
-	<!--<script src="layout/scripts/jquery.placeholder.min.js"></script>-->
-
-
 
 	<script type="text/javascript">
 
@@ -103,189 +225,65 @@
 			$("#password").val(pass2);
 		}
 
-		function cap() {
-			var alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'
-				, 'W', 'X', 'Y', 'Z'];
-			var a = alpha[Math.floor(Math.random() * 26)];
-			var b = alpha[Math.floor(Math.random() * 26)];
-			var c = alpha[Math.floor(Math.random() * 26)];
-			var d = alpha[Math.floor(Math.random() * 26)];
-			var e = alpha[Math.floor(Math.random() * 26)];
-
-
-			var final = a + b + c + d + e;
-			document.getElementById("capt").value = final;
+		
+		function getCaptch() {
+			$.ajax({
+				type: "GET",
+				url: 'captcha/get',
+				success: function (responseData) {
+	
+					$("#capt").val(responseData.captcha);
+					
+				}
+			});
 		}
-		function validcap(event) {
-			var stg1 = document.getElementById('capt').value;
-			var stg2 = document.getElementById('textinput').value;
-
-			if (stg1 !== stg2) {
-				alert("Please enter a valid captcha");
-				event.preventDefault();
-				return false;
-			}
-		}
-
-
-		window.onload = cap;
+		
+		
 	</script>
-
 </head>
-
 <body>
-	<div class="header-design-new">
-
-		<img src="./images/Header.jpeg" th:src="@{./images/Header.jpeg}">
-
-	</div>
-
-	<nav class="navbar navbar-expand-sm bg-dark-green navbar-dark container-fluid">
-		<div class="container">
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="collapsibleNavbar">
-				<ul class="navbar-nav">
-					<!--						<li class="nav-item" style="margin-left: 85px;"></li>-->
-
-					<a class="nav-link text-white">
-						Home
-					</a>
-
-
-
-					<li class="nav-item" style="margin-left: 85px;"></li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle text-white" href="#" id="reportsDropdown"
-							data-bs-toggle="dropdown">
-							Reports
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="reportsDropdown">
-							<li><a class="dropdown-item" href="#">District Wise Abstract on Extent Booked</a></li>
-							<!--                                    <li><a class="dropdown-item" href="#">District Wise Status Report for All Crops </a></li>-->
-							<li><a class="dropdown-item" href="#">State Wide Crop Report</a></li>
-							<li><a class="dropdown-item" href="#">List of Perennial/Biennial Crops</a></li>
-						</ul>
-					</li>
-
-					<li class="nav-item" style="margin-left: 85px;"></li>
-					<li class="nav-item">
-						<a class="nav-link text-white" href="#">Guidelines</a>
-					</li>
-					<li class="nav-item" style="margin-left: 85px;"></li>
-					<li class="nav-item">
-						<a class="nav-link text-white" href="#">About Us</a>
-					</li>
-
-				</ul>
-			</div>
+<div>
+    <div class="header">
+        <img src="./images/usdheader.jpg" class="img-fluid ">
+    </div>
+<div class="container">
+  
+    <div class="row " >
+        <div class="col-lg-6 order-2 order-lg-1">
+			
+		
+<!--            <img src="./images/bbgg2.png" class="img-fluid" ; style="margin-top:30px;max-width: 100%;">    -->
+     
+            
+			
 		</div>
-	</nav>
-
-	<div class="container">
-		<div class="row">
-			<div class="col-7" style="padding-top: 35px;">
-				<div id="carouselExampleControls" class="carousel slide dev" data-bs-ride="carousel">
-					<div class="carousel-inner">
-						<!--					    <div class="carousel-item active">-->
-						<!--					      <img src="./images/1.jpg" class="d-block w-60" alt="...">-->
-						<!--					    </div>-->
-						<div class="carousel-item active">
-							<img src="./images/2.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/3.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/4.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/7.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/8.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/9.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item ">
-							<img src="./images/10.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/1.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/11.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/12.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/14.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item ">
-							<img src="./images/15.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/16.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/18.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/19.jpg" class="d-block w-60" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="./images/20.jpg" class="d-block w-60" alt="...">
-						</div>
-					</div>
-					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-						data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-						data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
-				</div>
-			</div>
-
-			<div id="login" class="col-lg-5"
-				style="padding-bottom:50px; padding-top:20px;padding-left:50px;padding-right:50px ">
-
-				<h2>Login</h2>
-				<form th:action="@{/login-auth}" method="post">
+          
+            <div class="col-lg-6 order-1 order-lg-2 form">
+            <div class="form-container">
+           <form th:action="@{/}" th:object="${appuser}" method="post" autocomplete="off">
 					<input type="hidden" name="shapassword" id="shapassword" />
 					<div class="mb-3">
 						<input type="text" class="form-control" th:name="username" th:placeholder="Username" required
-							style=" border-radius: 20px;">
+							autocomplete="off" style=" border-radius: 20px;">
 					</div>
 					<div class="mb-3">
-						<input type="password" class="form-control" th:name="password" id="password"
-							th:placeholder="Password" required style=" border-radius: 20px;" onchange="changePass()">
+						<input type="password" class="form-control" name="password" id="password"
+							th:placeholder="Password" required autocomplete="off" style=" border-radius: 20px;" onchange="changePass()">
 					</div>
 
 					<label>
-						<div class="form-group col-50">
-							<input type="text" class="form-control" readonly id="capt">
-
-						</div>
-						<div class="form-row">
-
-							<div class="form-group col-50">
-								<input type="text" class="form-control" placeholder="Enter Captcha" id="textinput">
-							</div>
-						</div>
-					</label>
-					<h6>Refresh <img class="image_refresh" src="./images/Refresh.png" onclick="cap()"></h6>
+						 <div class="form-group mb-3">
+		            	<span th:utext="${usercaptcha}"></span><br>
+		            	
+						<input type="text" th:field="*{answer}"  id="answer" autocomplete="off" name="answer" class="form-control hero-subscribe-from"/>
+						  <span   class="error" th:if="${#fields.hasErrors('answer')}" th:errors="*{answer}" style="color: red;" ></span>   
+                        <span id="answer-error"  class="error"></span>  
+		            </div>
 
 					<br>
 					<div class="form-group">
-						<input type="submit" class="btn btn-lg btn-success btn-block" value="submit"
-							onclick="validcap(event)" />
+						<input type="submit" class="btn btn-lg btn-success btn-block" value="Submit"/>
+						 <!--  onclick="validcap(event)" -->
 
 
 					</div>
@@ -294,9 +292,33 @@
 						<span th:utext="${msg}"></span>
 					</div>
 				</form>
-			</div>
-		</div>
-	</div>
-</body>
+            </div>
+        </div>
+   
+           
+       
+</div>
+</div><br><br><br><br>
+<footer class="footer text-dark text-center ">
+	
+<!--	<img src="./images/usdfooter.jpg" class="img-fluid" ; style="margin-top:30px;max-width: 100%;">  -->
+   
+    <div class="pt-2">
+        <div class="" style="display: flex; align-items: center;justify-content: center;">
+            <p><b>Site is Designed and Hosted by</b> <a href="https://ap.nic.in" target="_blank">AP-NIC</a></p>
+            <br>
+            <a href="https://ap.nic.in" target="_blank" style="margin-left: 10px; display: flex; align-items: center; ">
+                <img src="./images/logo.png" alt="NIC LOGO" style="width:60px;">
+            </a>
+        </div>
+    </div>
+    
+   <div><p> <b> Contents Published and Managed by  <a href="https://www.apagrisnet.gov.in/" target="_blank"> Department of Agriculture </a>  Govt.of Andhra Pradesh</b></p></div> 
+  
+</footer>
+</div>
 
+
+<!-- Bootstrap JS -->
+</body>
 </html>

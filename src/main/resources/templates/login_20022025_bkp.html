@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head >
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<script src="./js/jquery-3.7.0.js"></script>
+	 <script src="./js/jquery.js"></script> 
+	<link rel="stylesheet"  type="text/css" href="./css/bootstrap1.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<title>Login Page</title>
+    <style>
+        /* Custom CSS */
+        body {
+             /* Replace with your background image */
+            background-size: cover;         
+            height: 100vh;
+            margin: 0;  
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+      
+        
+        .header {
+            width: 100%;
+            max-height: 185px;
+        }
+
+        .top {
+            position: relative;
+            top: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+ .form-container {
+    background: #ffffff;
+    padding: 100px;
+    border-radius: 8px;
+    width: 60%;
+    border-radius: 50%;
+    position: relative;
+    margin-left: 150px;
+    margin-top: 150px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+        form{
+           /* margin-top: 130px;
+           margin-left: 80px;
+           margin-right: 0; */
+           
+           padding: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #8A5F5F;
+            border-radius: 5px;
+        }
+
+        .captcha-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .captcha-text {
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 3px;
+            background: #FFE0CD;
+            padding: 5px 10px;
+            border-radius: 5px;
+            width: 30%;
+        }
+
+        .captcha-box button {
+            color: #FFE0CD;
+        }
+
+        button {
+         
+            padding: 10px;
+            background: #f4d0d0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width:90%;
+            margin-right: 0px;
+            justify-content: space-between;
+        }
+
+        button:hover {
+            background: #b36500;
+        }
+
+        .head {
+            color: white;
+        }
+        
+
+       @media (max-width: 376px) {
+        .form-container {
+    background: #ffffff;
+  
+    
+    width: 100%;
+    border-radius: 50%;
+    position: relative;
+    margin-left: 0px;
+    margin-top: 100px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   } 
+
+   form{
+           /* margin-top: 130px;
+           margin-left: 80px;
+           margin-right: 0; */
+           
+           padding: 10px;
+        }
+        .captcha-text {
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 3px;
+    background: #FFE0CD;
+    padding: 5px 10px;
+    border-radius: 5px;
+    /* width: 30%; */
+        
+            }
+       }
+
+        .footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    font-size: 16px;
+    background-color: #070707;
+    max-height: 50px;
+    font-weight:bold;
+    letter-spacing:1.5px;
+   
+   
+   
+}
+.col-lg-6{
+height: 100%;
+
+}
+
+button[type="submit"] {
+    margin-top: 20px; /* Increase the space */
+    background-color: #be6c0f;
+    width: 40%;
+    align-items: center;
+    margin-left: 80px;
+}
+
+    h5{
+        color:white;
+    }
+    .column{
+        padding-top: 50px;
+        width:250px;
+    }
+    .container{
+        max-width: 1980px;
+        height: 860px;
+        background-image: url("./images/farm.png");
+    }
+    
+    </style>
+  
+
+
+	<script>jQuery(document).ready(function ($) {
+			$('img').removeAttr('width height');
+		});
+
+
+	</script>
+	
+	<script src="/script/validations.js" language="javascript"></script>
+	<script language="javascript" src="./js/jquery1/md5_1.js"></script>
+	<script language="javascript" src="./js/sha256.js"></script>
+
+	<script type="text/javascript">
+
+		function changePass() {
+			var password = $("#password").val();
+			var pass1 = GM(GM(password));
+			var sha256 = new jsSHA('SHA-256', 'TEXT');
+			sha256.update(pass1);
+			var pass2 = sha256.getHash("HEX");
+			$("#password").val(pass2);
+		}
+
+		
+		function getCaptch() {
+			$.ajax({
+				type: "GET",
+				url: 'captcha/get',
+				success: function (responseData) {
+	
+					$("#capt").val(responseData.captcha);
+					
+				}
+			});
+		}
+		
+		
+	</script>
+</head>
+<body>
+<div>
+    <div class="header">
+        <img src="./images/headfarm.jpg" class="img-fluid ">
+    </div>
+<div class="container">
+  
+    <div class="row ">
+        <div class="col-lg-6"></div>
+           
+        <div class="col-lg-6 form">
+          
+            <div class="form-container">
+               
+               <form th:action="@{/login}" th:object="${appuser}" method="post" autocomplete="off">
+					<input type="hidden" name="shapassword" id="shapassword" />
+					<div class="mb-3">
+						<input type="text" class="form-control" th:name="username" th:placeholder="Username" required
+							autocomplete="off" style=" border-radius: 20px;">
+					</div>
+					<div class="mb-3">
+						<input type="password" class="form-control" name="password" id="password"
+							th:placeholder="Password" required autocomplete="off" style=" border-radius: 20px;" onchange="changePass()">
+					</div>
+
+					<label>
+						 <div class="form-group mb-3">
+		            	<span th:utext="${usercaptcha}"></span><br>
+		            	
+						<input type="text" th:field="*{answer}"  id="answer" autocomplete="off" name="answer" class="form-control hero-subscribe-from"/>
+						  <span   class="error" th:if="${#fields.hasErrors('answer')}" th:errors="*{answer}" style="color: red;" ></span>   
+                        <span id="answer-error"  class="error"></span>  
+		            </div>
+
+					<br>
+					<div class="form-group">
+						<input type="submit" class="btn btn-lg btn-success btn-block" value="submit"/>
+						 <!--  onclick="validcap(event)" -->
+
+
+					</div>
+
+					<div>
+						<span th:utext="${msg}"></span>
+					</div>
+				</form>
+          
+        </div>
+    </div>
+</div>
+</div>
+<footer class="footer text-white text-center py-3">
+    <p >Designed and Developed by NIC</p>
+</footer>
+</div>
+
+
+<!-- Bootstrap JS -->
+</body>
+</html>

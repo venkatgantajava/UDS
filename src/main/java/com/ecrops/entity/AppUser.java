@@ -12,18 +12,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name = "user_registration")
+@Table(name = "user_registration",schema="public")
 public class AppUser {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 
 	private String userid;
 
-	private String encpassword;
+	private String uds_encpassword;
 
 	private String district;
 
@@ -32,6 +32,15 @@ public class AppUser {
 	private String village;
 
 	private String type_user;
+	
+	@Transient
+	private String question;
+	@Transient
+	//@NotNull(message = "answer is required")
+	private int answer;
+	@Transient
+    private String operationType; 
+	
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userid"), inverseJoinColumns = @JoinColumn(name = "id"))
@@ -49,12 +58,15 @@ public class AppUser {
 		this.userid = userid;
 	}
 
-	public String getEncpassword() {
-		return encpassword;
+
+	
+
+	public String getUds_encpassword() {
+		return uds_encpassword;
 	}
 
-	public void setEncpassword(String encpassword) {
-		this.encpassword = encpassword;
+	public void setUds_encpassword(String uds_encpassword) {
+		this.uds_encpassword = uds_encpassword;
 	}
 
 	public String getDistrict() {
@@ -98,26 +110,74 @@ public class AppUser {
 		this.roles = roles;
 	}
 
-	@Override
-	public String toString() {
-		return "AppUser [userid=" + userid + ", encpassword=" + encpassword + ", district=" + district
-				+ ", blockortehsil=" + blockortehsil + ", village=" + village + ", type_user=" + type_user + ", roles="
-				+ roles + ", getUserid()=" + getUserid() + ", getEncpassword()=" + getEncpassword() + ", getDistrict()="
-				+ getDistrict() + ", getBlockortehsil()=" + getBlockortehsil() + ", getVillage()=" + getVillage()
-				+ ", getType_user()=" + getType_user() + ", getRoles()=" + getRoles() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "AppUser [userid=" + userid + ", encpassword=" + fm_encpassword + ", district=" + district
+//				+ ", blockortehsil=" + blockortehsil + ", village=" + village + ", type_user=" + type_user + ", roles="
+//				+ roles + ", getUserid()=" + getUserid() + ", getEncpassword()=" + getEncpassword() + ", getDistrict()="
+//				+ getDistrict() + ", getBlockortehsil()=" + getBlockortehsil() + ", getVillage()=" + getVillage()
+//				+ ", getType_user()=" + getType_user() + ", getRoles()=" + getRoles() + ", getClass()=" + getClass()
+//				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+//	}
+	
+	
+	
 
 	public AppUser(String userid, String encpassword, String district, String blockortehsil, String village,
 			String type_user, Collection<Roles> roles) {
 		super();
 		this.userid = userid;
-		this.encpassword = encpassword;
+		this.uds_encpassword = encpassword;
 		this.district = district;
 		this.blockortehsil = blockortehsil;
 		this.village = village;
 		this.type_user = type_user;
 		this.roles = roles;
+	}
+
+	
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+
+	public int getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(int answer) {
+		this.answer = answer;
+	}
+
+	public String getOperationType() {
+		return operationType;
+	}
+
+	public void setOperationType(String operationType) {
+		this.operationType = operationType;
+	}
+
+	public AppUser(String question, int answer, String operationType) {
+		super();
+		this.question = question;
+		this.answer = answer;
+		this.operationType = operationType;
+	}
+
+	@Override
+	public String toString() {
+		return "AppUser [userid=" + userid + ", uds_encpassword=" + uds_encpassword + ", district=" + district
+				+ ", blockortehsil=" + blockortehsil + ", village=" + village + ", type_user=" + type_user
+				+ ", question=" + question + ", answer=" + answer + ", operationType=" + operationType + ", roles="
+				+ roles + ", getUserid()=" + getUserid() + ", getUds_encpassword()=" + getUds_encpassword()
+				+ ", getDistrict()=" + getDistrict() + ", getBlockortehsil()=" + getBlockortehsil() + ", getVillage()="
+				+ getVillage() + ", getType_user()=" + getType_user() + ", getRoles()=" + getRoles()
+				+ ", getQuestion()=" + getQuestion() + ", getAnswer()=" + getAnswer() + ", getOperationType()="
+				+ getOperationType() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 	

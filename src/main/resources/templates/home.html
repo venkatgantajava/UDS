@@ -5,10 +5,33 @@
 
 <body>
 	<div th:insert="headerImage"></div>
+	
+	
+	<div th:if="${session.role != '17' and session.role != '5' and session.role != '2' and session.role != '9' 
+	and session.role != '31' and session.role != '22' and session.role != '44' and session.role != '25' 
+	and session.role != '45' and session.role != '19' and session.role != '51' and session.role != '18' and session.role != '55' 
+	and session.role != '56' and session.role != '57'  and session.role != '33' and session.role != '30' and session.role != '48' 
+	and session.role != '59' and session.role != '38' and session.role != '46'  and session.role != '52' and session.role != '53'
+	 and session.role != '58'   and session.role != '1' 
+	and session.role != '54' and session.role != '69' and session.role != '68' and session.role != '70' 
+	and session.role != '71' and session.role != '72' and session.role != '40'}" th:insert="navBarTop"></div>
+	
+	<div th:if="${session.role == '25'}" th:insert="navBarTopRBK"></div>
+	
+	<div th:if="${session.role == '5'}" th:insert="navBarTopMAO"></div>
+	
+	<div th:if="${session.role == '9'}" th:insert="navBarTopDAO"></div>
+	<div th:if="${session.role == '17'}" th:insert="navBarTopDDAP"></div>
+	
+	
 
-	<div th:insert="navBarTop"></div>
 	<div th:insert="headerMessage"></div>
 
 </body>
 
 </html>
+
+
+
+
+

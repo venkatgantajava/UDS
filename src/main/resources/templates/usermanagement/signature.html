@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's New</title>
+<!--<link rel="stylesheet"-->
+<!--	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">-->
+<!--<script-->
+<!--	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+<script>
+    function previewImage(event) {
+        const file = event.target.files[0]; // Get the selected file
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Show Image Preview
+                const preview = document.getElementById("preview");
+                preview.src = e.target.result;
+                preview.style.display = "block";
+
+                // Show Success Message
+                document.getElementById("successMessageContainer").style.display = "block";
+
+                // Show Refresh Button
+                document.getElementById("refreshButton").style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function clearFileInput() {
+        // Reset File Input
+        document.getElementById("fileInput").value = "";
+
+        // Hide Preview
+        document.getElementById("preview").style.display = "none";
+
+        // Hide Success Message
+        document.getElementById("successMessageContainer").style.display = "none";
+
+        // Hide Refresh Button
+        document.getElementById("refreshButton").style.display = "none";
+    }
+
+    function refreshPage() {
+        location.reload(); // Reload the page to reset everything
+    }
+</script>
+<style>
+
+
+#successMessageContainer{
+color:green;
+}
+
+</style>
+
+
+
+</head>
+<body>
+<head th:insert="header"></head>
+<div th:insert="headerImage"></div>
+<div th:insert="navBarTop"></div>
+<div th:insert="headerMessage"></div>
+
+
+<div style="display: flex; align-items: center; margin: 20px 0;">
+	<hr
+		style="flex: 1; border: none; border-top: 3px solid #000; margin: 0;" />
+	<h2 style="margin: 0 20px; white-space: nowrap;">facsimile Signature</h2>
+	<hr
+		style="flex: 1; border: none; border-top: 3px solid #000; margin: 0;" />
+</div>
+
+<!-- Add Alert Form -->
+<div class="container mt-5">
+    <div class="row align-items-start">
+        <div class="col-md-10 d-flex align-items-center justify-content-center">
+            <div class="p-4 border rounded" style="width: 60%; max-width: 800px; background-color: #f9f9f9;">
+                <h4 class="text-center mb-4" style="color: #006400;">Upload  facsimile signature</h4>
+
+                <form id="myform" enctype="multipart/form-data">
+                    <!-- File Input and Preview Container -->
+                    <div class="form-group d-flex align-items-center">
+                        <!-- File Input on the Left -->
+                        <div class="file-input-container" style="flex-grow: 1;">
+                            <label for="fileInput" class="font-weight-bold">Choose File:</label>
+                            <input type="file" id="fileInput" name="file" class="form-control-file" onchange="previewImage(event)">
+                            
+                                 <!-- Success Message -->
+                        <div id="successMessageContainer" style="display: none; margin-top: 10px;">
+                            <p id="successMessage" class="alert " style="margin: 0; text-align: center;">File Selected Successfully!</p>
+                        </div>
+                        </div>
+                        
+                  
+                        <!-- Image Preview on the Right -->
+                        <div class="preview-box" style="margin-left: 20px;">
+                            <img id="preview" src="" alt="Signature Preview" style="display: none; width: 150px; ">
+                        </div>
+                        
+                        
+                    </div>
+ 
+
+                    <!-- Refresh Button -->
+        <!--             <div class="form-group mt-2">
+                        <button type="button" class="btn btn-secondary btn-sm" id="refreshButton" style="display: none;" onclick="clearFileInput()">Refresh</button>
+                    </div> -->
+
+                    <!-- Submit & Refresh Buttons -->
+                    <div class="mt-3 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-info" style="background-color: #28a745; color: #fff; width: 150px; margin-right: 10px;">Submit</button>
+                        <button type="button" class="btn btn-info" style="background-color: #17a2b8; width: 150px;" onclick="refreshPage()">Refresh</button>
+                    </div>
+                    <p id="responseMessage" style="margin-top: 10px; font-weight: normal;"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+		<!-- Add Alert Modal -->
+		<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+			aria-labelledby="addModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addModalLabel">Add New Alert</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="addForm">
+							<div class="form-group">
+								<label for="newMessage">Message</label> <input type="text"
+									class="form-control" id="newMessage" required>
+							</div>
+							<button type="button" class="btn btn-primary"
+								onclick="addNewAlert()">Save</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Edit Alert Modal -->
+		<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+			aria-labelledby="editModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="editModalLabel">Edit Alert</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="editForm">
+							<input type="hidden" id="editRowId">
+							<div class="form-group">
+								<label for="editMessage">Message</label> <input type="text"
+									class="form-control" id="editMessage" required>
+							</div>
+							<button type="button" class="btn btn-primary"
+								onclick="saveNewsAlert()">Save</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+
+	<script>
+	
+	
+// 	 function previewImage(event) {
+//          const file = event.target.files[0]; // Get the selected file
+//          if (file) {
+//              const reader = new FileReader();
+//              reader.onload = function(e) {
+//                  const preview = document.getElementById("preview");
+//                  preview.src = e.target.result;
+//                  preview.style.display = "block";
+//              };
+//              reader.readAsDataURL(file); 
+//          }
+//      }
+    function adjustHeight(el) {
+        el.style.height = 'auto'; 
+        el.style.height = (el.scrollHeight) + 'px'; 
+    }
+
+    $(document).ready(function () {
+    	 $('.close').click(function() {
+ 	        $('#editModal').modal('hide');
+ 	    });
+       
+        $("#myform").submit(function (event) {
+            event.preventDefault();  
+
+     
+             const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0]; 
+            if(file){
+            
+            	uploadFile();
+            }
+            document.getElementById("fileInput").addEventListener("change", function () {
+                document.getElementById("refreshButton").style.display = "inline-block";
+            });
+        });     
+       
+    });
+    
+    function uploadFile() {
+    	
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+        const maxFileSize = 1 * 1024 * 1024; 
+        const responseMessage = document.getElementById("responseMessage");
+   
+        responseMessage.innerText = "";
+        responseMessage.style.color = "green";
+
+   
+        if (!file) {
+            responseMessage.innerText = "Please select a file to upload.";
+            responseMessage.style.color = "red";
+            return;
+        }
+        if (file.size > maxFileSize) {
+            responseMessage.innerText = "File size exceeds 1 MB. Please select a smaller file.";
+            responseMessage.style.color = "red";
+            return;
+        }
+
+        const formData = new FormData();
+        
+        formData.append("file", file);
+     
+
+        responseMessage.innerText = "Uploading file, please wait...";
+        responseMessage.style.color = "blue";
+   
+        $.ajax({
+            url: './api/uploadNewsOrFile',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function () {
+                responseMessage.innerText = "File uploaded successfully!";
+                responseMessage.style.color = "green";
+
+                document.getElementById("successMessage").innerText = "Upload successful!";
+                document.getElementById("successMessageContainer").style.display = "block";
+
+                setTimeout(() => {
+                    document.getElementById("successMessageContainer").style.display = "none";
+                }, 5000);
+
+                fileInput.value = ""; // Clear file input
+                document.getElementById("message").value = ""; // Clear message input
+                document.getElementById("refreshButton").style.display = "none"; // Hide refresh button
+                fetchAlerts(); // Refresh alerts
+            },
+            error: function () {
+                responseMessage.innerText = "File submission failed. Please try again.";
+                responseMessage.style.color = "red";
+            }
+        });
+    }
+
+    function exportToExcel() {
+        var table = document.getElementById('alertsTable');
+        var rows = table.rows;
+        var csv = [];
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var cells = row.getElementsByTagName('td');
+            var rowData = [];
+            for (var j = 0; j < cells.length; j++) {
+                rowData.push(cells[j].innerText);
+            }
+            csv.push(rowData.join(','));
+        }
+
+
+        var csvString = csv.join('\n');
+        var blob = new Blob([csvString], { type: 'text/csv' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'farmer_alerts.csv';
+        link.click();
+    }
+    
+    function printTable() {
+        var printContents = document.getElementById('alertsTable').outerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+ 
+   
+    function addNewAlert(message) {
+        var data = { message: message };
+        $.ajax({
+            type: 'POST',
+            url: './api/addNewAlert',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function () {
+                document.getElementById("successMessage").innerText = "Message added successfully!";
+                document.getElementById("successMessageContainer").style.display = "block";
+
+                setTimeout(() => {
+                    document.getElementById("successMessageContainer").style.display = "none";
+                }, 5000);
+
+                $('#message').val(""); // Clear the input field
+                fetchAlerts(); // Refresh the alerts table
+            },
+            error: function () {
+                alert('Failed to add message.');
+            }
+        });
+    }
+    
+ function saveNewsAlert() {
+        const updatedMessage = $('#editMessage').val();
+        const rowId = $('#editRowId').val();
+        var data = {
+            slno: rowId,
+            news: updatedMessage
+        };
+        $.ajax({
+            type: 'POST',
+            url: './utilMao/updateNewAlerts',
+            contentType: 'application/json',
+            data: JSON.stringify(data),  // Send slno and message as JSON
+            success: function () {
+                alert('Message updated successfully!');
+                $(`#msg_${rowId}`).text(updatedMessage);
+                $('#editModal').modal('hide');
+            },
+            error: function () {
+                alert('Failed to update message.');
+            }
+        });
+    }
+
+    function openEditModal(slno, message) {
+        $('#editRowId').val(slno);
+        $('#editMessage').val(message);
+        $('#editModal').modal('show');
+    }
+
+    function deleteAlerts(slno) {
+        if (confirm('Are you sure you want to delete this message?')) {
+            $.ajax({
+                type: 'POST',
+                url: './utilMao/deleteAlerts',
+                contentType: 'application/json',
+                data: JSON.stringify(slno),
+                success: function () {
+                    alert('Alerts deleted successfully!');
+                    $(`#row_${slno}`).remove();
+                },
+                error: function () {
+                    alert('Failed to delete alerts.');
+                }
+            });
+        }
+    }
+    
+    function clearFileInput() {
+        document.getElementById("fileInput").value = ""; // Clear the file input
+        document.getElementById("refreshButton").style.display = "none"; // Hide refresh button
+    }
+    
+    function refreshPage() {
+        location.reload(); // Reloads the current page
+    }
+    
+</script>
+
+	</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHA-512 Hash Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 14px;
+            margin: 5px;
+        }
+        #hashResult {
+            margin-top: 20px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+<h2>SHA-512 Hashing Example</h2>
+
+<!-- Form to accept user input for hashing -->
+<form action="/generateHash" method="POST">
+    <label for="inputText">Enter text to hash:</label><br>
+   <input type="text" id="inputString" placeholder="Enter text to hash">
+    
+    <!-- Button that triggers the hash generation, passing the id "inputString" to the generateHash function -->
+<button type="submit" onclick="encodeUsingSHA512(document.getElementById('inputString').value)">Generate SHA-512 Hash</button>
+</form>
+
+<!-- Display the SHA-512 hash result -->
+<div id="hashResult">
+        <h3>SHA-512 Hash Result:</h3>
+        <p id="hashedText"></p>  <!-- This is where the hash will be displayed -->
+    </div>
+<script src="js/encode.js"></script>
+
+</body>
+</html>
+

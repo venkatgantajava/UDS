@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head  th:insert="header">
+	<div th:insert="headerImage"></div>
+	<div th:insert="navBarTop"></div>
+	<div th:insert="headerMessage"></div>
+
+    <meta charset="ISO-8859-1">
+    <title>Report Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+	
+    <h2>Input Distribution Report</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Wbed Name</th>
+                <th>Wbem Name</th>
+                <th>VS Name</th>
+                <th>UID</th>
+                <th>Farmer Name</th>
+                <th>Father Name</th>
+                <th>Crop Name</th>
+                <th>Extent</th>
+                <th>Quantity Req</th>
+                <th>Quantity Elg</th>
+                <th>Dosage</th>
+                <th>Authenticated By</th>
+                <th>Authenticated UID</th>
+                <th>Authenticated Trans ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="report : ${list}">
+                <td th:text="${report.transactionid}">-</td>
+                <td th:text="${report.wbedname}">-</td>
+                <td th:text="${report.wbemname}">-</td>
+                <td th:text="${report.vsname}">-</td>
+                <td th:text="${report.uid}">-</td>
+                <td th:text="${report.farmername}">-</td>
+                <td th:text="${report.fathername}">-</td>
+                <td th:text="${report.cropnameeng}">-</td>
+                <td th:text="${report.extent}">-</td>
+                <td th:text="${report.quantity_req}">-</td>
+                <td th:text="${report.quantity_elg}">-</td>
+                <td th:text="${report.dosage}">-</td>
+                <td th:text="${report.authneticatedby}">-</td>
+                <td th:text="${report.authenticateduid}">-</td>
+                <td th:text="${report.authenticatedtransid}">-</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

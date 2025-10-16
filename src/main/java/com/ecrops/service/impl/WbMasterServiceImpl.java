@@ -16,8 +16,8 @@ public class WbMasterServiceImpl implements WbMasterService {
 	WbMasterRepo wbMasterRepo;
 
 	@Override
-	public WbMaster getWbMasterDetailsForVillage(Integer wbvcode, Integer wbMcode, Integer wbDcode) {
-		return wbMasterRepo.getWbMasterDetailsForVillage(wbvcode, wbMcode, wbDcode);
+	public WbMaster getWbMasterDetailsForVillage(Integer village, Integer wbMcode, Integer wbDcode) {
+		return wbMasterRepo.getWbMasterDetailsForVillage(village, wbMcode, wbDcode);
 	}
 
 	@Override
@@ -33,5 +33,29 @@ public class WbMasterServiceImpl implements WbMasterService {
 		public List<WbMaster> findVillageName(Integer dcode, Integer mcode, Integer vcode){
 			return wbMasterRepo.findVillageName( dcode,  mcode,  vcode);
 	}
+		
+		
+		@Override
+		public List<WbMaster> findUnsurveyedVilageList(Integer dcode, Integer mcode) {
+			return wbMasterRepo.findUnsurveyedVilageList(dcode, mcode);
+		}
+		
+		@Override
+		public List<String> findDistByCode(Integer dcode) {
+			return wbMasterRepo.findDistByCode(dcode);
+		}
+
+		@Override
+		public String findDCode(int dcode) {
+			// TODO Auto-generated method stub
+			return wbMasterRepo.findDCode(dcode);
+		}
+		
+		@Override
+		public String findDCodeJc(String userid) {
+			// TODO Auto-generated method stub
+			return wbMasterRepo.findDCodeJc(userid);
+		}
+
 
 }

@@ -15,6 +15,12 @@ public class VillageSec {
 
 	@Column(name = "wbvname")
 	private String wbvname;
+	
+	@Column(name = "vscode")
+	private Integer vscode;
+
+	@Column(name = "vsname")
+	private String vsname;
 
 	public Integer getVcode() {
 		return vcode;
@@ -31,5 +37,28 @@ public class VillageSec {
 	public void setWbvname(String wbvname) {
 		this.wbvname = wbvname;
 	}
+
+	public Integer getVscode() {
+		return vscode;
+	}
+
+	public void setVscode(Integer vscode) {
+		this.vscode = vscode;
+	}
+
+	public String getVsname() {
+		return vsname;
+	}
+
+	public void setVsname(String vsname) {
+		this.vsname = vsname;
+	}
+
+	@Override
+	public String toString() {
+		return "VillageSec [vcode=" + vcode + ", wbvname=" + wbvname + ", vscode=" + vscode + ", vsname=" + vsname
+				+ "]";
+	}
+	
 	
 }

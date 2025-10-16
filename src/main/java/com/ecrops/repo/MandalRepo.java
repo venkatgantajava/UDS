@@ -10,6 +10,14 @@ import com.ecrops.entity.MandalEntity;
 import com.ecrops.projection.VillageName;
 
 public interface MandalRepo extends JpaRepository<MandalEntity, Integer> {
-	@Query(value="select mname from mandal_2011_cs where mcode=:mandalCode",nativeQuery=true)
-	public List<VillageName> getmandalName(@Param("mandalCode") Integer mandalCode);
+	@Query(value="select mcode,mname from farmmechanization.mandal_2011_cs",nativeQuery=true)
+	public List<MandalEntity> getmandalDetails();
+	
+	@Query(value="select mcode, mname from farmmechanization.mandal_2011_cs where dcode=:distCode",nativeQuery=true)
+	public List<VillageName> getmname(@Param("distCode") Integer distCode);
+	
+	
+	@Query(value="select mcode, mname from farmmechanization.mandal_2011_cs where dcode=:dcode",nativeQuery=true)
+
+	public List<MandalEntity> findMandalsByDistrict(int dcode);
 }

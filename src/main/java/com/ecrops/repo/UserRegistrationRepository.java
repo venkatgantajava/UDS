@@ -21,7 +21,7 @@ public class UserRegistrationRepository {
 	@Transactional
 	public int updateUserDetails(String incsts, Integer empcode, String emp_name, String email, String mobile,
 			String aadhaar_id, String rbkuserid2) {
-		String insertQry = "UPDATE user_registration set datetime=now(),regular_sts=?, emp_code=?, name=?, emailid=?, mobile_phone=?,aadhaar_id=?  WHERE userid=? ";
+		String insertQry = "UPDATE public.user_registration set datetime=now() AT TIME ZONE 'Asia/Kolkata',regular_sts=?, emp_code=?, name=?, emailid=?, mobile_phone=?,aadhaar_id=?  WHERE userid=? ";
 		Query sql = entityManager.createNativeQuery(insertQry);
 		sql.setParameter(1, incsts);
 		sql.setParameter(2, empcode);
@@ -38,7 +38,7 @@ public class UserRegistrationRepository {
 	@Transactional
 	public int updateUserDetails1(String incsts, Integer empcode, String emp_name, String email, String mobile,
 			String aadhaar_id, String rbkuserid2) {
-		String insertQry = "UPDATE user_registration set datetime=now(),regular_sts=?, emp_code=?, name=?, emailid=?, mobile_phone=?,aadhaar_id=?  WHERE userid=? ";
+		String insertQry = "UPDATE public.user_registration set datetime=now() AT TIME ZONE 'Asia/Kolkata',regular_sts=?, emp_code=?, name=?, emailid=?, mobile_phone=?,aadhaar_id=?  WHERE userid=? ";
 		Query sql = entityManager.createNativeQuery(insertQry);
 		sql.setParameter(1, incsts);
 		sql.setParameter(2, empcode);
@@ -55,7 +55,7 @@ public class UserRegistrationRepository {
 	@Transactional
 	public int UpdateUserDetails2(Integer empcode, String emp_name, String email, String mobile,
 			String aadhaar_id, String rbkuserid2) {
-		String insertQry = "UPDATE user_registration set datetime=now(), emp_code=?, name=?, emailid=?, mobile_phone=?,aadhaar_id=?  WHERE userid=? ";
+		String insertQry = "UPDATE public.user_registration set datetime=now() AT TIME ZONE 'Asia/Kolkata', emp_code=?, name=?, emailid=?, mobile_phone=?,aadhaar_id=?  WHERE userid=? ";
 		Query sql = entityManager.createNativeQuery(insertQry);
 		sql.setParameter(1, empcode);
 		sql.setParameter(2, emp_name);

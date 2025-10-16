@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 
-@Table(name="user_registration")
+@Table(name="user_registration",schema="public")
 public class Districts {
 	
 	@Id 

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="ISO-8859-1">
+    <title>Report Quantity</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #f2f2f2;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e9f5ff;
+        }
+    </style>
+	<head></head>
+
+</head>
+<body>
+
+	<div th:insert="home"></div>
+		
+
+    <div class="container">
+        <h2>Crop Wise Quantity Summary</h2>
+
+        <table>
+            <thead>
+                <tr>
+                         <th  style="text-align: center;">District Name</th>
+                    <th  style="text-align: center;">Mandal Name</th>
+                    <th  style="text-align: center;">RSK Name</th>
+                    <th  style="text-align: center;">Crop Name</th>
+                    <th  style="text-align: center;">Count</th>
+                    <th  style="text-align: center;">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${list}">
+                    <td th:text="${item.wbedName}">WBED Name</td>
+                    <td th:text="${item.wbemName}">WBEM Name</td>
+                    <td th:text="${item.vsName}">VS Name</td>
+                    <td th:text="${item.cropNameEng}">Crop Name</td>
+                     <td th:text="${item.transactionId}" style="text-align: right;">Count</td>
+                    <td th:text="${item.quantity}"  style="text-align: right;">Quantity</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

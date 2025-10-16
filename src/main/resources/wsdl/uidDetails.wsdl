@@ -1,0 +1,306 @@
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/">
+<wsdl:types>
+<s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+<s:element name="StateWiseSearchBasedonUID">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="UID" type="s:string"/>
+<s:element minOccurs="1" maxOccurs="1" name="Dcode" type="s:int"/>
+<s:element minOccurs="0" maxOccurs="1" name="usr_id" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="pwd" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="StateWiseSearchBasedonUIDResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="StateWiseSearchBasedonUIDResult" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="StateWiseSearchBasedonVillageCode">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="VillageCode" type="s:string"/>
+<s:element minOccurs="1" maxOccurs="1" name="Dcode" type="s:int"/>
+<s:element minOccurs="0" maxOccurs="1" name="usr_id" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="pwd" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="StateWiseSearchBasedonVillageCodeResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="StateWiseSearchBasedonVillageCodeResult" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="RTGSDataByVillCode">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="VillageCode" type="s:string"/>
+<s:element minOccurs="1" maxOccurs="1" name="Dcode" type="s:int"/>
+<s:element minOccurs="0" maxOccurs="1" name="usr_id" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="pwd" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="RTGSDataByVillCodeResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="RTGSDataByVillCodeResult" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="string" nillable="true" type="s:string"/>
+</s:schema>
+</wsdl:types>
+<wsdl:message name="StateWiseSearchBasedonUIDSoapIn">
+<wsdl:part name="parameters" element="tns:StateWiseSearchBasedonUID"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonUIDSoapOut">
+<wsdl:part name="parameters" element="tns:StateWiseSearchBasedonUIDResponse"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonVillageCodeSoapIn">
+<wsdl:part name="parameters" element="tns:StateWiseSearchBasedonVillageCode"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonVillageCodeSoapOut">
+<wsdl:part name="parameters" element="tns:StateWiseSearchBasedonVillageCodeResponse"/>
+</wsdl:message>
+<wsdl:message name="RTGSDataByVillCodeSoapIn">
+<wsdl:part name="parameters" element="tns:RTGSDataByVillCode"/>
+</wsdl:message>
+<wsdl:message name="RTGSDataByVillCodeSoapOut">
+<wsdl:part name="parameters" element="tns:RTGSDataByVillCodeResponse"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonUIDHttpGetIn">
+<wsdl:part name="UID" type="s:string"/>
+<wsdl:part name="Dcode" type="s:string"/>
+<wsdl:part name="usr_id" type="s:string"/>
+<wsdl:part name="pwd" type="s:string"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonUIDHttpGetOut">
+<wsdl:part name="Body" element="tns:string"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonVillageCodeHttpGetIn">
+<wsdl:part name="VillageCode" type="s:string"/>
+<wsdl:part name="Dcode" type="s:string"/>
+<wsdl:part name="usr_id" type="s:string"/>
+<wsdl:part name="pwd" type="s:string"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonVillageCodeHttpGetOut">
+<wsdl:part name="Body" element="tns:string"/>
+</wsdl:message>
+<wsdl:message name="RTGSDataByVillCodeHttpGetIn">
+<wsdl:part name="VillageCode" type="s:string"/>
+<wsdl:part name="Dcode" type="s:string"/>
+<wsdl:part name="usr_id" type="s:string"/>
+<wsdl:part name="pwd" type="s:string"/>
+</wsdl:message>
+<wsdl:message name="RTGSDataByVillCodeHttpGetOut">
+<wsdl:part name="Body" element="tns:string"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonUIDHttpPostIn">
+<wsdl:part name="UID" type="s:string"/>
+<wsdl:part name="Dcode" type="s:string"/>
+<wsdl:part name="usr_id" type="s:string"/>
+<wsdl:part name="pwd" type="s:string"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonUIDHttpPostOut">
+<wsdl:part name="Body" element="tns:string"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonVillageCodeHttpPostIn">
+<wsdl:part name="VillageCode" type="s:string"/>
+<wsdl:part name="Dcode" type="s:string"/>
+<wsdl:part name="usr_id" type="s:string"/>
+<wsdl:part name="pwd" type="s:string"/>
+</wsdl:message>
+<wsdl:message name="StateWiseSearchBasedonVillageCodeHttpPostOut">
+<wsdl:part name="Body" element="tns:string"/>
+</wsdl:message>
+<wsdl:message name="RTGSDataByVillCodeHttpPostIn">
+<wsdl:part name="VillageCode" type="s:string"/>
+<wsdl:part name="Dcode" type="s:string"/>
+<wsdl:part name="usr_id" type="s:string"/>
+<wsdl:part name="pwd" type="s:string"/>
+</wsdl:message>
+<wsdl:message name="RTGSDataByVillCodeHttpPostOut">
+<wsdl:part name="Body" element="tns:string"/>
+</wsdl:message>
+<wsdl:portType name="StateWiseSearchOnUIDSoap">
+<wsdl:operation name="StateWiseSearchBasedonUID">
+<wsdl:input message="tns:StateWiseSearchBasedonUIDSoapIn"/>
+<wsdl:output message="tns:StateWiseSearchBasedonUIDSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="StateWiseSearchBasedonVillageCode">
+<wsdl:input message="tns:StateWiseSearchBasedonVillageCodeSoapIn"/>
+<wsdl:output message="tns:StateWiseSearchBasedonVillageCodeSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="RTGSDataByVillCode">
+<wsdl:input message="tns:RTGSDataByVillCodeSoapIn"/>
+<wsdl:output message="tns:RTGSDataByVillCodeSoapOut"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:portType name="StateWiseSearchOnUIDHttpGet">
+<wsdl:operation name="StateWiseSearchBasedonUID">
+<wsdl:input message="tns:StateWiseSearchBasedonUIDHttpGetIn"/>
+<wsdl:output message="tns:StateWiseSearchBasedonUIDHttpGetOut"/>
+</wsdl:operation>
+<wsdl:operation name="StateWiseSearchBasedonVillageCode">
+<wsdl:input message="tns:StateWiseSearchBasedonVillageCodeHttpGetIn"/>
+<wsdl:output message="tns:StateWiseSearchBasedonVillageCodeHttpGetOut"/>
+</wsdl:operation>
+<wsdl:operation name="RTGSDataByVillCode">
+<wsdl:input message="tns:RTGSDataByVillCodeHttpGetIn"/>
+<wsdl:output message="tns:RTGSDataByVillCodeHttpGetOut"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:portType name="StateWiseSearchOnUIDHttpPost">
+<wsdl:operation name="StateWiseSearchBasedonUID">
+<wsdl:input message="tns:StateWiseSearchBasedonUIDHttpPostIn"/>
+<wsdl:output message="tns:StateWiseSearchBasedonUIDHttpPostOut"/>
+</wsdl:operation>
+<wsdl:operation name="StateWiseSearchBasedonVillageCode">
+<wsdl:input message="tns:StateWiseSearchBasedonVillageCodeHttpPostIn"/>
+<wsdl:output message="tns:StateWiseSearchBasedonVillageCodeHttpPostOut"/>
+</wsdl:operation>
+<wsdl:operation name="RTGSDataByVillCode">
+<wsdl:input message="tns:RTGSDataByVillCodeHttpPostIn"/>
+<wsdl:output message="tns:RTGSDataByVillCodeHttpPostOut"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="StateWiseSearchOnUIDSoap" type="tns:StateWiseSearchOnUIDSoap">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="StateWiseSearchBasedonUID">
+<soap:operation soapAction="http://tempuri.org/StateWiseSearchBasedonUID" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="StateWiseSearchBasedonVillageCode">
+<soap:operation soapAction="http://tempuri.org/StateWiseSearchBasedonVillageCode" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="RTGSDataByVillCode">
+<soap:operation soapAction="http://tempuri.org/RTGSDataByVillCode" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:binding name="StateWiseSearchOnUIDSoap12" type="tns:StateWiseSearchOnUIDSoap">
+<soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="StateWiseSearchBasedonUID">
+<soap12:operation soapAction="http://tempuri.org/StateWiseSearchBasedonUID" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="StateWiseSearchBasedonVillageCode">
+<soap12:operation soapAction="http://tempuri.org/StateWiseSearchBasedonVillageCode" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="RTGSDataByVillCode">
+<soap12:operation soapAction="http://tempuri.org/RTGSDataByVillCode" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:binding name="StateWiseSearchOnUIDHttpGet" type="tns:StateWiseSearchOnUIDHttpGet">
+<http:binding verb="GET"/>
+<wsdl:operation name="StateWiseSearchBasedonUID">
+<http:operation location="/StateWiseSearchBasedonUID"/>
+<wsdl:input>
+<http:urlEncoded/>
+</wsdl:input>
+<wsdl:output>
+<mime:mimeXml part="Body"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="StateWiseSearchBasedonVillageCode">
+<http:operation location="/StateWiseSearchBasedonVillageCode"/>
+<wsdl:input>
+<http:urlEncoded/>
+</wsdl:input>
+<wsdl:output>
+<mime:mimeXml part="Body"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="RTGSDataByVillCode">
+<http:operation location="/RTGSDataByVillCode"/>
+<wsdl:input>
+<http:urlEncoded/>
+</wsdl:input>
+<wsdl:output>
+<mime:mimeXml part="Body"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:binding name="StateWiseSearchOnUIDHttpPost" type="tns:StateWiseSearchOnUIDHttpPost">
+<http:binding verb="POST"/>
+<wsdl:operation name="StateWiseSearchBasedonUID">
+<http:operation location="/StateWiseSearchBasedonUID"/>
+<wsdl:input>
+<mime:content type="application/x-www-form-urlencoded"/>
+</wsdl:input>
+<wsdl:output>
+<mime:mimeXml part="Body"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="StateWiseSearchBasedonVillageCode">
+<http:operation location="/StateWiseSearchBasedonVillageCode"/>
+<wsdl:input>
+<mime:content type="application/x-www-form-urlencoded"/>
+</wsdl:input>
+<wsdl:output>
+<mime:mimeXml part="Body"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="RTGSDataByVillCode">
+<http:operation location="/RTGSDataByVillCode"/>
+<wsdl:input>
+<mime:content type="application/x-www-form-urlencoded"/>
+</wsdl:input>
+<wsdl:output>
+<mime:mimeXml part="Body"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="StateWiseSearchOnUID">
+<wsdl:port name="StateWiseSearchOnUIDSoap" binding="tns:StateWiseSearchOnUIDSoap">
+<soap:address location="https://uatwebland.ap.gov.in/StateWiseSearchOnUID.asmx"/>
+</wsdl:port>
+<wsdl:port name="StateWiseSearchOnUIDSoap12" binding="tns:StateWiseSearchOnUIDSoap12">
+<soap12:address location="https://uatwebland.ap.gov.in/StateWiseSearchOnUID.asmx"/>
+</wsdl:port>
+<wsdl:port name="StateWiseSearchOnUIDHttpGet" binding="tns:StateWiseSearchOnUIDHttpGet">
+<http:address location="https://uatwebland.ap.gov.in/StateWiseSearchOnUID.asmx"/>
+</wsdl:port>
+<wsdl:port name="StateWiseSearchOnUIDHttpPost" binding="tns:StateWiseSearchOnUIDHttpPost">
+<http:address location="https://uatwebland.ap.gov.in/StateWiseSearchOnUID.asmx"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>
