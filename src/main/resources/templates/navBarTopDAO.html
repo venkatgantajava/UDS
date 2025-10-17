@@ -23,9 +23,15 @@
 <!--								<a class="dropdown-item" href="horesetpwd">Change Password For Below Level Users</a>-->
 <!--							</li>-->
 
+						<li
+								sec:authorize=" hasAuthority('9')">
+								<a class="dropdown-item" href="resetDaoPassword">Change Password for Self </a>
+							</li>
+							
+							
 							<li
-								sec:authorize=" hasAuthority('25')">
-								<a class="dropdown-item" href="horesetpwdRsk">Change Password for Self </a>
+								sec:authorize=" hasAuthority('9')">
+								<a class="dropdown-item" href="posthoresetpwdDAO">Change Password for Below Users </a>
 							</li>
 
 

@@ -12,7 +12,7 @@
     <style>
         /* Custom CSS */
         body {
-            background-image: url("./images/udsbg.png"); /* Replace with your background image */
+            background-image: url("./images/UDS_Background.jpeg"); /* Replace with your background image */
             background-size: cover;         
             height: 100%;
             margin: 0;  
@@ -46,18 +46,21 @@
             width: 100%;
             text-align: center;
         }
+        
+     
+		 
 #answer{
 	width:380px;
-	border-radius: 30px;
+	border-radius: 5px;
 }
         .form-container {
-            background: #f5f5f5;
+              background: rgb(169 160 160 / 50%);
             padding: 20px;
             border-radius: 8px;        
             max-width: 450px;
             width: 90%;
             position: relative;
-            margin-left:250px;
+            margin-left:400px;
             height: 500px;
             margin-top: 10px;
         }
@@ -65,7 +68,7 @@
         
         @media (max-width: 376px) {
            .form-container {
-            background: #f5f5f5;
+            background: rgba(255,255,255,0.5);
             padding: 20px;
             border-radius: 8px;        
             max-width: 450px;
@@ -80,11 +83,17 @@
 	max-height: 65%;
 }
 
+#answer{
+	width:260px;
+	border-radius: 5px;
+}
+   
+
 }
         
         
         form{
-            margin-top: 50px;
+           margin-top: 20px;
            margin-left: 0px;
            margin-right: 0;
            padding: 10px;
@@ -163,7 +172,7 @@
         .footer {
     width: 100%;
     height: 80px;
-    margin-top:50px;
+    margin-top:60px;
     font-size: 16px;
     background-color:white;
     max-height:100%;
@@ -172,6 +181,7 @@
    
 
 }
+	
 .col-lg-6{
 max-height: 100%;
 
@@ -260,15 +270,16 @@ button[type="submit"] {
           
             <div class="col-lg-6 order-1 order-lg-2 form">
             <div class="form-container">
+				<h3 style="justify-content: center;align-items: center;display: flex;font-weight: 700; color:rgb(25, 135, 84)">Login</h3>
            <form th:action="@{/}" th:object="${appuser}" method="post" autocomplete="off">
 					<input type="hidden" name="shapassword" id="shapassword" />
 					<div class="mb-3">
 						<input type="text" class="form-control" th:name="username" th:placeholder="Username" required
-							autocomplete="off" style=" border-radius: 20px;">
+							autocomplete="off" style=" border-radius: 5px;">
 					</div>
 					<div class="mb-3">
 						<input type="password" class="form-control" name="password" id="password"
-							th:placeholder="Password" required autocomplete="off" style=" border-radius: 20px;" onchange="changePass()">
+							th:placeholder="Password" required autocomplete="off" style=" border-radius: 5px;" onchange="changePass()">
 					</div>
 
 					<label>

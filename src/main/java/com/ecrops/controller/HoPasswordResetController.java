@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ecrops.dto.MAOresetPassword;
 import com.ecrops.entity.MandalsFusersho;
 import com.ecrops.entity.VillageForHO;
 import com.ecrops.repo.MandalsFhorestpwdRepository;
+import com.ecrops.repo.UDSReportsRepo;
 import com.ecrops.repo.VillageRepositoryFhorestpwd;
 import com.ecrops.service.ChangePasswordToSha;
 import com.ecrops.service.impl.UserRegistrationUpdateServiceImpl;
@@ -95,6 +97,10 @@ public class HoPasswordResetController {
 
 	@Autowired
 	private MandalsFhorestpwdRepository mandalsFhorestpwdRepository;
+	
+	
+	@Autowired
+	private UDSReportsRepo udsReportsRepo;
 
 	
 	
@@ -110,12 +116,6 @@ public class HoPasswordResetController {
 	}
 	
 	
-	@PreAuthorize("hasAuthority('17')")
-	@GetMapping("/ddapreset")
-	public String findAl(Model theModel)
-	{
-	    return "ddap/ddapadminResetPassword";   
-	} 
 	
 	
 	@PreAuthorize("hasAuthority('25')")
@@ -132,6 +132,9 @@ public class HoPasswordResetController {
 //	    System.out.println("--------->"+mandalsFho.size());
 	    return mandalsFho;
 	}
+	
+	
+	
 	
 	@PreAuthorize("hasAuthority('25')")
 	@PostMapping("/posthoresetpwdRsk")
@@ -159,7 +162,48 @@ public class HoPasswordResetController {
 		}
 		return "horoles/horesetpwdrsk";
 	}
+	
+	
 
+	@PreAuthorize("hasAuthority('17')")
+	@GetMapping("/ddapreset")
+	public String findAl(Model theModel)
+	{
+	    return "ddap/ddapadminResetPassword";   
+	} 
+	
+	@PreAuthorize("hasAuthority('5')")
+	@GetMapping("/horesetpwdRskDAO")
+	public String findAlRSKuserid(Model theModel, HttpSession httpSession) {
+		String mcode = (String) httpSession.getAttribute("vscode").toString();
+//		System.out.println("dcode-------->"+dcode);
+		List<VillageForHO> mandals = fhorestpwd.getRbk(Integer.parseInt(mcode));
+//		System.out.println("mandals------->"+mandals.size());
+		theModel.addAttribute("mandal", mandals);
+		return "horoles/horesetpwdrsk";
+	}
+	
+	@PreAuthorize("hasAuthority('9')")
+	@GetMapping("/posthoresetpwdDAO")
+	public String DaoResetPasswaord()
+	{
+		return "dao/posthoresetpwdDAO";
+	}
 	
 	
+	@PreAuthorize("hasAuthority('9')")
+	@GetMapping("/getMaoData")
+	@ResponseBody
+	public List<MAOresetPassword> getMandalnamesFhoDAO(HttpSession session) {
+//		System.out.println("--------->"+mandalname);
+	    List<MAOresetPassword> mandalsFho = null;
+	    try {
+	    	mandalsFho  = udsReportsRepo.getMao(session.getAttribute("dcode").toString());
+	    	System.out.println(mandalsFho.get(0).getMandalName());
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    System.out.println("--------->"+mandalsFho.size());
+	    return mandalsFho;
+	}
 }

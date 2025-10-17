@@ -13,7 +13,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import com.ecrops.dto.MAOresetPassword;
 import com.ecrops.dto.ReportMaoDTO;
+import com.ecrops.entity.MandalsFusersho;
 
 
 
@@ -135,6 +137,46 @@ public class UDSReportsRepo {
         return dtos;
     }
 
+
+
+    public List<MAOresetPassword> getRsk(String useridPattern) {
+        String sql = "SELECT userid FROM user_registration WHERE userid LIKE 'RBK_%' AND blockortehsil = ?";
+
+        Query query = entityManager.createNativeQuery(sql);
+        query.setParameter(1, useridPattern);
+        
+        List<MAOresetPassword> dt = new ArrayList<>();
+        List<String> results = query.getResultList();
+        
+        for (String row : results) {
+        	MAOresetPassword dto = new MAOresetPassword();
+            dto.setMandalName(row);
+            dt.add(dto);
+        }
+        
+
+        return dt;
+    }
+
+
+    public List<MAOresetPassword> getMao(String dcode) {
+        String sql = "select userid from user_registration where userid like 'MAO_%' and district = ?;";
+
+        Query query = entityManager.createNativeQuery(sql);
+        query.setParameter(1, dcode);
+        
+        List<MAOresetPassword> dt = new ArrayList<>();
+        List<String> results = query.getResultList();
+        
+        for (String row : results) {
+        	MAOresetPassword dto = new MAOresetPassword();
+            dto.setDistName(row);
+            dt.add(dto);
+        }
+        
+
+        return dt;
+    }
     
     
 }

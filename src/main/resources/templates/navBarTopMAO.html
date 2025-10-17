@@ -24,8 +24,13 @@
 <!--							</li>-->
 
 							<li
-								sec:authorize=" hasAuthority('25')">
-								<a class="dropdown-item" href="horesetpwdRsk">Change Password for Self </a>
+								sec:authorize=" hasAuthority('5')">
+								<a class="dropdown-item" href="resetMaoPassword">Change Password for Self </a>
+							</li>
+							
+							<li
+								sec:authorize=" hasAuthority('5')">
+								<a class="dropdown-item" href="resetMaoPasswordForBelowUsers">Change Password for Below Users </a>
 							</li>
 
 
